@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3923BF17269A8B00C58BD5 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9B3923C217269A8B00C58BD5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B3923C017269A8B00C58BD5 /* README.md */; };
 		9B4B3362172575440078CDCC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3361172575440078CDCC /* UIKit.framework */; };
 		9B4B3364172575440078CDCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3363172575440078CDCC /* Foundation.framework */; };
 		9B4B3366172575440078CDCC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3365172575440078CDCC /* CoreGraphics.framework */; };
@@ -27,8 +29,6 @@
 		9BA07B781725969B000F4183 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA07B771725969B000F4183 /* libz.dylib */; };
 		9BA07B7A172596A2000F4183 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA07B79172596A2000F4183 /* SystemConfiguration.framework */; };
 		9BA07B7C17259724000F4183 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA07B7B17259724000F4183 /* libxml2.dylib */; };
-		9BA07BB9172597DF000F4183 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07B7E172597DF000F4183 /* .gitattributes */; };
-		9BA07BBA172597DF000F4183 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07B7F172597DF000F4183 /* .gitignore */; };
 		9BA07BBB172597DF000F4183 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07B82172597DF000F4183 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9BA07BBC172597DF000F4183 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07B85172597DF000F4183 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9BA07BBD172597DF000F4183 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07B87172597DF000F4183 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -63,6 +63,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B3923BE17269A8B00C58BD5 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		9B3923BF17269A8B00C58BD5 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		9B3923C017269A8B00C58BD5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9B4B335E172575440078CDCC /* hkutil2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hkutil2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B4B3361172575440078CDCC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9B4B3363172575440078CDCC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,8 +94,6 @@
 		9BA07B771725969B000F4183 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9BA07B79172596A2000F4183 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9BA07B7B17259724000F4183 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		9BA07B7E172597DF000F4183 /* .gitattributes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
-		9BA07B7F172597DF000F4183 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9BA07B81172597DF000F4183 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		9BA07B82172597DF000F4183 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		9BA07B83172597DF000F4183 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -178,6 +179,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B3923BD17269A8B00C58BD5 /* jsonkit */ = {
+			isa = PBXGroup;
+			children = (
+				9B3923BE17269A8B00C58BD5 /* JSONKit.h */,
+				9B3923BF17269A8B00C58BD5 /* JSONKit.m */,
+				9B3923C017269A8B00C58BD5 /* README.md */,
+			);
+			path = jsonkit;
+			sourceTree = "<group>";
+		};
 		9B4B3355172575440078CDCC = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +264,7 @@
 		9B4B33861725770A0078CDCC /* thirdtools */ = {
 			isa = PBXGroup;
 			children = (
+				9B3923BD17269A8B00C58BD5 /* jsonkit */,
 				9BA07B7D172597DF000F4183 /* pokeb-asi-http-request-3ed0b3c */,
 			);
 			path = thirdtools;
@@ -276,8 +288,6 @@
 		9BA07B7D172597DF000F4183 /* pokeb-asi-http-request-3ed0b3c */ = {
 			isa = PBXGroup;
 			children = (
-				9BA07B7E172597DF000F4183 /* .gitattributes */,
-				9BA07B7F172597DF000F4183 /* .gitignore */,
 				9BA07B80172597DF000F4183 /* Classes */,
 				9BA07BB5172597DF000F4183 /* External */,
 			);
@@ -440,11 +450,10 @@
 				9B4B3378172575450078CDCC /* Default-568h@2x.png in Resources */,
 				9B4B337E172575450078CDCC /* HKViewController.xib in Resources */,
 				9B4B3385172576A70078CDCC /* README.md in Resources */,
-				9BA07BB9172597DF000F4183 /* .gitattributes in Resources */,
-				9BA07BBA172597DF000F4183 /* .gitignore in Resources */,
 				9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */,
 				9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */,
 				9BA07BE517266674000F4183 /* HKSubViewCtrl.xib in Resources */,
+				9B3923C217269A8B00C58BD5 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +497,7 @@
 				9BA07BDC1726333D000F4183 /* HKView3Ctrl.m in Sources */,
 				9BA07BE017266403000F4183 /* HKShadowCtrl.m in Sources */,
 				9BA07BE417266674000F4183 /* HKSubViewCtrl.m in Sources */,
+				9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

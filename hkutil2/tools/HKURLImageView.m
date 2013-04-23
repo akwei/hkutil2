@@ -15,7 +15,6 @@ static NSTimeInterval _globalTimeout;
 @implementation HKURLImageView{
     NSData* _imageData;
     NSString* _imageUrl;
-    UIImage* _curImage;
 }
 
 +(void)setGlobalTimeout:(NSTimeInterval)t{
@@ -76,19 +75,29 @@ static NSTimeInterval _globalTimeout;
         _imageUrl = [url copy];
         isCanLoadFromUrl = YES;
     }
-    else if ([_imageUrl isEqualToString:url]) {
+    else if ([_imageUrl isEqualToString:url]) {//还是同样的url
         if (_imageData) {
             isCanLoadFromUrl = NO;
         }
         else{
             //load local
-            _imageData = [_shareImageCache objectForKey:url];
+            _imageData = [_shareImageCache objectForKey:_imageUrl];
             if (_imageData) {
                 isCanLoadFromUrl = NO;
             }
             else{
                 isCanLoadFromUrl = YES;
             }
+        }
+    }
+    else{//url不同了，需要加载不同图片
+        _imageUrl = [url copy];
+        _imageData = [_shareImageCache objectForKey:_imageUrl];
+        if (_imageData) {
+            isCanLoadFromUrl = NO;
+        }
+        else{
+            isCanLoadFromUrl = YES;
         }
     }
     if (isCanLoadFromUrl) {

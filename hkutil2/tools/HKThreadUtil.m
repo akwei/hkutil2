@@ -30,7 +30,11 @@ static HKThreadUtil* _sharedHKThreadUtil;
 }
 
 -(void)asyncBlock:(void (^)(void))block{
-    dispatch_async(_asyncQueue, block);
+    dispatch_async(_asyncQueue, ^{
+        @autoreleasepool {
+            block();
+        }
+    });
 }
 
 -(void)asyncBlockToMainThread:(void (^)(void))block{

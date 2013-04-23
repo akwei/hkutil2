@@ -7,6 +7,8 @@
 //
 
 #import "HKViewController.h"
+#import "HKView2Ctrl.h"
+#import "HKView3Ctrl.h"
 
 @interface HKViewController ()
 
@@ -26,4 +28,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)toNext:(id)sender {
+    HKView2Ctrl* ctrl = [[HKView2Ctrl alloc] initWithNibName:@"HKView2Ctrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)to3:(id)sender {
+    HKView3Ctrl* ctrl = [[HKView3Ctrl alloc] initWithNibName:@"HKView3Ctrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
 @end

@@ -52,7 +52,10 @@
 		9BA07BCF172597DF000F4183 /* ASIS3Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BB2172597DF000F4183 /* ASIS3Request.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9BA07BD0172597DF000F4183 /* ASIS3ServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BB4172597DF000F4183 /* ASIS3ServiceRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9BA07BD1172597DF000F4183 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BB8172597DF000F4183 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9BA07BD317259823000F4183 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA07BD217259823000F4183 /* libxml2.2.dylib */; };
+		9BA07BD717262CE5000F4183 /* HKView2Ctrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BD517262CE5000F4183 /* HKView2Ctrl.m */; };
+		9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07BD617262CE5000F4183 /* HKView2Ctrl.xib */; };
+		9BA07BDC1726333D000F4183 /* HKView3Ctrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */; };
+		9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,7 +140,12 @@
 		9BA07BB4172597DF000F4183 /* ASIS3ServiceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIS3ServiceRequest.m; sourceTree = "<group>"; };
 		9BA07BB7172597DF000F4183 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		9BA07BB8172597DF000F4183 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		9BA07BD217259823000F4183 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		9BA07BD417262CE5000F4183 /* HKView2Ctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKView2Ctrl.h; sourceTree = "<group>"; };
+		9BA07BD517262CE5000F4183 /* HKView2Ctrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKView2Ctrl.m; sourceTree = "<group>"; };
+		9BA07BD617262CE5000F4183 /* HKView2Ctrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKView2Ctrl.xib; sourceTree = "<group>"; };
+		9BA07BD91726333D000F4183 /* HKView3Ctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKView3Ctrl.h; sourceTree = "<group>"; };
+		9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKView3Ctrl.m; sourceTree = "<group>"; };
+		9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKView3Ctrl.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +153,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BA07BD317259823000F4183 /* libxml2.2.dylib in Frameworks */,
 				9BA07B7C17259724000F4183 /* libxml2.dylib in Frameworks */,
 				9BA07B7A172596A2000F4183 /* SystemConfiguration.framework in Frameworks */,
 				9BA07B781725969B000F4183 /* libz.dylib in Frameworks */,
@@ -163,11 +170,10 @@
 		9B4B3355172575440078CDCC = {
 			isa = PBXGroup;
 			children = (
-				9BA07BD217259823000F4183 /* libxml2.2.dylib */,
-				9B4B3384172576A70078CDCC /* README.md */,
 				9B4B3367172575440078CDCC /* hkutil2 */,
 				9B4B3360172575440078CDCC /* Frameworks */,
 				9B4B335F172575440078CDCC /* Products */,
+				9B4B3384172576A70078CDCC /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,6 +210,12 @@
 				9B4B3379172575450078CDCC /* HKViewController.h */,
 				9B4B337A172575450078CDCC /* HKViewController.m */,
 				9B4B337C172575450078CDCC /* HKViewController.xib */,
+				9BA07BD417262CE5000F4183 /* HKView2Ctrl.h */,
+				9BA07BD517262CE5000F4183 /* HKView2Ctrl.m */,
+				9BA07BD617262CE5000F4183 /* HKView2Ctrl.xib */,
+				9BA07BD91726333D000F4183 /* HKView3Ctrl.h */,
+				9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */,
+				9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -413,6 +425,8 @@
 				9B4B3385172576A70078CDCC /* README.md in Resources */,
 				9BA07BB9172597DF000F4183 /* .gitattributes in Resources */,
 				9BA07BBA172597DF000F4183 /* .gitignore in Resources */,
+				9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */,
+				9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +466,8 @@
 				9BA07BCF172597DF000F4183 /* ASIS3Request.m in Sources */,
 				9BA07BD0172597DF000F4183 /* ASIS3ServiceRequest.m in Sources */,
 				9BA07BD1172597DF000F4183 /* Reachability.m in Sources */,
+				9BA07BD717262CE5000F4183 /* HKView2Ctrl.m in Sources */,
+				9BA07BDC1726333D000F4183 /* HKView3Ctrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

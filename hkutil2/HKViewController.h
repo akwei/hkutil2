@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface HKViewController : UIViewController
+- (IBAction)toNext:(id)sender;
+- (IBAction)to3:(id)sender;
 
 @end

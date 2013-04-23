@@ -28,6 +28,14 @@
 		9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E91726C8320051C840 /* HKSQLQuery.m */; };
 		9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6EC1726CA140051C840 /* FileUtil.m */; };
 		9B73E6EF1726CB730051C840 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B73E6EE1726CB730051C840 /* libsqlite3.dylib */; };
+		9B73E6F21726CCF40051C840 /* HKTimerInvoker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */; };
+		9B73E7011726CF7C0051C840 /* DataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F41726CF7A0051C840 /* DataUtil.m */; };
+		9B73E7021726CF7C0051C840 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F61726CF7B0051C840 /* DeviceUtil.m */; };
+		9B73E7031726CF7C0051C840 /* KeyboardNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */; };
+		9B73E7041726CF7C0051C840 /* KVEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FA1726CF7B0051C840 /* KVEncoder.m */; };
+		9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FC1726CF7C0051C840 /* LanUtil.m */; };
+		9B73E7061726CF7C0051C840 /* MyIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FE1726CF7C0051C840 /* MyIp.m */; };
+		9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E7001726CF7C0051C840 /* TimeUtil.m */; };
 		9BA07A701725842F000F4183 /* HKThreadUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A6F1725842F000F4183 /* HKThreadUtil.m */; };
 		9BA07A73172587ED000F4183 /* HKDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A72172587ED000F4183 /* HKDownloader.m */; };
 		9BA07A7617258905000F4183 /* HKURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A7517258905000F4183 /* HKURLImageView.m */; };
@@ -104,6 +112,22 @@
 		9B73E6EB1726CA140051C840 /* FileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtil.h; sourceTree = "<group>"; };
 		9B73E6EC1726CA140051C840 /* FileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtil.m; sourceTree = "<group>"; };
 		9B73E6EE1726CB730051C840 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		9B73E6F01726CCF40051C840 /* HKTimerInvoker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTimerInvoker.h; sourceTree = "<group>"; };
+		9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTimerInvoker.m; sourceTree = "<group>"; };
+		9B73E6F31726CF7A0051C840 /* DataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataUtil.h; sourceTree = "<group>"; };
+		9B73E6F41726CF7A0051C840 /* DataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataUtil.m; sourceTree = "<group>"; };
+		9B73E6F51726CF7B0051C840 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
+		9B73E6F61726CF7B0051C840 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
+		9B73E6F71726CF7B0051C840 /* KeyboardNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardNotice.h; sourceTree = "<group>"; };
+		9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardNotice.m; sourceTree = "<group>"; };
+		9B73E6F91726CF7B0051C840 /* KVEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVEncoder.h; sourceTree = "<group>"; };
+		9B73E6FA1726CF7B0051C840 /* KVEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVEncoder.m; sourceTree = "<group>"; };
+		9B73E6FB1726CF7B0051C840 /* LanUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanUtil.h; sourceTree = "<group>"; };
+		9B73E6FC1726CF7C0051C840 /* LanUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanUtil.m; sourceTree = "<group>"; };
+		9B73E6FD1726CF7C0051C840 /* MyIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyIp.h; sourceTree = "<group>"; };
+		9B73E6FE1726CF7C0051C840 /* MyIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyIp.m; sourceTree = "<group>"; };
+		9B73E6FF1726CF7C0051C840 /* TimeUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeUtil.h; sourceTree = "<group>"; };
+		9B73E7001726CF7C0051C840 /* TimeUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeUtil.m; sourceTree = "<group>"; };
 		9BA07A6E1725842F000F4183 /* HKThreadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKThreadUtil.h; sourceTree = "<group>"; };
 		9BA07A6F1725842F000F4183 /* HKThreadUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKThreadUtil.m; sourceTree = "<group>"; };
 		9BA07A71172587ED000F4183 /* HKDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDownloader.h; sourceTree = "<group>"; };
@@ -296,6 +320,20 @@
 		9B4B33871725770A0078CDCC /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				9B73E6F31726CF7A0051C840 /* DataUtil.h */,
+				9B73E6F41726CF7A0051C840 /* DataUtil.m */,
+				9B73E6F51726CF7B0051C840 /* DeviceUtil.h */,
+				9B73E6F61726CF7B0051C840 /* DeviceUtil.m */,
+				9B73E6F71726CF7B0051C840 /* KeyboardNotice.h */,
+				9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */,
+				9B73E6F91726CF7B0051C840 /* KVEncoder.h */,
+				9B73E6FA1726CF7B0051C840 /* KVEncoder.m */,
+				9B73E6FB1726CF7B0051C840 /* LanUtil.h */,
+				9B73E6FC1726CF7C0051C840 /* LanUtil.m */,
+				9B73E6FD1726CF7C0051C840 /* MyIp.h */,
+				9B73E6FE1726CF7C0051C840 /* MyIp.m */,
+				9B73E6FF1726CF7C0051C840 /* TimeUtil.h */,
+				9B73E7001726CF7C0051C840 /* TimeUtil.m */,
 				9B73E6EB1726CA140051C840 /* FileUtil.h */,
 				9B73E6EC1726CA140051C840 /* FileUtil.m */,
 				9B73E6E11726C7EE0051C840 /* EncUtil.h */,
@@ -317,6 +355,8 @@
 				9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */,
 				9B73E6E81726C8310051C840 /* HKSQLQuery.h */,
 				9B73E6E91726C8320051C840 /* HKSQLQuery.m */,
+				9B73E6F01726CCF40051C840 /* HKTimerInvoker.h */,
+				9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -540,6 +580,14 @@
 				9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */,
 				9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */,
 				9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */,
+				9B73E6F21726CCF40051C840 /* HKTimerInvoker.m in Sources */,
+				9B73E7011726CF7C0051C840 /* DataUtil.m in Sources */,
+				9B73E7021726CF7C0051C840 /* DeviceUtil.m in Sources */,
+				9B73E7031726CF7C0051C840 /* KeyboardNotice.m in Sources */,
+				9B73E7041726CF7C0051C840 /* KVEncoder.m in Sources */,
+				9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */,
+				9B73E7061726CF7C0051C840 /* MyIp.m in Sources */,
+				9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

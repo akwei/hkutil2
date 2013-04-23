@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3923BF17269A8B00C58BD5 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9B3923C217269A8B00C58BD5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B3923C017269A8B00C58BD5 /* README.md */; };
+		9B3923C817269C1300C58BD5 /* HKShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3923C717269C1300C58BD5 /* HKShadowView.m */; };
 		9B4B3362172575440078CDCC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3361172575440078CDCC /* UIKit.framework */; };
 		9B4B3364172575440078CDCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3363172575440078CDCC /* Foundation.framework */; };
 		9B4B3366172575440078CDCC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3365172575440078CDCC /* CoreGraphics.framework */; };
@@ -66,6 +67,8 @@
 		9B3923BE17269A8B00C58BD5 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		9B3923BF17269A8B00C58BD5 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		9B3923C017269A8B00C58BD5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		9B3923C617269C1300C58BD5 /* HKShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKShadowView.h; sourceTree = "<group>"; };
+		9B3923C717269C1300C58BD5 /* HKShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKShadowView.m; sourceTree = "<group>"; };
 		9B4B335E172575440078CDCC /* hkutil2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hkutil2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B4B3361172575440078CDCC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9B4B3363172575440078CDCC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -281,6 +284,8 @@
 				9BA07A7517258905000F4183 /* HKURLImageView.m */,
 				9BA07BDE17266403000F4183 /* HKShadowCtrl.h */,
 				9BA07BDF17266403000F4183 /* HKShadowCtrl.m */,
+				9B3923C617269C1300C58BD5 /* HKShadowView.h */,
+				9B3923C717269C1300C58BD5 /* HKShadowView.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -498,6 +503,7 @@
 				9BA07BE017266403000F4183 /* HKShadowCtrl.m in Sources */,
 				9BA07BE417266674000F4183 /* HKSubViewCtrl.m in Sources */,
 				9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */,
+				9B3923C817269C1300C58BD5 /* HKShadowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

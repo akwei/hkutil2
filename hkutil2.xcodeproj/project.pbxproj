@@ -56,6 +56,10 @@
 		9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07BD617262CE5000F4183 /* HKView2Ctrl.xib */; };
 		9BA07BDC1726333D000F4183 /* HKView3Ctrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */; };
 		9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */; };
+		9BA07BE017266403000F4183 /* HKShadowCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BDF17266403000F4183 /* HKShadowCtrl.m */; };
+		9BA07BE417266674000F4183 /* HKSubViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07BE217266673000F4183 /* HKSubViewCtrl.m */; };
+		9BA07BE517266674000F4183 /* HKSubViewCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA07BE317266673000F4183 /* HKSubViewCtrl.xib */; };
+		9BA07BE71726681A000F4183 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BA07BE61726681A000F4183 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +150,12 @@
 		9BA07BD91726333D000F4183 /* HKView3Ctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKView3Ctrl.h; sourceTree = "<group>"; };
 		9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKView3Ctrl.m; sourceTree = "<group>"; };
 		9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKView3Ctrl.xib; sourceTree = "<group>"; };
+		9BA07BDE17266403000F4183 /* HKShadowCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKShadowCtrl.h; sourceTree = "<group>"; };
+		9BA07BDF17266403000F4183 /* HKShadowCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKShadowCtrl.m; sourceTree = "<group>"; };
+		9BA07BE117266673000F4183 /* HKSubViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKSubViewCtrl.h; sourceTree = "<group>"; };
+		9BA07BE217266673000F4183 /* HKSubViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKSubViewCtrl.m; sourceTree = "<group>"; };
+		9BA07BE317266673000F4183 /* HKSubViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKSubViewCtrl.xib; sourceTree = "<group>"; };
+		9BA07BE61726681A000F4183 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BA07BE71726681A000F4183 /* QuartzCore.framework in Frameworks */,
 				9BA07B7C17259724000F4183 /* libxml2.dylib in Frameworks */,
 				9BA07B7A172596A2000F4183 /* SystemConfiguration.framework in Frameworks */,
 				9BA07B781725969B000F4183 /* libz.dylib in Frameworks */,
@@ -188,6 +199,7 @@
 		9B4B3360172575440078CDCC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9BA07BE61726681A000F4183 /* QuartzCore.framework */,
 				9BA07B7B17259724000F4183 /* libxml2.dylib */,
 				9BA07B79172596A2000F4183 /* SystemConfiguration.framework */,
 				9BA07B771725969B000F4183 /* libz.dylib */,
@@ -216,6 +228,9 @@
 				9BA07BD91726333D000F4183 /* HKView3Ctrl.h */,
 				9BA07BDA1726333D000F4183 /* HKView3Ctrl.m */,
 				9BA07BDB1726333D000F4183 /* HKView3Ctrl.xib */,
+				9BA07BE117266673000F4183 /* HKSubViewCtrl.h */,
+				9BA07BE217266673000F4183 /* HKSubViewCtrl.m */,
+				9BA07BE317266673000F4183 /* HKSubViewCtrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -252,6 +267,8 @@
 				9BA07A72172587ED000F4183 /* HKDownloader.m */,
 				9BA07A7417258905000F4183 /* HKURLImageView.h */,
 				9BA07A7517258905000F4183 /* HKURLImageView.m */,
+				9BA07BDE17266403000F4183 /* HKShadowCtrl.h */,
+				9BA07BDF17266403000F4183 /* HKShadowCtrl.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -427,6 +444,7 @@
 				9BA07BBA172597DF000F4183 /* .gitignore in Resources */,
 				9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */,
 				9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */,
+				9BA07BE517266674000F4183 /* HKSubViewCtrl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +486,8 @@
 				9BA07BD1172597DF000F4183 /* Reachability.m in Sources */,
 				9BA07BD717262CE5000F4183 /* HKView2Ctrl.m in Sources */,
 				9BA07BDC1726333D000F4183 /* HKView3Ctrl.m in Sources */,
+				9BA07BE017266403000F4183 /* HKShadowCtrl.m in Sources */,
+				9BA07BE417266674000F4183 /* HKSubViewCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

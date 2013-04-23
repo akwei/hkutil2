@@ -29,17 +29,19 @@
 }
 
 -(void)start{
-    _downloadDone = NO;
-    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:self.timeout];
-	_con = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    [_con scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    [_con start];
-    do {
-        SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, NO);
-        if (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished) {
-            _downloadDone = YES;
-        }
-    } while (!_downloadDone);
+    @autoreleasepool {
+        _downloadDone = NO;
+        NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:self.timeout];
+        _con = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+        [_con scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        [_con start];
+        do {
+            SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, NO);
+            if (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished) {
+                _downloadDone = YES;
+            }
+        } while (!_downloadDone);
+    }
 }
 
 -(void)cancel{

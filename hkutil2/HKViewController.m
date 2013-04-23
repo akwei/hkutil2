@@ -9,17 +9,18 @@
 #import "HKViewController.h"
 #import "HKView2Ctrl.h"
 #import "HKView3Ctrl.h"
+#import "HKShadowCtrl.h"
+#import "HKSubViewCtrl.h"
 
-@interface HKViewController ()
-
-@end
-
-@implementation HKViewController
+@implementation HKViewController{
+    HKShadowCtrl* _shadowCtrl;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    _shadowCtrl = [[HKShadowCtrl alloc] initWithParentView:self.view];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,5 +37,10 @@
 - (IBAction)to3:(id)sender {
     HKView3Ctrl* ctrl = [[HKView3Ctrl alloc] initWithNibName:@"HKView3Ctrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)toSubView:(id)sender {
+    HKSubViewCtrl* ctrl = [[HKSubViewCtrl alloc] initWithNibName:@"HKSubViewCtrl" bundle:nil];
+    [_shadowCtrl hkPushViewController:ctrl animated:YES];
 }
 @end

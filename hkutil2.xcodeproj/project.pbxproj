@@ -36,6 +36,7 @@
 		9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FC1726CF7C0051C840 /* LanUtil.m */; };
 		9B73E7061726CF7C0051C840 /* MyIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FE1726CF7C0051C840 /* MyIp.m */; };
 		9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E7001726CF7C0051C840 /* TimeUtil.m */; };
+		9B73E70A1726DA600051C840 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E7091726DA5F0051C840 /* HttpClient.m */; };
 		9BA07A701725842F000F4183 /* HKThreadUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A6F1725842F000F4183 /* HKThreadUtil.m */; };
 		9BA07A73172587ED000F4183 /* HKDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A72172587ED000F4183 /* HKDownloader.m */; };
 		9BA07A7617258905000F4183 /* HKURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A7517258905000F4183 /* HKURLImageView.m */; };
@@ -128,6 +129,8 @@
 		9B73E6FE1726CF7C0051C840 /* MyIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyIp.m; sourceTree = "<group>"; };
 		9B73E6FF1726CF7C0051C840 /* TimeUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeUtil.h; sourceTree = "<group>"; };
 		9B73E7001726CF7C0051C840 /* TimeUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeUtil.m; sourceTree = "<group>"; };
+		9B73E7081726DA5F0051C840 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		9B73E7091726DA5F0051C840 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
 		9BA07A6E1725842F000F4183 /* HKThreadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKThreadUtil.h; sourceTree = "<group>"; };
 		9BA07A6F1725842F000F4183 /* HKThreadUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKThreadUtil.m; sourceTree = "<group>"; };
 		9BA07A71172587ED000F4183 /* HKDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDownloader.h; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 		9B4B33871725770A0078CDCC /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				9B73E7081726DA5F0051C840 /* HttpClient.h */,
+				9B73E7091726DA5F0051C840 /* HttpClient.m */,
 				9B73E6F31726CF7A0051C840 /* DataUtil.h */,
 				9B73E6F41726CF7A0051C840 /* DataUtil.m */,
 				9B73E6F51726CF7B0051C840 /* DeviceUtil.h */,
@@ -588,6 +593,7 @@
 				9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */,
 				9B73E7061726CF7C0051C840 /* MyIp.m in Sources */,
 				9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */,
+				9B73E70A1726DA600051C840 /* HttpClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

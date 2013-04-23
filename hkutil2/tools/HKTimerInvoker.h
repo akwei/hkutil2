@@ -27,4 +27,5 @@
 -(void)startWithDelay:(NSTimeInterval)t;
 
 -(void)stop:(BOOL)waitDone;
+
 @end

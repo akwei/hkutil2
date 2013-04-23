@@ -56,42 +56,44 @@
 }
 
 -(void)startWithDelay:(NSTimeInterval)t{
-    if (self.running) {
+    __unsafe_unretained HKTimerInvoker* me = self;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        if (me.running) {
 #if TimerInvokeDebug
-        NSLog(@"timer already running");
+            NSLog(@"timer already running");
 #endif
-        return;
-    }
-    if (self.time<1) {
-        @throw [NSException exceptionWithName:@"TimerInvoke arg:time err" reason:@"time must >= 1" userInfo:nil];
-    }
-    stopFlag=NO;
+            return;
+        }
+        me.running=YES;
+        stopFlag=NO;
+    });
+    
     [_threadUtil asyncBlock:^{
         [condition lock];
         if (t>0) {
 #if TimerInvokeDebug
             NSLog(@"sleep for delay %f",self.delay);
 #endif
-            [self sleep:t];
+            [me sleep:t];
         }
         if (!stopFlag) {
-            [self methodInvoke];
+            [me methodInvoke];
             while (!stopFlag) {
-                [self sleep:self.time];
+                [me sleep:me.time];
                 if (stopFlag) {
                     break;
                 }
-                [self methodInvoke];
+                [me methodInvoke];
             }
         }
-        self.running=NO;
+        me.running=NO;
 #if TimerInvokeDebug
         NSLog(@"stop running");
 #endif
         [flgCondition signal];
         [condition unlock];
     }];
-    self.running=YES;
+    
 }
 
 -(void)start{
@@ -111,6 +113,7 @@
         }
     }
 }
+
 -(void)invokeCallback{
     self.running=NO;
 }

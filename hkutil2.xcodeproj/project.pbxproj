@@ -22,6 +22,12 @@
 		9B4B337B172575450078CDCC /* HKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4B337A172575450078CDCC /* HKViewController.m */; };
 		9B4B337E172575450078CDCC /* HKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B337C172575450078CDCC /* HKViewController.xib */; };
 		9B4B3385172576A70078CDCC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B3384172576A70078CDCC /* README.md */; };
+		9B73E6E01726C7320051C840 /* HKAutoSizeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */; };
+		9B73E6E61726C7EE0051C840 /* EncUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E21726C7EE0051C840 /* EncUtil.m */; };
+		9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E91726C8320051C840 /* HKSQLQuery.m */; };
+		9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6EC1726CA140051C840 /* FileUtil.m */; };
+		9B73E6EF1726CB730051C840 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B73E6EE1726CB730051C840 /* libsqlite3.dylib */; };
 		9BA07A701725842F000F4183 /* HKThreadUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A6F1725842F000F4183 /* HKThreadUtil.m */; };
 		9BA07A73172587ED000F4183 /* HKDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A72172587ED000F4183 /* HKDownloader.m */; };
 		9BA07A7617258905000F4183 /* HKURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A7517258905000F4183 /* HKURLImageView.m */; };
@@ -86,6 +92,18 @@
 		9B4B337A172575450078CDCC /* HKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HKViewController.m; sourceTree = "<group>"; };
 		9B4B337D172575450078CDCC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HKViewController.xib; sourceTree = "<group>"; };
 		9B4B3384172576A70078CDCC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		9B73E6DE1726C7320051C840 /* HKAutoSizeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKAutoSizeLabel.h; sourceTree = "<group>"; };
+		9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKAutoSizeLabel.m; sourceTree = "<group>"; };
+		9B73E6E11726C7EE0051C840 /* EncUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncUtil.h; sourceTree = "<group>"; };
+		9B73E6E21726C7EE0051C840 /* EncUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncUtil.m; sourceTree = "<group>"; };
+		9B73E6E31726C7EE0051C840 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		9B73E6E41726C7EE0051C840 /* GTMStringEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStringEncoding.h; sourceTree = "<group>"; };
+		9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStringEncoding.m; sourceTree = "<group>"; };
+		9B73E6E81726C8310051C840 /* HKSQLQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKSQLQuery.h; sourceTree = "<group>"; };
+		9B73E6E91726C8320051C840 /* HKSQLQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKSQLQuery.m; sourceTree = "<group>"; };
+		9B73E6EB1726CA140051C840 /* FileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtil.h; sourceTree = "<group>"; };
+		9B73E6EC1726CA140051C840 /* FileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtil.m; sourceTree = "<group>"; };
+		9B73E6EE1726CB730051C840 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		9BA07A6E1725842F000F4183 /* HKThreadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKThreadUtil.h; sourceTree = "<group>"; };
 		9BA07A6F1725842F000F4183 /* HKThreadUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKThreadUtil.m; sourceTree = "<group>"; };
 		9BA07A71172587ED000F4183 /* HKDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDownloader.h; sourceTree = "<group>"; };
@@ -167,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B73E6EF1726CB730051C840 /* libsqlite3.dylib in Frameworks */,
 				9BA07BE71726681A000F4183 /* QuartzCore.framework in Frameworks */,
 				9BA07B7C17259724000F4183 /* libxml2.dylib in Frameworks */,
 				9BA07B7A172596A2000F4183 /* SystemConfiguration.framework in Frameworks */,
@@ -213,6 +232,7 @@
 		9B4B3360172575440078CDCC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B73E6EE1726CB730051C840 /* libsqlite3.dylib */,
 				9BA07BE61726681A000F4183 /* QuartzCore.framework */,
 				9BA07B7B17259724000F4183 /* libxml2.dylib */,
 				9BA07B79172596A2000F4183 /* SystemConfiguration.framework */,
@@ -276,6 +296,13 @@
 		9B4B33871725770A0078CDCC /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				9B73E6EB1726CA140051C840 /* FileUtil.h */,
+				9B73E6EC1726CA140051C840 /* FileUtil.m */,
+				9B73E6E11726C7EE0051C840 /* EncUtil.h */,
+				9B73E6E21726C7EE0051C840 /* EncUtil.m */,
+				9B73E6E31726C7EE0051C840 /* GTMDefines.h */,
+				9B73E6E41726C7EE0051C840 /* GTMStringEncoding.h */,
+				9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */,
 				9BA07A6E1725842F000F4183 /* HKThreadUtil.h */,
 				9BA07A6F1725842F000F4183 /* HKThreadUtil.m */,
 				9BA07A71172587ED000F4183 /* HKDownloader.h */,
@@ -286,6 +313,10 @@
 				9BA07BDF17266403000F4183 /* HKShadowCtrl.m */,
 				9B3923C617269C1300C58BD5 /* HKShadowView.h */,
 				9B3923C717269C1300C58BD5 /* HKShadowView.m */,
+				9B73E6DE1726C7320051C840 /* HKAutoSizeLabel.h */,
+				9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */,
+				9B73E6E81726C8310051C840 /* HKSQLQuery.h */,
+				9B73E6E91726C8320051C840 /* HKSQLQuery.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -504,6 +535,11 @@
 				9BA07BE417266674000F4183 /* HKSubViewCtrl.m in Sources */,
 				9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */,
 				9B3923C817269C1300C58BD5 /* HKShadowView.m in Sources */,
+				9B73E6E01726C7320051C840 /* HKAutoSizeLabel.m in Sources */,
+				9B73E6E61726C7EE0051C840 /* EncUtil.m in Sources */,
+				9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */,
+				9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */,
+				9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

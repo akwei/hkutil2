@@ -19,12 +19,12 @@
 + (NSString*)encodeURL:(NSString *)string
 {
     NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                  NULL,
-                                                                                  (__bridge CFStringRef)string,
-                                                                                  NULL,
-                                                                                  //                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                  (CFStringRef)@":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`",
-                                                                                  kCFStringEncodingUTF8 ));
+                                                                                                    NULL,
+                                                                                                    (__bridge CFStringRef)string,
+                                                                                                    NULL,
+                                                                                                    //                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    (CFStringRef)@":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`",
+                                                                                                    kCFStringEncodingUTF8 ));
     return encodedString;
 }
 

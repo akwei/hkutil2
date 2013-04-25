@@ -39,6 +39,8 @@
 		9B8B60151728B58A00032219 /* HKTimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B600B1728B58A00032219 /* HKTimeUtil.m */; };
 		9B8B60191728BED400032219 /* HKEncUtilCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60171728BED300032219 /* HKEncUtilCtrl.m */; };
 		9B8B601A1728BED400032219 /* HKEncUtilCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8B60181728BED400032219 /* HKEncUtilCtrl.xib */; };
+		9B8B601E1728F64300032219 /* HKHttpClientCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B601C1728F64200032219 /* HKHttpClientCtrl.m */; };
+		9B8B601F1728F64300032219 /* HKHttpClientCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8B601D1728F64300032219 /* HKHttpClientCtrl.xib */; };
 		9BA07A701725842F000F4183 /* HKThreadUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A6F1725842F000F4183 /* HKThreadUtil.m */; };
 		9BA07A73172587ED000F4183 /* HKDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A72172587ED000F4183 /* HKDownloader.m */; };
 		9BA07A7617258905000F4183 /* HKURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A7517258905000F4183 /* HKURLImageView.m */; };
@@ -136,6 +138,9 @@
 		9B8B60161728BED300032219 /* HKEncUtilCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKEncUtilCtrl.h; sourceTree = "<group>"; };
 		9B8B60171728BED300032219 /* HKEncUtilCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKEncUtilCtrl.m; sourceTree = "<group>"; };
 		9B8B60181728BED400032219 /* HKEncUtilCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKEncUtilCtrl.xib; sourceTree = "<group>"; };
+		9B8B601B1728F64100032219 /* HKHttpClientCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKHttpClientCtrl.h; sourceTree = "<group>"; };
+		9B8B601C1728F64200032219 /* HKHttpClientCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKHttpClientCtrl.m; sourceTree = "<group>"; };
+		9B8B601D1728F64300032219 /* HKHttpClientCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKHttpClientCtrl.xib; sourceTree = "<group>"; };
 		9BA07A6E1725842F000F4183 /* HKThreadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKThreadUtil.h; sourceTree = "<group>"; };
 		9BA07A6F1725842F000F4183 /* HKThreadUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKThreadUtil.m; sourceTree = "<group>"; };
 		9BA07A71172587ED000F4183 /* HKDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDownloader.h; sourceTree = "<group>"; };
@@ -300,6 +305,9 @@
 				9B8B60161728BED300032219 /* HKEncUtilCtrl.h */,
 				9B8B60171728BED300032219 /* HKEncUtilCtrl.m */,
 				9B8B60181728BED400032219 /* HKEncUtilCtrl.xib */,
+				9B8B601B1728F64100032219 /* HKHttpClientCtrl.h */,
+				9B8B601C1728F64200032219 /* HKHttpClientCtrl.m */,
+				9B8B601D1728F64300032219 /* HKHttpClientCtrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -544,6 +552,7 @@
 				9BA07BE517266674000F4183 /* HKSubViewCtrl.xib in Resources */,
 				9B3923C217269A8B00C58BD5 /* README.md in Resources */,
 				9B8B601A1728BED400032219 /* HKEncUtilCtrl.xib in Resources */,
+				9B8B601F1728F64300032219 /* HKHttpClientCtrl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +613,7 @@
 				9B8B60141728B58A00032219 /* HKMyIp.m in Sources */,
 				9B8B60151728B58A00032219 /* HKTimeUtil.m in Sources */,
 				9B8B60191728BED400032219 /* HKEncUtilCtrl.m in Sources */,
+				9B8B601E1728F64300032219 /* HKHttpClientCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 #import "ASIFormDataRequest.h"
 #import "HKDataUtil.h"
 
-#define HTTPCLIENT_DEBUG 0
+#define HTTPCLIENT_DEBUG 1
 
 @interface HKHttpClient ()
 @property(nonatomic,copy) NSString* tmpUrl;
@@ -199,14 +199,18 @@
     self.tmpUrl=buf;
 }
 
--(void)executeRequest:(BOOL)binary{
+-(void)executeRequestForBinary:(BOOL)binary{
     self.request.requestHeaders = self.headers;
     self.request.requestCookies = self.cookies;
 	self.request.timeOutSeconds=self.timeOutSeconds;
 	[self.request startSynchronous];
     self.responseData = [[NSData alloc] initWithData:self.request.responseData];
+    if (!binary) {
+        self.responseText = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
+	}
 #if HTTPCLIENT_DEBUG
     NSLog(@"httpMethod : %@",self.request.requestMethod);
+    NSLog(@"responseStatusCode : %i",self.request.responseStatusCode);
     NSLog(@"responseEncoding : %i",self.request.responseEncoding);
     NSLog(@"responseHeaders : %@",[self.request.responseHeaders description]);
     if (binary) {
@@ -215,25 +219,21 @@
     else{
         NSLog(@"responseText : %@",self.responseText);
     }
-    NSLog(@"responseStatusCode : %i",self.request.responseStatusCode);
 #endif
-	if (binary) {
-        self.responseText = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
-	}
 }
 
 -(void)doGet{
     [self buildGetUrl];
     self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
 	self.request.requestMethod=@"GET";
-    [self executeRequest:YES];
+    [self executeRequestForBinary:NO];
 }
 
 -(void)doGetForBinary{
     [self buildGetUrl];
 	self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
 	self.request.requestMethod=@"GET";
-	[self executeRequest:NO];
+	[self executeRequestForBinary:YES];
 }
 
 -(void)doPost{
@@ -250,7 +250,7 @@
     for (NSString *text in self.postTextArr) {
         [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
     }
-	[self executeRequest:YES];
+	[self executeRequestForBinary:NO];
 }
 
 -(void)doPostForBinary{
@@ -267,7 +267,7 @@
     for (NSString *text in self.postTextArr) {
         [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
     }
-	[self executeRequest:NO];
+	[self executeRequestForBinary:YES];
 }
 
 @end

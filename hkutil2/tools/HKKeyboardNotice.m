@@ -8,6 +8,13 @@
 
 #import "HKKeyboardNotice.h"
 
+@interface HKKeyboardNotice ()
+@property(nonatomic,assign)UIView* viewContainer;
+@property(nonatomic,assign)UIView* viewForMove;
+@property(nonatomic,assign)CGRect oldFrame;
+@property(nonatomic,assign)BOOL moved;
+@end
+
 @implementation HKKeyboardNotice
 
 

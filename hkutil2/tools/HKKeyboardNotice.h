@@ -10,10 +10,6 @@
 
 @interface HKKeyboardNotice : NSObject
 
-@property(nonatomic,strong)UIView* viewContainer;
-@property(nonatomic,strong)UIView* viewForMove;
-@property(nonatomic,assign)CGRect oldFrame;
-@property(nonatomic,assign)BOOL moved;
 @property(nonatomic,assign)CGFloat disHeight;//键盘与view可以有此差异的高度，不一定非要view点高度完全高于键盘顶端
 
 -(id)initWithViewContainer:(UIView*)vc viewForMove:(UIView*)v;

@@ -13,5 +13,6 @@
 - (IBAction)to3:(id)sender;
 - (IBAction)toSubView:(id)sender;
 - (IBAction)testEncUtil:(id)sender;
+- (IBAction)testHttpClient:(id)sender;
 
 @end

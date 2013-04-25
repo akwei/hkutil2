@@ -11,6 +11,7 @@
 #import "HKView3Ctrl.h"
 #import "HKShadowCtrl.h"
 #import "HKSubViewCtrl.h"
+#import "HKEncUtilCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -42,5 +43,10 @@
 - (IBAction)toSubView:(id)sender {
     HKSubViewCtrl* ctrl = [[HKSubViewCtrl alloc] initWithNibName:@"HKSubViewCtrl" bundle:nil];
     [_shadowCtrl hkPushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testEncUtil:(id)sender {
+    HKEncUtilCtrl* ctrl = [[HKEncUtilCtrl alloc] initWithNibName:@"HKEncUtilCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 @end

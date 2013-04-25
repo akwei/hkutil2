@@ -68,12 +68,14 @@
  **/
 -(void)doGet;
 
--(void)doGetData;
+-(void)doGetForBinary;
 
 /**
  *进行post请求
  **/
 -(void)doPost;
+
+-(void)doPostForBinary;
 
 
 @end

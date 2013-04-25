@@ -17,15 +17,15 @@
 +(NSData*)decodeBase64:(NSString*)value;
 
 +(NSString*) encodeDESWithBase64WithKey:(NSString*)key value:(NSString*)value;
-
 +(NSString*) decodeDESWithBase64WithKey:(NSString*)key value:(NSString*)value;
 
-+(NSString*)encodeDESToHex:(NSString*)key value:(NSString*)value;
-
-+(NSString*)decodeDESHex:(NSString*)key hex:(NSString*)hex;
++(NSString*)encodeDESToHexWithKey:(NSString*)key value:(NSString*)value;
++(NSString*)decodeDESHexWithKey:(NSString*)key hex:(NSString*)hex;
 
 +(NSString*) encode3DESWithBase64WithKey:(NSString*)key value:(NSString*)value;
-
 +(NSString*) decode3DESWithBase64WithKey:(NSString*)key value:(NSString*)value;
+
++(NSString*)encode3DESToHexWithKey:(NSString*)key value:(NSString*)value;
++(NSString*)decode3DESHexWithKey:(NSString*)key hex:(NSString*)hex;
 
 @end

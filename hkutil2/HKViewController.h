@@ -12,5 +12,6 @@
 - (IBAction)toNext:(id)sender;
 - (IBAction)to3:(id)sender;
 - (IBAction)toSubView:(id)sender;
+- (IBAction)testEncUtil:(id)sender;
 
 @end

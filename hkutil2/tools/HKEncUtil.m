@@ -87,17 +87,39 @@
     return decodeStr;
 }
 
-+(NSString *)encodeDESToHex:(NSString *)key value:(NSString *)value{
++(NSString *)encodeDESToHexWithKey:(NSString *)key value:(NSString *)value{
     NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
     NSData* data=[HKEncUtil desData:strData key:key CCOperation:kCCEncrypt];
     return [self hexStringFromData:data];
 }
 
-+(NSString *)decodeDESHex:(NSString *)key hex:(NSString *)hex{
++(NSString *)decodeDESHexWithKey:(NSString *)key hex:(NSString *)hex{
     NSData* data = [self dataFromHexString:hex];
     NSData* decodeData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
     NSString* decodeStr= [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
     return decodeStr;
+}
+
++(NSString *)encode3DESToHexWithKey:(NSString *)key value:(NSString *)value{
+    NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
+    const void *vplainText = (const void *)[strData bytes];
+    size_t plainTextBufferSize = [strData length];
+    NSData* data = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCEncrypt];
+    if (!data) {
+        return nil;
+    }
+    return [self hexStringFromData:data];
+}
+
++(NSString *)decode3DESHexWithKey:(NSString *)key hex:(NSString *)hex{
+    NSData* data = [self dataFromHexString:hex];
+    const void *vplainText = (const void *)[data bytes];
+    size_t plainTextBufferSize = [data length];
+    NSData* d = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCDecrypt];
+    if (!d) {
+        return nil;
+    }
+    return [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
 }
 
 + (NSData *)dataFromHexString:(NSString *)string{
@@ -134,7 +156,7 @@
 }
 
 +(NSString *)encode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [HKEncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCEncrypt];
+    return [HKEncUtil encodeAndDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCEncrypt];
 }
 
 +(NSString*)formatKey:(NSString*)key{
@@ -157,10 +179,10 @@
 }
 
 +(NSString *)decode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [HKEncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCDecrypt];
+    return [HKEncUtil encodeAndDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCDecrypt];
 }
 
-+(NSString *)encodeANdDecode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
++(NSString *)encodeAndDecode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
     const void *vplainText;
     size_t plainTextBufferSize;
     GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
@@ -176,6 +198,23 @@
         plainTextBufferSize = [data length];
         vplainText = (const void *)[data bytes];
     }
+    NSData* data = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:encryptOrDecrypt];
+    if (!data) {
+        return nil;
+    }
+    NSString *result;
+    if (encryptOrDecrypt == kCCDecrypt)
+    {
+        result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    else
+    {
+        result = [coder encode:data];
+    }
+    return result;
+}
+
++(NSData *)encodeAndDecode3DESWithKey:(NSString *)key size_t:(size_t)plainTextBufferSize vplainText:(const void *)vplainText encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
     
     CCCryptorStatus ccStatus;
     uint8_t *bufferPtr = NULL;
@@ -215,21 +254,9 @@
      else if (ccStatus == kCCDecodeError) return @"DECODE ERROR";
      else if (ccStatus == kCCUnimplemented) return @"UNIMPLEMENTED"; */
     
-    NSString *result;
-    
-    if (encryptOrDecrypt == kCCDecrypt)
-    {
-        result = [[NSString alloc] initWithData:[NSData dataWithBytes:(const void *)bufferPtr
-                                                               length:(NSUInteger)movedBytes]
-                                       encoding:NSUTF8StringEncoding];
-    }
-    else
-    {
-        NSData *myData = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];
-        result = [coder encode:myData];
-    }
+    NSData *data = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];
     free(bufferPtr);
-    return result;
+    return data;
 }
 
 @end

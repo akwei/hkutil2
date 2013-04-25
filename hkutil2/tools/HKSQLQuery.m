@@ -7,7 +7,7 @@
 //
 
 #import "HKSQLQuery.h"
-#import "FileUtil.h"
+#import "HKFileUtil.h"
 
 #define DbConnDebug 0
 #define DbConnTrDebug 0
@@ -104,12 +104,12 @@ static dispatch_queue_t pubSyncQueue2;
         if (dbOpen) {
             return ;
         }
-        NSString* dbPath=[FileUtil getFilePath:self.dbName];
+        NSString* dbPath=[HKFileUtil getFilePath:self.dbName];
 #if DbConnDebug
         NSLog(@"%@",dbPath);
 #endif
-        if (![FileUtil isFileExist:dbPath]) {
-            BOOL result = [FileUtil copyFromResource:self.dbName absFileName:dbPath];
+        if (![HKFileUtil isFileExist:dbPath]) {
+            BOOL result = [HKFileUtil copyFromResource:self.dbName absFileName:dbPath];
             if (!result) {
                 NSString* exname=[NSString stringWithFormat:@"create db file %@ err",self.dbName];
                 [self throwException:0 exName:exname reason:@""];

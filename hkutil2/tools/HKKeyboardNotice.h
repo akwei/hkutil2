@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KeyboardNotice : NSObject
+@interface HKKeyboardNotice : NSObject
 
 @property(nonatomic,strong)UIView* viewContainer;
 @property(nonatomic,strong)UIView* viewForMove;

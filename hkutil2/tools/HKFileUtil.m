@@ -6,9 +6,9 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "FileUtil.h"
+#import "HKFileUtil.h"
 
-@implementation FileUtil
+@implementation HKFileUtil
 
 +(NSString *)getAppRefPath{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -17,7 +17,7 @@
 }
 
 +(NSString *)getFilePath:(NSString *)fileName{
-    return [[FileUtil getAppRefPath] stringByAppendingPathComponent:fileName];
+    return [[HKFileUtil getAppRefPath] stringByAppendingPathComponent:fileName];
 }
 
 +(BOOL)copyFromResource:(NSString *)resourceFileName absFileName:(NSString *)absFileName{

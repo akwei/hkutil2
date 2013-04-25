@@ -24,7 +24,7 @@
  NSData* responseData = client.responseData;
  int statusCode = client.request.responseStatusCode;
  */
-@interface HttpClient : NSObject
+@interface HKHttpClient : NSObject
 
 @property(nonatomic,assign) NSTimeInterval timeOutSeconds;
 @property(nonatomic,copy) NSString *url;

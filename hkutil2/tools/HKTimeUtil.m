@@ -6,13 +6,13 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#import "TimeUtil.h"
+#import "HKTimeUtil.h"
 
-@implementation TimeInfo
+@implementation HKTimeInfo
 
 @end
 
-@implementation TimeUtil
+@implementation HKTimeUtil
 
 - (id)init
 {
@@ -35,18 +35,18 @@
 
 +(NSString *)stringWithDoubleDate:(double)doubleDate format:(NSString *)format{
     NSDate* date=[[NSDate alloc] initWithTimeIntervalSince1970:doubleDate];
-    NSString* value = [TimeUtil stringWithDate:date format:format];
+    NSString* value = [HKTimeUtil stringWithDate:date format:format];
     return value;
 }
 
-+(TimeInfo *)timeInfoWithDate:(NSDate *)date{
++(HKTimeInfo *)timeInfoWithDate:(NSDate *)date{
     NSCalendar* cal=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
     NSDateComponents* cps=[cal components:unitFlags fromDate:date];
     if (!cps) {
         return nil;
     }
-    TimeInfo* info=[[TimeInfo alloc] init];
+    HKTimeInfo* info=[[HKTimeInfo alloc] init];
     info.year=[cps year];
     info.month=[cps month];
     info.day=[cps day];
@@ -56,12 +56,12 @@
     return info;
 }
 
-+(TimeInfo *)timeInfoWithDoubleDate:(double)date{
++(HKTimeInfo *)timeInfoWithDoubleDate:(double)date{
     NSDate* ndate=[NSDate dateWithTimeIntervalSince1970:date];
     return [self timeInfoWithDate:ndate];
 }
 
-+(TimeInfo *)timeInfoWithDoubleDate:(double)date toDoubleDate:(double)toDate{
++(HKTimeInfo *)timeInfoWithDoubleDate:(double)date toDoubleDate:(double)toDate{
     NSDate* ndate=[NSDate dateWithTimeIntervalSince1970:date];
     NSDate* nToDate=[NSDate dateWithTimeIntervalSince1970:toDate];
     NSCalendar* cal=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -70,7 +70,7 @@
     if (!cps) {
         return nil;
     }
-    TimeInfo* info=[[TimeInfo alloc] init];
+    HKTimeInfo* info=[[HKTimeInfo alloc] init];
     info.year=[cps year];
     info.month=[cps month];
     info.day=[cps day];

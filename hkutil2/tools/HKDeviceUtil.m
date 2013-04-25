@@ -6,14 +6,14 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "DeviceUtil.h"
-#import "MyIp.h"
+#import "HKDeviceUtil.h"
+#import "HKMyIp.h"
 
 
-@implementation DeviceUtil
+@implementation HKDeviceUtil
 
 +(NSString *)localIp{
-    MyIp* m=[[MyIp alloc] init];
+    HKMyIp* m=[[HKMyIp alloc] init];
     NSString* ip=[[m deviceIPAdress] copy];
     return ip;
 }

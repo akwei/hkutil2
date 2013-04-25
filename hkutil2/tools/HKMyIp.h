@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MyIp : NSObject
+@interface HKMyIp : NSObject
 
 -(NSString*)deviceIPAdress;
 

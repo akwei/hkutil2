@@ -23,20 +23,20 @@
 		9B4B337E172575450078CDCC /* HKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B337C172575450078CDCC /* HKViewController.xib */; };
 		9B4B3385172576A70078CDCC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B3384172576A70078CDCC /* README.md */; };
 		9B73E6E01726C7320051C840 /* HKAutoSizeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */; };
-		9B73E6E61726C7EE0051C840 /* EncUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E21726C7EE0051C840 /* EncUtil.m */; };
 		9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E91726C8320051C840 /* HKSQLQuery.m */; };
-		9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6EC1726CA140051C840 /* FileUtil.m */; };
 		9B73E6EF1726CB730051C840 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B73E6EE1726CB730051C840 /* libsqlite3.dylib */; };
 		9B73E6F21726CCF40051C840 /* HKTimerInvoker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */; };
-		9B73E7011726CF7C0051C840 /* DataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F41726CF7A0051C840 /* DataUtil.m */; };
-		9B73E7021726CF7C0051C840 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F61726CF7B0051C840 /* DeviceUtil.m */; };
-		9B73E7031726CF7C0051C840 /* KeyboardNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */; };
-		9B73E7041726CF7C0051C840 /* KVEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FA1726CF7B0051C840 /* KVEncoder.m */; };
-		9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FC1726CF7C0051C840 /* LanUtil.m */; };
-		9B73E7061726CF7C0051C840 /* MyIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6FE1726CF7C0051C840 /* MyIp.m */; };
-		9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E7001726CF7C0051C840 /* TimeUtil.m */; };
-		9B73E70A1726DA600051C840 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E7091726DA5F0051C840 /* HttpClient.m */; };
+		9B8B600C1728B58A00032219 /* HKDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FF91728B58A00032219 /* HKDataUtil.m */; };
+		9B8B600D1728B58A00032219 /* HKDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FFB1728B58A00032219 /* HKDeviceUtil.m */; };
+		9B8B600E1728B58A00032219 /* HKEncUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FFD1728B58A00032219 /* HKEncUtil.m */; };
+		9B8B600F1728B58A00032219 /* HKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FFF1728B58A00032219 /* HKFileUtil.m */; };
+		9B8B60101728B58A00032219 /* HKHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60011728B58A00032219 /* HKHttpClient.m */; };
+		9B8B60111728B58A00032219 /* HKKeyboardNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60031728B58A00032219 /* HKKeyboardNotice.m */; };
+		9B8B60121728B58A00032219 /* HKKVEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60051728B58A00032219 /* HKKVEncoder.m */; };
+		9B8B60131728B58A00032219 /* HKLanUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60071728B58A00032219 /* HKLanUtil.m */; };
+		9B8B60141728B58A00032219 /* HKMyIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B60091728B58A00032219 /* HKMyIp.m */; };
+		9B8B60151728B58A00032219 /* HKTimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B600B1728B58A00032219 /* HKTimeUtil.m */; };
 		9BA07A701725842F000F4183 /* HKThreadUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A6F1725842F000F4183 /* HKThreadUtil.m */; };
 		9BA07A73172587ED000F4183 /* HKDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A72172587ED000F4183 /* HKDownloader.m */; };
 		9BA07A7617258905000F4183 /* HKURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07A7517258905000F4183 /* HKURLImageView.m */; };
@@ -103,34 +103,34 @@
 		9B4B3384172576A70078CDCC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9B73E6DE1726C7320051C840 /* HKAutoSizeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKAutoSizeLabel.h; sourceTree = "<group>"; };
 		9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKAutoSizeLabel.m; sourceTree = "<group>"; };
-		9B73E6E11726C7EE0051C840 /* EncUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncUtil.h; sourceTree = "<group>"; };
-		9B73E6E21726C7EE0051C840 /* EncUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncUtil.m; sourceTree = "<group>"; };
 		9B73E6E31726C7EE0051C840 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		9B73E6E41726C7EE0051C840 /* GTMStringEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStringEncoding.h; sourceTree = "<group>"; };
 		9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStringEncoding.m; sourceTree = "<group>"; };
 		9B73E6E81726C8310051C840 /* HKSQLQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKSQLQuery.h; sourceTree = "<group>"; };
 		9B73E6E91726C8320051C840 /* HKSQLQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKSQLQuery.m; sourceTree = "<group>"; };
-		9B73E6EB1726CA140051C840 /* FileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtil.h; sourceTree = "<group>"; };
-		9B73E6EC1726CA140051C840 /* FileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtil.m; sourceTree = "<group>"; };
 		9B73E6EE1726CB730051C840 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		9B73E6F01726CCF40051C840 /* HKTimerInvoker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTimerInvoker.h; sourceTree = "<group>"; };
 		9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTimerInvoker.m; sourceTree = "<group>"; };
-		9B73E6F31726CF7A0051C840 /* DataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataUtil.h; sourceTree = "<group>"; };
-		9B73E6F41726CF7A0051C840 /* DataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataUtil.m; sourceTree = "<group>"; };
-		9B73E6F51726CF7B0051C840 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
-		9B73E6F61726CF7B0051C840 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
-		9B73E6F71726CF7B0051C840 /* KeyboardNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardNotice.h; sourceTree = "<group>"; };
-		9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardNotice.m; sourceTree = "<group>"; };
-		9B73E6F91726CF7B0051C840 /* KVEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVEncoder.h; sourceTree = "<group>"; };
-		9B73E6FA1726CF7B0051C840 /* KVEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVEncoder.m; sourceTree = "<group>"; };
-		9B73E6FB1726CF7B0051C840 /* LanUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanUtil.h; sourceTree = "<group>"; };
-		9B73E6FC1726CF7C0051C840 /* LanUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanUtil.m; sourceTree = "<group>"; };
-		9B73E6FD1726CF7C0051C840 /* MyIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyIp.h; sourceTree = "<group>"; };
-		9B73E6FE1726CF7C0051C840 /* MyIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyIp.m; sourceTree = "<group>"; };
-		9B73E6FF1726CF7C0051C840 /* TimeUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeUtil.h; sourceTree = "<group>"; };
-		9B73E7001726CF7C0051C840 /* TimeUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeUtil.m; sourceTree = "<group>"; };
-		9B73E7081726DA5F0051C840 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
-		9B73E7091726DA5F0051C840 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
+		9B8B5FF81728B58A00032219 /* HKDataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDataUtil.h; sourceTree = "<group>"; };
+		9B8B5FF91728B58A00032219 /* HKDataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDataUtil.m; sourceTree = "<group>"; };
+		9B8B5FFA1728B58A00032219 /* HKDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDeviceUtil.h; sourceTree = "<group>"; };
+		9B8B5FFB1728B58A00032219 /* HKDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDeviceUtil.m; sourceTree = "<group>"; };
+		9B8B5FFC1728B58A00032219 /* HKEncUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKEncUtil.h; sourceTree = "<group>"; };
+		9B8B5FFD1728B58A00032219 /* HKEncUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKEncUtil.m; sourceTree = "<group>"; };
+		9B8B5FFE1728B58A00032219 /* HKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFileUtil.h; sourceTree = "<group>"; };
+		9B8B5FFF1728B58A00032219 /* HKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKFileUtil.m; sourceTree = "<group>"; };
+		9B8B60001728B58A00032219 /* HKHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKHttpClient.h; sourceTree = "<group>"; };
+		9B8B60011728B58A00032219 /* HKHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKHttpClient.m; sourceTree = "<group>"; };
+		9B8B60021728B58A00032219 /* HKKeyboardNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKKeyboardNotice.h; sourceTree = "<group>"; };
+		9B8B60031728B58A00032219 /* HKKeyboardNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKKeyboardNotice.m; sourceTree = "<group>"; };
+		9B8B60041728B58A00032219 /* HKKVEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKKVEncoder.h; sourceTree = "<group>"; };
+		9B8B60051728B58A00032219 /* HKKVEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKKVEncoder.m; sourceTree = "<group>"; };
+		9B8B60061728B58A00032219 /* HKLanUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKLanUtil.h; sourceTree = "<group>"; };
+		9B8B60071728B58A00032219 /* HKLanUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKLanUtil.m; sourceTree = "<group>"; };
+		9B8B60081728B58A00032219 /* HKMyIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKMyIp.h; sourceTree = "<group>"; };
+		9B8B60091728B58A00032219 /* HKMyIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKMyIp.m; sourceTree = "<group>"; };
+		9B8B600A1728B58A00032219 /* HKTimeUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTimeUtil.h; sourceTree = "<group>"; };
+		9B8B600B1728B58A00032219 /* HKTimeUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTimeUtil.m; sourceTree = "<group>"; };
 		9BA07A6E1725842F000F4183 /* HKThreadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKThreadUtil.h; sourceTree = "<group>"; };
 		9BA07A6F1725842F000F4183 /* HKThreadUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKThreadUtil.m; sourceTree = "<group>"; };
 		9BA07A71172587ED000F4183 /* HKDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDownloader.h; sourceTree = "<group>"; };
@@ -323,26 +323,26 @@
 		9B4B33871725770A0078CDCC /* tools */ = {
 			isa = PBXGroup;
 			children = (
-				9B73E7081726DA5F0051C840 /* HttpClient.h */,
-				9B73E7091726DA5F0051C840 /* HttpClient.m */,
-				9B73E6F31726CF7A0051C840 /* DataUtil.h */,
-				9B73E6F41726CF7A0051C840 /* DataUtil.m */,
-				9B73E6F51726CF7B0051C840 /* DeviceUtil.h */,
-				9B73E6F61726CF7B0051C840 /* DeviceUtil.m */,
-				9B73E6F71726CF7B0051C840 /* KeyboardNotice.h */,
-				9B73E6F81726CF7B0051C840 /* KeyboardNotice.m */,
-				9B73E6F91726CF7B0051C840 /* KVEncoder.h */,
-				9B73E6FA1726CF7B0051C840 /* KVEncoder.m */,
-				9B73E6FB1726CF7B0051C840 /* LanUtil.h */,
-				9B73E6FC1726CF7C0051C840 /* LanUtil.m */,
-				9B73E6FD1726CF7C0051C840 /* MyIp.h */,
-				9B73E6FE1726CF7C0051C840 /* MyIp.m */,
-				9B73E6FF1726CF7C0051C840 /* TimeUtil.h */,
-				9B73E7001726CF7C0051C840 /* TimeUtil.m */,
-				9B73E6EB1726CA140051C840 /* FileUtil.h */,
-				9B73E6EC1726CA140051C840 /* FileUtil.m */,
-				9B73E6E11726C7EE0051C840 /* EncUtil.h */,
-				9B73E6E21726C7EE0051C840 /* EncUtil.m */,
+				9B8B5FF81728B58A00032219 /* HKDataUtil.h */,
+				9B8B5FF91728B58A00032219 /* HKDataUtil.m */,
+				9B8B5FFA1728B58A00032219 /* HKDeviceUtil.h */,
+				9B8B5FFB1728B58A00032219 /* HKDeviceUtil.m */,
+				9B8B5FFC1728B58A00032219 /* HKEncUtil.h */,
+				9B8B5FFD1728B58A00032219 /* HKEncUtil.m */,
+				9B8B5FFE1728B58A00032219 /* HKFileUtil.h */,
+				9B8B5FFF1728B58A00032219 /* HKFileUtil.m */,
+				9B8B60001728B58A00032219 /* HKHttpClient.h */,
+				9B8B60011728B58A00032219 /* HKHttpClient.m */,
+				9B8B60021728B58A00032219 /* HKKeyboardNotice.h */,
+				9B8B60031728B58A00032219 /* HKKeyboardNotice.m */,
+				9B8B60041728B58A00032219 /* HKKVEncoder.h */,
+				9B8B60051728B58A00032219 /* HKKVEncoder.m */,
+				9B8B60061728B58A00032219 /* HKLanUtil.h */,
+				9B8B60071728B58A00032219 /* HKLanUtil.m */,
+				9B8B60081728B58A00032219 /* HKMyIp.h */,
+				9B8B60091728B58A00032219 /* HKMyIp.m */,
+				9B8B600A1728B58A00032219 /* HKTimeUtil.h */,
+				9B8B600B1728B58A00032219 /* HKTimeUtil.m */,
 				9B73E6E31726C7EE0051C840 /* GTMDefines.h */,
 				9B73E6E41726C7EE0051C840 /* GTMStringEncoding.h */,
 				9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */,
@@ -581,19 +581,19 @@
 				9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */,
 				9B3923C817269C1300C58BD5 /* HKShadowView.m in Sources */,
 				9B73E6E01726C7320051C840 /* HKAutoSizeLabel.m in Sources */,
-				9B73E6E61726C7EE0051C840 /* EncUtil.m in Sources */,
 				9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */,
 				9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */,
-				9B73E6ED1726CA140051C840 /* FileUtil.m in Sources */,
 				9B73E6F21726CCF40051C840 /* HKTimerInvoker.m in Sources */,
-				9B73E7011726CF7C0051C840 /* DataUtil.m in Sources */,
-				9B73E7021726CF7C0051C840 /* DeviceUtil.m in Sources */,
-				9B73E7031726CF7C0051C840 /* KeyboardNotice.m in Sources */,
-				9B73E7041726CF7C0051C840 /* KVEncoder.m in Sources */,
-				9B73E7051726CF7C0051C840 /* LanUtil.m in Sources */,
-				9B73E7061726CF7C0051C840 /* MyIp.m in Sources */,
-				9B73E7071726CF7C0051C840 /* TimeUtil.m in Sources */,
-				9B73E70A1726DA600051C840 /* HttpClient.m in Sources */,
+				9B8B600C1728B58A00032219 /* HKDataUtil.m in Sources */,
+				9B8B600D1728B58A00032219 /* HKDeviceUtil.m in Sources */,
+				9B8B600E1728B58A00032219 /* HKEncUtil.m in Sources */,
+				9B8B600F1728B58A00032219 /* HKFileUtil.m in Sources */,
+				9B8B60101728B58A00032219 /* HKHttpClient.m in Sources */,
+				9B8B60111728B58A00032219 /* HKKeyboardNotice.m in Sources */,
+				9B8B60121728B58A00032219 /* HKKVEncoder.m in Sources */,
+				9B8B60131728B58A00032219 /* HKLanUtil.m in Sources */,
+				9B8B60141728B58A00032219 /* HKMyIp.m in Sources */,
+				9B8B60151728B58A00032219 /* HKTimeUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

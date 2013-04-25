@@ -6,21 +6,21 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "LanUtil.h"
+#import "HKLanUtil.h"
 
-static LanUtil* lanUtil=nil;
-@implementation LanUtil
+static HKLanUtil* lanUtil=nil;
+@implementation HKLanUtil
 static NSString *sysloc = @"zh-Hans";
 
-+(LanUtil *)instance{
++(HKLanUtil *)instance{
     if (!lanUtil) {
-        lanUtil=[[LanUtil alloc] init];
+        lanUtil=[[HKLanUtil alloc] init];
     }
     return lanUtil;
 }
 
 +(void)setSysLoc:(NSString *)loc{
-    @synchronized([LanUtil class]){
+    @synchronized([HKLanUtil class]){
         sysloc=nil;
         sysloc=loc;     
     }

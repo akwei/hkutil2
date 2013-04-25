@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FileUtil : NSObject
+@interface HKFileUtil : NSObject
 
 +(NSString*)getAppRefPath;
 

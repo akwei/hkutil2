@@ -6,13 +6,13 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#import "HttpClient.h"
+#import "HKHttpClient.h"
 #import "ASIFormDataRequest.h"
-#import "DataUtil.h"
+#import "HKDataUtil.h"
 
 #define HTTPCLIENT_DEBUG 0
 
-@interface HttpClient ()
+@interface HKHttpClient ()
 @property(nonatomic,copy) NSString* tmpUrl;
 @property(nonatomic,copy) NSString *method;
 @property(nonatomic,strong) NSMutableDictionary *params;//请求参数key_value值
@@ -22,7 +22,7 @@
 @property(nonatomic,strong) NSMutableArray* cookies;
 @end
 
-@implementation HttpClient
+@implementation HKHttpClient
 
 - (id)init
 {
@@ -187,8 +187,8 @@
 	int lastIdx=[self.params count]-1;
 	for (NSString *key in self.params) {
 		id value=[self.params objectForKey:key];
-		NSString *enc_key=[DataUtil encodeURL:key];
-		NSString *enc_value=[DataUtil encodeURL:value];
+		NSString *enc_key=[HKDataUtil encodeURL:key];
+		NSString *enc_value=[HKDataUtil encodeURL:value];
 		NSString *k_v=[[NSString alloc] initWithFormat:@"%@=%@",enc_key,enc_value];
 		[buf appendString:k_v];
 		if (i<lastIdx) {

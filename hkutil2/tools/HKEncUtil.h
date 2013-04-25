@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EncUtil : NSObject
+@interface HKEncUtil : NSObject
 
 +(NSString*)md5:(NSString*)value;
 

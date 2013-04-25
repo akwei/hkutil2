@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TimeInfo : NSObject
+@interface HKTimeInfo : NSObject
 @property(nonatomic,assign)NSInteger year;
 @property(nonatomic,assign)NSInteger month;
 @property(nonatomic,assign)NSInteger day;
@@ -18,17 +18,17 @@
 
 @end
 
-@interface TimeUtil : NSObject
+@interface HKTimeUtil : NSObject
 
 +(NSString*)stringWithDate:(NSDate*)date format:(NSString*)format;
 
 +(NSString*)stringWithDoubleDate:(double)doubleDate format:(NSString*)format;
 
-+(TimeInfo*)timeInfoWithDoubleDate:(double)date;
++(HKTimeInfo*)timeInfoWithDoubleDate:(double)date;
 
-+(TimeInfo*)timeInfoWithDate:(NSDate*)date;
++(HKTimeInfo*)timeInfoWithDate:(NSDate*)date;
 
-+(TimeInfo*)timeInfoWithDoubleDate:(double)date toDoubleDate:(double)toDate;
++(HKTimeInfo*)timeInfoWithDoubleDate:(double)date toDoubleDate:(double)toDate;
 
 +(double)nowDoubleDate;
 

@@ -11,7 +11,7 @@
 #define kDeviceScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kDeviceScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface DeviceUtil : NSObject
+@interface HKDeviceUtil : NSObject
 
 +(NSString*)localIp;
 

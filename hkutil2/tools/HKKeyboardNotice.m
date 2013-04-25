@@ -6,9 +6,9 @@
 //  Copyright (c) 2012年 akwei. All rights reserved.
 //
 
-#import "KeyboardNotice.h"
+#import "HKKeyboardNotice.h"
 
-@implementation KeyboardNotice
+@implementation HKKeyboardNotice
 
 
 -(id)initWithViewContainer:(UIView *)vc viewForMove:(UIView *)v{

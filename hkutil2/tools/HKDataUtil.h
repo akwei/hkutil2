@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DataUtil : NSObject
+@interface HKDataUtil : NSObject
 
 +(NSString*)trim:(NSString*)str;
 

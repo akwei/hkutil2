@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "MyIp.h"
+#import "HKMyIp.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +29,7 @@
 
 #define MAXADDRS 32
 
-@implementation MyIp
+@implementation HKMyIp
 
 //char *if_names[MAXADDRS];
 //char *ip_names[MAXADDRS];

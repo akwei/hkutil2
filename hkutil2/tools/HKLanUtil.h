@@ -10,9 +10,9 @@
 
 #define NSHKLocal(_key,_comment) [[LanUtil instance] localWithKey:_key comment:_comment]
 
-@interface LanUtil : NSObject
+@interface HKLanUtil : NSObject
 
-+(LanUtil*)instance;
++(HKLanUtil*)instance;
 
 //设置全局选择语言
 +(void)setSysLoc:(NSString*)loc;

@@ -6,12 +6,12 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "EncUtil.h"
+#import "HKEncUtil.h"
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import "GTMStringEncoding.h"
 
-@implementation EncUtil
+@implementation HKEncUtil
 
 +(NSString *)md5:(NSString *)value{
 	int len=CC_MD5_DIGEST_LENGTH;
@@ -74,7 +74,7 @@
 
 +(NSString *)encodeDESWithBase64WithKey:(NSString *)key value:(NSString *)value{
     NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* data=[EncUtil desData:strData key:key CCOperation:kCCEncrypt];
+    NSData* data=[HKEncUtil desData:strData key:key CCOperation:kCCEncrypt];
     GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
     return [coder encode:data];
 }
@@ -82,20 +82,20 @@
 +(NSString *)decodeDESWithBase64WithKey:(NSString *)key value:(NSString *)value{
     GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
     NSData* data=[coder decode:value];
-    NSData* decodeData=[EncUtil desData:data key:key CCOperation:kCCDecrypt];
+    NSData* decodeData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
     NSString* decodeStr= [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
     return decodeStr;
 }
 
 +(NSString *)encodeDESToHex:(NSString *)key value:(NSString *)value{
     NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* data=[EncUtil desData:strData key:key CCOperation:kCCEncrypt];
+    NSData* data=[HKEncUtil desData:strData key:key CCOperation:kCCEncrypt];
     return [self hexStringFromData:data];
 }
 
 +(NSString *)decodeDESHex:(NSString *)key hex:(NSString *)hex{
     NSData* data = [self dataFromHexString:hex];
-    NSData* decodeData=[EncUtil desData:data key:key CCOperation:kCCDecrypt];
+    NSData* decodeData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
     NSString* decodeStr= [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
     return decodeStr;
 }
@@ -134,7 +134,7 @@
 }
 
 +(NSString *)encode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [EncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCEncrypt];
+    return [HKEncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCEncrypt];
 }
 
 +(NSString*)formatKey:(NSString*)key{
@@ -157,7 +157,7 @@
 }
 
 +(NSString *)decode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [EncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCDecrypt];
+    return [HKEncUtil encodeANdDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCDecrypt];
 }
 
 +(NSString *)encodeANdDecode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
@@ -187,7 +187,7 @@
     memset((void *)bufferPtr, 0x0, bufferPtrSize);
     // memset((void *) iv, 0x0, (size_t) sizeof(iv));
     
-    NSString* nKey=[EncUtil formatKey:key];
+    NSString* nKey=[HKEncUtil formatKey:key];
     const void *vkey = (const void *) [nKey UTF8String];
     // NSString *initVec = @"init Vec";
     //const void *vinitVec = (const void *) [initVec UTF8String];

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KVEncoder : NSObject
+@interface HKKVEncoder : NSObject
 
 +(NSString*)exec:(NSDictionary*)dic;
 

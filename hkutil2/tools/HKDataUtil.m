@@ -6,9 +6,9 @@
 //
 //
 
-#import "DataUtil.h"
+#import "HKDataUtil.h"
 
-@implementation DataUtil
+@implementation HKDataUtil
 
 
 +(NSString *)trim:(NSString *)str{

@@ -7,18 +7,19 @@
 //
 
 #import "HttpClient.h"
-#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "DataUtil.h"
 
-@implementation HttpException
-@end
+#define HTTPCLIENT_DEBUG 0
 
-@implementation HttpClientException
-@end
-
-
-@implementation HttpResponse
+@interface HttpClient ()
+@property(nonatomic,copy) NSString* tmpUrl;
+@property(nonatomic,copy) NSString *method;
+@property(nonatomic,strong) NSMutableDictionary *params;//请求参数key_value值
+@property(nonatomic,strong) NSMutableDictionary *dataParams;//请求的上传数据的key_value值
+@property(nonatomic,strong) NSMutableArray *postTextArr;//post body
+@property(nonatomic,strong) NSMutableDictionary* headers;
+@property(nonatomic,strong) NSMutableArray* cookies;
 @end
 
 @implementation HttpClient
@@ -29,10 +30,10 @@
     if (self) {
         self.params=[NSMutableDictionary dictionary];
         self.dataParams=[NSMutableDictionary dictionary];
+        self.headers = [[NSMutableDictionary alloc] init];
         self.postTextArr=[NSMutableArray array];
 		[self setRequestGetMetod];
     }
-    
     return self;
 }
 
@@ -115,11 +116,59 @@
     [self.postTextArr addObject:text];
 }
 
+-(void)addHeaderString:(NSString *)value forKey:(NSString *)key{
+    [self.headers setValue:value forKey:key];
+}
+
+-(void)addHeaderInteger:(NSInteger)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithInteger:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderUnsignedInteger:(NSUInteger)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithUnsignedInteger:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderLong:(long)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithLong:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderUnsignedLong:(unsigned long)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithUnsignedLong:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderLongLong:(long long)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithLongLong:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderUnsignedLongLong:(unsigned long long)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithUnsignedLongLong:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderDouble:(double)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithDouble:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
+-(void)addHeaderFloat:(float)value forKey:(NSString *)key{
+    NSNumber* n = [[NSNumber alloc] initWithFloat:value];
+    [self addHeaderString:[n stringValue] forKey:key];
+}
+
 -(NSMutableDictionary *)allParams{
     NSMutableDictionary* dic=[NSMutableDictionary dictionary];
     [dic addEntriesFromDictionary:self.params];
     [dic addEntriesFromDictionary:self.dataParams];
     return dic;
+}
+
+-(void)addCookie:(NSHTTPCookie *)cookie{
+    [self.cookies addObject:cookie];
 }
 
 -(void)buildGetUrl{
@@ -150,39 +199,41 @@
     self.tmpUrl=buf;
 }
 
--(void)executeRequest:(ASIHTTPRequest *)request asString:(BOOL)stringValue{
-	request.timeOutSeconds=self.timeOutSeconds;
-	[request startSynchronous];
-	self.error=[request error];
-	self.response=[[HttpResponse alloc] init];
-	self.response.statusCode=request.responseStatusCode;
-	self.response.error=self.error;
-	if (stringValue) {
-        NSData* data=[[NSData alloc] initWithData:request.responseData];
-        self.response.text=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+-(void)executeRequest:(BOOL)binary{
+    self.request.requestHeaders = self.headers;
+    self.request.requestCookies = self.cookies;
+	self.request.timeOutSeconds=self.timeOutSeconds;
+	[self.request startSynchronous];
+    self.responseData = [[NSData alloc] initWithData:self.request.responseData];
 #if HTTPCLIENT_DEBUG
-        NSLog(@"responseEncoding : %i",request.responseEncoding);
-        NSLog(@"responseHeaders : %@",[request.responseHeaders description]);
-        NSLog(@"responseText : %@",self.response.text);
+    NSLog(@"httpMethod : %@",self.request.requestMethod);
+    NSLog(@"responseEncoding : %i",self.request.responseEncoding);
+    NSLog(@"responseHeaders : %@",[self.request.responseHeaders description]);
+    if (binary) {
+        NSLog(@"responseData : %@",self.responseData);
+    }
+    else{
+        NSLog(@"responseText : %@",self.responseText);
+    }
+    NSLog(@"responseStatusCode : %i",self.request.responseStatusCode);
 #endif
-	}
-	else{
-		self.response.data=request.responseData;
+	if (binary) {
+        self.responseText = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
 	}
 }
 
 -(void)doGet{
     [self buildGetUrl];
-	ASIHTTPRequest *req=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
-	req.requestMethod=@"GET";
-	[self executeRequest:req asString:YES];
+    self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
+	self.request.requestMethod=@"GET";
+    [self executeRequest:YES];
 }
 
--(void)doGetData{
+-(void)doGetForBinary{
     [self buildGetUrl];
-	ASIHTTPRequest *req=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
-	req.requestMethod=@"GET";
-	[self executeRequest:req asString:NO];
+	self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
+	self.request.requestMethod=@"GET";
+	[self executeRequest:NO];
 }
 
 -(void)doPost{
@@ -199,7 +250,24 @@
     for (NSString *text in self.postTextArr) {
         [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
     }
-	[self executeRequest:req asString:true];
+	[self executeRequest:YES];
+}
+
+-(void)doPostForBinary{
+    ASIFormDataRequest *req=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.url]];
+	req.requestMethod=@"POST";
+	for (NSString *key in self.params) {
+		id value=[self.params objectForKey:key];
+		[req addPostValue:value forKey:key];
+	}
+	for (NSString *key in self.dataParams) {
+		NSData *data=[self.dataParams objectForKey:key];
+		[req addData:data forKey:key];
+	}
+    for (NSString *text in self.postTextArr) {
+        [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+	[self executeRequest:NO];
 }
 
 @end

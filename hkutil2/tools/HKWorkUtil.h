@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface HKWorkUtil : NSObject
+
+-(void)runOnLayer:(CALayer*)layer animation:(CAAnimation*)animation onComplete:(void (^)(void))completeBlock;
+
+-(void)runOnLayer:(CALayer*)layer animation:(CAAnimation*)animation delay:(NSTimeInterval)delay onComplete:(void (^)(void))completeBlock;
+
+-(void)runBlock:(void (^)(void))block delay:(NSTimeInterval)delay;
 
 @end

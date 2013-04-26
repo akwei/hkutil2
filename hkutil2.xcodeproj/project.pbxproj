@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B20EB491729714D005E9D1D /* HKUtilCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB471729714D005E9D1D /* HKUtilCtrl.m */; };
+		9B20EB4A1729714D005E9D1D /* HKUtilCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */; };
+		9B20EB4D17297888005E9D1D /* HKWorkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB4C17297888005E9D1D /* HKWorkUtil.m */; };
+		9B20EB51172978EA005E9D1D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB50172978EA005E9D1D /* MBProgressHUD.m */; };
 		9B3923C117269A8B00C58BD5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3923BF17269A8B00C58BD5 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9B3923C217269A8B00C58BD5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B3923C017269A8B00C58BD5 /* README.md */; };
 		9B3923C817269C1300C58BD5 /* HKShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3923C717269C1300C58BD5 /* HKShadowView.m */; };
 		9B4B3362172575440078CDCC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3361172575440078CDCC /* UIKit.framework */; };
 		9B4B3364172575440078CDCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4B3363172575440078CDCC /* Foundation.framework */; };
@@ -83,9 +86,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B20EB461729714D005E9D1D /* HKUtilCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKUtilCtrl.h; sourceTree = "<group>"; };
+		9B20EB471729714D005E9D1D /* HKUtilCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKUtilCtrl.m; sourceTree = "<group>"; };
+		9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKUtilCtrl.xib; sourceTree = "<group>"; };
+		9B20EB4B17297888005E9D1D /* HKWorkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKWorkUtil.h; sourceTree = "<group>"; };
+		9B20EB4C17297888005E9D1D /* HKWorkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKWorkUtil.m; sourceTree = "<group>"; };
+		9B20EB4F172978EA005E9D1D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		9B20EB50172978EA005E9D1D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9B3923BE17269A8B00C58BD5 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		9B3923BF17269A8B00C58BD5 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		9B3923C017269A8B00C58BD5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9B3923C617269C1300C58BD5 /* HKShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKShadowView.h; sourceTree = "<group>"; };
 		9B3923C717269C1300C58BD5 /* HKShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKShadowView.m; sourceTree = "<group>"; };
 		9B4B335E172575440078CDCC /* hkutil2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hkutil2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,12 +247,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B20EB4E172978EA005E9D1D /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				9B20EB4F172978EA005E9D1D /* MBProgressHUD.h */,
+				9B20EB50172978EA005E9D1D /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		9B3923BD17269A8B00C58BD5 /* jsonkit */ = {
 			isa = PBXGroup;
 			children = (
 				9B3923BE17269A8B00C58BD5 /* JSONKit.h */,
 				9B3923BF17269A8B00C58BD5 /* JSONKit.m */,
-				9B3923C017269A8B00C58BD5 /* README.md */,
 			);
 			path = jsonkit;
 			sourceTree = "<group>";
@@ -308,6 +325,9 @@
 				9B8B601B1728F64100032219 /* HKHttpClientCtrl.h */,
 				9B8B601C1728F64200032219 /* HKHttpClientCtrl.m */,
 				9B8B601D1728F64300032219 /* HKHttpClientCtrl.xib */,
+				9B20EB461729714D005E9D1D /* HKUtilCtrl.h */,
+				9B20EB471729714D005E9D1D /* HKUtilCtrl.m */,
+				9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -330,6 +350,7 @@
 		9B4B33861725770A0078CDCC /* thirdtools */ = {
 			isa = PBXGroup;
 			children = (
+				9B20EB4E172978EA005E9D1D /* MBProgressHUD */,
 				9B3923BD17269A8B00C58BD5 /* jsonkit */,
 				9BA07B7D172597DF000F4183 /* pokeb-asi-http-request-3ed0b3c */,
 			);
@@ -378,6 +399,8 @@
 				9B73E6E91726C8320051C840 /* HKSQLQuery.m */,
 				9B73E6F01726CCF40051C840 /* HKTimerInvoker.h */,
 				9B73E6F11726CCF40051C840 /* HKTimerInvoker.m */,
+				9B20EB4B17297888005E9D1D /* HKWorkUtil.h */,
+				9B20EB4C17297888005E9D1D /* HKWorkUtil.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -550,9 +573,9 @@
 				9BA07BD817262CE5000F4183 /* HKView2Ctrl.xib in Resources */,
 				9BA07BDD1726333D000F4183 /* HKView3Ctrl.xib in Resources */,
 				9BA07BE517266674000F4183 /* HKSubViewCtrl.xib in Resources */,
-				9B3923C217269A8B00C58BD5 /* README.md in Resources */,
 				9B8B601A1728BED400032219 /* HKEncUtilCtrl.xib in Resources */,
 				9B8B601F1728F64300032219 /* HKHttpClientCtrl.xib in Resources */,
+				9B20EB4A1729714D005E9D1D /* HKUtilCtrl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +637,9 @@
 				9B8B60151728B58A00032219 /* HKTimeUtil.m in Sources */,
 				9B8B60191728BED400032219 /* HKEncUtilCtrl.m in Sources */,
 				9B8B601E1728F64300032219 /* HKHttpClientCtrl.m in Sources */,
+				9B20EB491729714D005E9D1D /* HKUtilCtrl.m in Sources */,
+				9B20EB4D17297888005E9D1D /* HKWorkUtil.m in Sources */,
+				9B20EB51172978EA005E9D1D /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

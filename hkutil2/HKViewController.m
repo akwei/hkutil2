@@ -13,6 +13,7 @@
 #import "HKSubViewCtrl.h"
 #import "HKEncUtilCtrl.h"
 #import "HKHttpClientCtrl.h"
+#import "HKUtilCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -53,6 +54,11 @@
 
 - (IBAction)testHttpClient:(id)sender {
     HKHttpClientCtrl* ctrl = [[HKHttpClientCtrl alloc] initWithNibName:@"HKHttpClientCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testUtil:(id)sender {
+    HKUtilCtrl* ctrl = [[HKUtilCtrl alloc] initWithNibName:@"HKUtilCtrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 @end

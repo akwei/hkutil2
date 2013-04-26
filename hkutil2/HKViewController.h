@@ -14,5 +14,6 @@
 - (IBAction)toSubView:(id)sender;
 - (IBAction)testEncUtil:(id)sender;
 - (IBAction)testHttpClient:(id)sender;
+- (IBAction)testUtil:(id)sender;
 
 @end

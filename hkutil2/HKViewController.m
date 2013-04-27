@@ -14,6 +14,9 @@
 #import "HKEncUtilCtrl.h"
 #import "HKHttpClientCtrl.h"
 #import "HKUtilCtrl.h"
+#import "HKTimerCtrl.h"
+#import "HKHTTPServerCtrl.h"
+#import "HKSQLQueryCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -60,5 +63,23 @@
 - (IBAction)testUtil:(id)sender {
     HKUtilCtrl* ctrl = [[HKUtilCtrl alloc] initWithNibName:@"HKUtilCtrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testTimer:(id)sender {
+    HKTimerCtrl* ctrl = [[HKTimerCtrl alloc] initWithNibName:@"HKTimerCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testHTTPServer:(id)sender {
+    HKHTTPServerCtrl* ctrl = [[HKHTTPServerCtrl alloc] initWithNibName:@"HKHTTPServerCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testSQLQuery:(id)sender {
+    HKSQLQueryCtrl* ctrl = [[HKSQLQueryCtrl alloc] initWithNibName:@"HKSQLQueryCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+- (void)viewDidUnload {
+    [super viewDidUnload];
 }
 @end

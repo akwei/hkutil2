@@ -14,28 +14,26 @@
 #define _SQL_DEBUG_OPEN 0
 #define _SQL_EXCEPTION_OPEN 1
 #define SQLExceptionMsg @"database write error"
+#define DB_CNF_FILE_NAME @"db_cfg"
 
-static dispatch_queue_t pubSyncQueue;
-static NSMutableDictionary* pubDic=nil;
+static NSMutableDictionary* DbConn_pubDic=nil;
 static NSMutableArray* ignoreRollbackExArr=nil;
 static NSMutableDictionary *classInfoDic=nil;
-static dispatch_queue_t pubSyncQueue;
-static NSMutableDictionary* pubDic2=nil;
+static NSMutableDictionary* HKSQLQuery_pubDic=nil;
 static NSMutableDictionary* objQueryDic=nil;
-static dispatch_queue_t pubSyncQueue2;
 
-#pragma mark - SQLException
-@implementation SQLException
+#pragma mark - HKSQLException
+@implementation HKSQLException
 @synthesize status;
 @end
 
-#pragma mark - ClassWrapper
-@implementation ClassWrapper
+#pragma mark - HKClassWrapper
+@implementation HKClassWrapper
 @end
 
-#pragma mark - DbConn
+#pragma mark - HKDbConn
 
-@implementation DbConn{
+@implementation HKDbConn{
     dispatch_queue_t syncQueue;
 }
 
@@ -43,18 +41,16 @@ static dispatch_queue_t pubSyncQueue2;
 +(id)getWithDbName:(NSString *)name{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        pubDic = [[NSMutableDictionary alloc] init];
-        pubSyncQueue = dispatch_queue_create("hk_simpleorm_DbConn_pub_sync_queue", DISPATCH_QUEUE_SERIAL);
+        DbConn_pubDic = [[NSMutableDictionary alloc] init];
     });
-    __block DbConn* con;
-    dispatch_sync(pubSyncQueue, ^{
-        con = [pubDic valueForKey:name];
+    @synchronized(self){
+        HKDbConn* con = [DbConn_pubDic valueForKey:name];
         if (!con) {
-            con = [[DbConn alloc] initWithDbName:name];
-            [pubDic setValue:con forKey:name];
+            con = [[HKDbConn alloc] initWithDbName:name];
+            [DbConn_pubDic setValue:con forKey:name];
         }
-    });
-    return con;
+        return con;
+    }
 }
 
 +(void)addRollbackIgnoreExceptionCls:(Class)exCls{
@@ -62,13 +58,13 @@ static dispatch_queue_t pubSyncQueue2;
     dispatch_once(&onceToken, ^{
         ignoreRollbackExArr = [[NSMutableArray alloc] init];
     });
-    ClassWrapper* cw = [[ClassWrapper alloc] init];
+    HKClassWrapper* cw = [[HKClassWrapper alloc] init];
     cw.cls=exCls;
     [ignoreRollbackExArr addObject:cw];
 }
 
 +(BOOL)hasRollbackIgnoreException:(NSException *)ex{
-    for (ClassWrapper* cw in ignoreRollbackExArr) {
+    for (HKClassWrapper* cw in ignoreRollbackExArr) {
         if ([ex isKindOfClass:cw.cls]) {
             return true;
         }
@@ -94,6 +90,10 @@ static dispatch_queue_t pubSyncQueue2;
     return nil;
 }
 
+-(void)dealloc{
+    dispatch_release(syncQueue);
+}
+
 
 -(sqlite3 *)getDbHandle{
     return dbhandle;
@@ -101,28 +101,30 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)open{
     dispatch_sync(syncQueue, ^{
-        if (dbOpen) {
-            return ;
-        }
-        NSString* dbPath=[HKFileUtil getFilePath:self.dbName];
-#if DbConnDebug
-        NSLog(@"%@",dbPath);
-#endif
-        if (![HKFileUtil isFileExist:dbPath]) {
-            BOOL result = [HKFileUtil copyFromResource:self.dbName absFileName:dbPath];
-            if (!result) {
-                NSString* exname=[NSString stringWithFormat:@"create db file %@ err",self.dbName];
-                [self throwException:0 exName:exname reason:@""];
+        @autoreleasepool {
+            if (dbOpen) {
+                return ;
             }
-        }
-        NSInteger stat=sqlite3_open([dbPath UTF8String], &dbhandle);
-        if (stat==SQLITE_OK) {
-            dbOpen=YES;
-            return ;
-        }
-        NSString* reason=[NSString stringWithUTF8String:sqlite3_errmsg(dbhandle)];
-        NSString* exname=[NSString stringWithFormat:@"close db %@ err",self.dbName];
-        [self throwException:stat exName:exname reason:reason];
+            NSString* dbPath=[HKFileUtil getFilePath:self.dbName];
+#if DbConnDebug
+            NSLog(@"%@",dbPath);
+#endif
+            if (![HKFileUtil isFileExist:dbPath]) {
+                BOOL result = [HKFileUtil copyFromResource:self.dbName absFileName:dbPath];
+                if (!result) {
+                    NSString* exname=[NSString stringWithFormat:@"create db file %@ err",self.dbName];
+                    [self throwException:0 exName:exname reason:@""];
+                }
+            }
+            NSInteger stat=sqlite3_open([dbPath UTF8String], &dbhandle);
+            if (stat==SQLITE_OK) {
+                dbOpen=YES;
+                return ;
+            }
+            NSString* reason=[NSString stringWithUTF8String:sqlite3_errmsg(dbhandle)];
+            NSString* exname=[NSString stringWithFormat:@"close db %@ err",self.dbName];
+            [self throwException:stat exName:exname reason:reason];
+        } 
     });
 }
 
@@ -179,34 +181,36 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)close{
     dispatch_sync(syncQueue, ^{
-        if (hasTranscation) {
-            return;
-        }
-#if DbConnDebug
-        NSLog(@"connection close");
-#endif
-        dbOpen=NO;
-        int status;
-        BOOL retry=NO;
-        int retryMaxCount=3;
-        int retryCount=0;
-        do {
-            status=sqlite3_close(dbhandle);
-            if (status!=SQLITE_OK) {
-                retryCount++;
-                if (retryCount>retryMaxCount) {
-                    NSString* reason=[[NSString alloc] initWithUTF8String:sqlite3_errmsg(dbhandle)];
-                    NSString* exname=[NSString stringWithFormat:@"close db %@ err",self.dbName];
-                    [self throwException:status exName:exname reason:reason];
-                    return;
-                }
-                if (status==SQLITE_BUSY || status==SQLITE_LOCKED) {
-                    usleep(20);
-                    retry=YES;
-                    NSLog(@"retry close db %@",self.dbName);
-                }
+        @autoreleasepool {
+            if (hasTranscation) {
+                return;
             }
-        } while (retry);
+#if DbConnDebug
+            NSLog(@"connection close");
+#endif
+            dbOpen=NO;
+            int status;
+            BOOL retry=NO;
+            int retryMaxCount=3;
+            int retryCount=0;
+            do {
+                status=sqlite3_close(dbhandle);
+                if (status!=SQLITE_OK) {
+                    retryCount++;
+                    if (retryCount>retryMaxCount) {
+                        NSString* reason=[[NSString alloc] initWithUTF8String:sqlite3_errmsg(dbhandle)];
+                        NSString* exname=[NSString stringWithFormat:@"close db %@ err",self.dbName];
+                        [self throwException:status exName:exname reason:reason];
+                        return;
+                    }
+                    if (status==SQLITE_BUSY || status==SQLITE_LOCKED) {
+                        usleep(20);
+                        retry=YES;
+                        NSLog(@"retry close db %@",self.dbName);
+                    }
+                }
+            } while (retry);
+        }
     });
 }
 
@@ -218,7 +222,7 @@ static dispatch_queue_t pubSyncQueue2;
         [self commit];
     }
     @catch (NSException *exception) {
-        if ([DbConn hasRollbackIgnoreException:exception]) {
+        if ([HKDbConn hasRollbackIgnoreException:exception]) {
             [self commit];
         }
         else{
@@ -233,7 +237,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)throwException:(NSInteger)status exName:(NSString*)exName reason:(NSString*)reason{
     NSString* errStatus=[NSString stringWithFormat:@"%i : %@",status,reason];
-    SQLException* ex=[[SQLException alloc] initWithName:exName reason:errStatus userInfo:nil];
+    HKSQLException* ex=[[HKSQLException alloc] initWithName:exName reason:errStatus userInfo:nil];
     ex.status=status;
     NSLog(@"%@",[ex description]);
     @throw ex;
@@ -242,17 +246,9 @@ static dispatch_queue_t pubSyncQueue2;
 @end
 
 
-#pragma mark - ClassInfo
-@interface ClassInfo(){
-}
+#pragma mark - HKClassInfo
 
--(void)buildInsertSQL;
--(void)buildUpdateSQL;
--(void)buildDeleteByIdSQL;
-
-@end
-
-@implementation ClassInfo
+@implementation HKClassInfo
 
 +(NSMutableDictionary*)getClassInfoDicInstance{
     static dispatch_once_t onceToken;
@@ -262,13 +258,13 @@ static dispatch_queue_t pubSyncQueue2;
     return classInfoDic;
 }
 
-+(ClassInfo *)getClassInfoWithClass:(Class)cls{
++(HKClassInfo *)getClassInfoWithClass:(Class)cls{
     NSString* className=[NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
-    return [[ClassInfo getClassInfoDicInstance] valueForKey:className];
+    return [[HKClassInfo getClassInfoDicInstance] valueForKey:className];
 }
 
-+(ClassInfo*)getClassInfoWithClassName:(NSString*)className{
-    NSMutableDictionary* dic=[ClassInfo getClassInfoDicInstance];
++(HKClassInfo*)getClassInfoWithClassName:(NSString*)className{
+    NSMutableDictionary* dic=[HKClassInfo getClassInfoDicInstance];
     return [dic valueForKey:className];
 }
 
@@ -292,8 +288,9 @@ static dispatch_queue_t pubSyncQueue2;
 -(NSString *)getPropTypeEncoding:(NSString *)propName{
     return [self.propTypeEncodingDic valueForKey:propName];
 }
-
+//添加配置中的类property，property和column是一样的
 -(void)addPropWithName:(NSString *)name{
+    //设置第一个字段为id字段
     if ([self.propsList count]==0) {
         self.idPropName=name;
         self.idColumnName=name;
@@ -394,21 +391,19 @@ static dispatch_queue_t pubSyncQueue2;
      dispatch_queue_t syncQueue;
 }
 
-+(HKSQLQuery *)getSQLQuery:(NSString *)dbName{
++(HKSQLQuery *)sqlQueryWithDbName:(NSString *)dbName{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        pubSyncQueue = dispatch_queue_create("hk_simpleorm_sqlquery_pub_sync_queue", DISPATCH_QUEUE_SERIAL);
-        pubDic2 = [[NSMutableDictionary alloc] init];
+        HKSQLQuery_pubDic = [[NSMutableDictionary alloc] init];
     });
-    __block HKSQLQuery* query;
-    dispatch_sync(pubSyncQueue, ^{
-        query = [pubDic2 valueForKey:dbName];
+    @synchronized(self){
+        HKSQLQuery* query = [HKSQLQuery_pubDic valueForKey:dbName];
         if (!query) {
             query = [[HKSQLQuery alloc] initWithDbName:dbName];
-            [pubDic2 setValue:query forKey:dbName];
+            [HKSQLQuery_pubDic setValue:query forKey:dbName];
         }
-    });
-    return query;
+        return query;
+    }
 }
 
 -(id)init{
@@ -421,12 +416,16 @@ static dispatch_queue_t pubSyncQueue2;
 -(id)initWithDbName:(NSString*)dbName{
     self=[super init];
     if (self) {
-        self.dbConn=[DbConn getWithDbName:dbName];
+        self.dbConn=[HKDbConn getWithDbName:dbName];
         NSString* n = [[NSString alloc] initWithFormat:@"hk_simpleorm_sqlquery2_%@",dbName];
         syncQueue = dispatch_queue_create([n UTF8String], DISPATCH_QUEUE_SERIAL);
         return self;
     }
     return nil;
+}
+
+-(void)dealloc{
+    dispatch_release(syncQueue);
 }
 
 -(NSInteger)insertWithSQL:(NSString *)sql params:(NSArray *)params{
@@ -522,7 +521,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)throwException:(NSInteger)status reason:(NSString*)reason{
     NSString* errStatus=[NSString stringWithFormat:@"%i : %@",status,reason];
-    SQLException* ex=[[SQLException alloc] initWithName:@"sql exception" reason:errStatus userInfo:nil];
+    HKSQLException* ex=[[HKSQLException alloc] initWithName:@"sql exception" reason:errStatus userInfo:nil];
     ex.status=status;
     @throw ex;
 }
@@ -647,25 +646,24 @@ static dispatch_queue_t pubSyncQueue2;
 
 @end
 
-#pragma mark - ObjQuery
+#pragma mark - HKObjQuery
 
-@implementation ObjQuery
+@implementation HKObjQuery
 
-+(ObjQuery *)instanceWithDbName:(NSString *)dbName{
++(HKObjQuery *)instanceWithDbName:(NSString *)dbName{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         objQueryDic=[[NSMutableDictionary alloc] init];
-        pubSyncQueue2 = dispatch_queue_create("hk_simpleorm_objquery_syncqueue", DISPATCH_QUEUE_SERIAL);
     });
-    __block ObjQuery* q;
-    dispatch_sync(pubSyncQueue2, ^{
+    @synchronized(self){
+        HKObjQuery* q;
         q=[objQueryDic valueForKey:dbName];
         if (!q) {
-            q=[[ObjQuery alloc] initWithDbName:dbName];
+            q=[[HKObjQuery alloc] initWithDbName:dbName];
             [objQueryDic setValue:q forKey:dbName];
         }
-    });
-    return q;
+        return q;
+    }
 }
 
 -(id)init{
@@ -675,17 +673,17 @@ static dispatch_queue_t pubSyncQueue2;
 -(id)initWithDbName:(NSString *)name{
     self = [super init];
     if (self) {
-        self.sqlQuery=[HKSQLQuery getSQLQuery:name];
+        self.sqlQuery=[HKSQLQuery sqlQueryWithDbName:name];
         [self buildDbCfgClass];
     }
     return self;
 }
 
 -(void)buildDbCfgClass{
-    NSString* dbCfgFilePath=[[NSBundle mainBundle] pathForResource:@"db_cfg" ofType:@"plist"];
+    NSString* dbCfgFilePath=[[NSBundle mainBundle] pathForResource:DB_CNF_FILE_NAME ofType:@"plist"];
     NSMutableDictionary *dic=[[NSMutableDictionary alloc] initWithContentsOfFile:dbCfgFilePath];
     for (NSString* key in dic) {
-        ClassInfo *ci=[[ClassInfo alloc] init];
+        HKClassInfo *ci=[[HKClassInfo alloc] init];
         NSString* fields=[dic valueForKey:key];
         ci.className=key;
         ci.tableName=key;
@@ -694,12 +692,12 @@ static dispatch_queue_t pubSyncQueue2;
             [ci addPropWithName:field];
         }
         [ci load];
-        NSMutableDictionary* classInfoDic=[ClassInfo getClassInfoDicInstance];
+        NSMutableDictionary* classInfoDic=[HKClassInfo getClassInfoDicInstance];
         [classInfoDic setValue:ci forKey:key];
     }
 }
 
--(NSMutableArray*)bindParams:(ClassInfo*)ci objId:(id)objId forInsert:(BOOL)forInsert{
+-(NSMutableArray*)bindParams:(HKClassInfo*)ci objId:(id)objId forInsert:(BOOL)forInsert{
     NSMutableArray* params=[NSMutableArray array];
     int i=0;
     @try {
@@ -730,7 +728,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)saveObj:(id)objId{
     NSString* className=[NSString stringWithCString:class_getName([objId class]) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableArray* params=[self bindParams:ci objId:objId forInsert:YES];
     NSInteger lastId = [self.sqlQuery insertWithSQL:ci.insertSQL params:params];
     [objId setValue:[NSNumber numberWithInteger:lastId] forKey:ci.idPropName];
@@ -738,7 +736,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)updateObj:(id)objId{
     NSString* className=[NSString stringWithCString:class_getName([objId class]) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableArray* params=[self bindParams:ci objId:objId forInsert:NO];
     [params addObject:[objId valueForKey:ci.idPropName]];
     [self.sqlQuery updateWithSQL:ci.updateSQL params:params];
@@ -746,7 +744,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)deleteWithClass:(Class)cls idValue:(id)idValue{
     NSString* className = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableArray* params=[NSMutableArray array];
     [params addObject:idValue];
     [self.sqlQuery updateWithSQL:ci.deleteByIdSQL params:params];
@@ -754,7 +752,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(void)deleteWithClass:(Class)cls where:(NSString *)where params:(NSArray *)params{
     NSString* className = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableString* sbuf=[[NSMutableString alloc] init];
     [sbuf appendFormat:@"delete from %@",ci.tableName];
     if (where) {
@@ -770,7 +768,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(int)countWithClass:(Class)cls where:(NSString *)where  params:(NSArray*)params{
     NSString* className = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableString* sqlbuf=[NSMutableString string];
     [sqlbuf appendFormat:@"select count(*) from %@",ci.tableName];
     if (where) {
@@ -782,7 +780,7 @@ static dispatch_queue_t pubSyncQueue2;
 
 -(NSArray *)listWithClass:(Class)cls where:(NSString *)where params:(NSArray *)params orderBy:(NSString *)orderBy begin:(NSInteger)begin size:(NSInteger)size{
     NSString* className = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
-    ClassInfo* ci=[ClassInfo getClassInfoWithClassName:className];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableString* sqlbuf=[NSMutableString string];
     [sqlbuf appendString:@"select "];
     for (NSString* name in ci.columnList) {
@@ -827,7 +825,7 @@ static dispatch_queue_t pubSyncQueue2;
 }
 
 -(id)objWithClass:(Class)cls idValue:(id)idValue{
-    ClassInfo* ci = [ClassInfo getClassInfoWithClass:cls];
+    HKClassInfo* ci = [HKClassInfo getClassInfoWithClass:cls];
     NSMutableString* where=[NSMutableString string];
     [where appendFormat:@"%@=?",ci.idColumnName];
     NSMutableArray* params=[NSMutableArray array];

@@ -9,6 +9,12 @@
 #import "HKTimerInvoker.h"
 #import "HKThreadUtil.h"
 
+#define TimerInvokeDebug 1
+
+@interface HKTimerInvoker ()
+@property(nonatomic,assign)BOOL running;
+@end
+
 @implementation HKTimerInvoker{
     HKThreadUtil* _threadUtil;
     BOOL stopFlag;
@@ -56,23 +62,21 @@
 }
 
 -(void)startWithDelay:(NSTimeInterval)t{
-    __unsafe_unretained HKTimerInvoker* me = self;
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        if (me.running) {
+    if (self.running) {
 #if TimerInvokeDebug
-            NSLog(@"timer already running");
+        NSLog(@"timer already running");
 #endif
-            return;
-        }
-        me.running=YES;
-        stopFlag=NO;
-    });
-    
+        return;
+    }
+    self.running=YES;
+    stopFlag=NO;
+
+    __block __unsafe_unretained HKTimerInvoker* me = self;
     [_threadUtil asyncBlock:^{
         [condition lock];
         if (t>0) {
 #if TimerInvokeDebug
-            NSLog(@"sleep for delay %f",self.delay);
+            NSLog(@"sleep for delay %f",t);
 #endif
             [me sleep:t];
         }
@@ -93,7 +97,6 @@
         [flgCondition signal];
         [condition unlock];
     }];
-    
 }
 
 -(void)start{
@@ -107,8 +110,9 @@
     BOOL canCallback = self.jobBlock();
     if (canCallback) {
         if (self.callbackBlock) {
+            __block __unsafe_unretained HKTimerInvoker* me = self;
             [_threadUtil syncBlockToMainThread:^{
-                self.callbackBlock();
+                me.callbackBlock();
             }];
         }
     }

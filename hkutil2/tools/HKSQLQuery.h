@@ -6,20 +6,48 @@
 //  Copyright (c) 2013年 huoku. All rights reserved.
 //
 
+/*
+ 使用方式1:
+ HKSQLQuery* query = [HKSQLQuery sqlQueryWithDbName:@"hkutil2.sqlite"];
+ Person* obj = [[Person alloc] init];
+ obj.name =@"akweiweiwei";
+ obj.createtime = [HKTimeUtil nowDoubleDate];
+ NSString* text = @"我来测试看看有没有问题    对了    aaa bbb";
+ obj.data = [text dataUsingEncoding:NSUTF8StringEncoding];
+ obj.pid = [query insertWithSQL:@"insert into Person(pid,name,data,createtime) values(?,?,?,?)"
+ params:@[[NSNull null],obj.name,obj.data,[NSNumber numberWithDouble:obj.createtime]]];
+ NSLog(@"insert person pid : %llu",(unsigned long long)obj.pid);
+ 
+ [query updateWithSQL:@"update Person set name=? where pid=?" params:@[@"apple",[NSNumber numberWithUnsignedInteger:obj.pid]]];
+ 
+ NSInteger count = [query countWithSQL:@"select count(*) from Person" params:nil];
+ NSLog(@"current count : %lu",(unsigned long)count);
+ 
+ NSArray* list = [query listWithSQL:@"select * from Person" params:nil];//NSDictonary in list
+ if ([list count]!=count) {
+ NSLog(@"select count not equal list size");
+ }
+ 
+ [query updateWithSQL:@"delete from Person where pid=?" params:@[[NSNumber numberWithUnsignedInteger:obj.pid]]];
+ 
+ 使用方式2:
+ 
+ */
+
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <sqlite3.h>
 
-@interface ClassWrapper : NSObject
+@interface HKClassWrapper : NSObject
 @property(nonatomic,assign)Class cls;
 @end
 
-@interface SQLException : NSException
+@interface HKSQLException : NSException
 @property(nonatomic,assign)NSInteger status;
 @end
 
-@interface DbConn : NSObject{
+@interface HKDbConn : NSObject{
     sqlite3* dbhandle;
     BOOL hasTranscation;
     BOOL dbOpen;
@@ -43,14 +71,14 @@
 
 @end
 
-@interface ClassInfo : NSObject
+@interface HKClassInfo : NSObject
 
 @property(nonatomic,copy) NSString* className;
 @property(nonatomic,copy) NSString* tableName;
 @property(nonatomic,copy) NSString* idPropName;
 @property(nonatomic,copy) NSString* idColumnName;
-@property(nonatomic,strong) NSMutableArray* propsList;
-@property(nonatomic,strong) NSMutableArray* columnList;
+@property(nonatomic,strong) NSMutableArray* propsList;//存储对象属性
+@property(nonatomic,strong) NSMutableArray* columnList;//存储sql中的列
 @property(nonatomic,strong) NSMutableDictionary* propsDic;//property : column
 @property(nonatomic,strong) NSMutableDictionary* columnPropDic;//column : property
 @property(nonatomic,strong) NSMutableDictionary* propTypeEncodingDic;
@@ -58,9 +86,9 @@
 @property(nonatomic,copy) NSString* updateSQL;
 @property(nonatomic,copy) NSString* deleteByIdSQL;
 
-+(ClassInfo*)getClassInfoWithClassName:(NSString*)className;
++(HKClassInfo*)getClassInfoWithClassName:(NSString*)className;
 +(NSMutableDictionary*)getClassInfoDicInstance;
-+(ClassInfo*)getClassInfoWithClass:(Class)cls;
++(HKClassInfo*)getClassInfoWithClass:(Class)cls;
 -(BOOL)hasPropWithName:(NSString*)name;
 -(void)load;
 -(void)addPropWithName:(NSString*)name;
@@ -71,12 +99,12 @@
 
 @interface HKSQLQuery : NSObject
 
-@property(nonatomic,strong)DbConn* dbConn;
+@property(nonatomic,strong)HKDbConn* dbConn;
 
 /*
  通过dbName获得SQLQuery对象
  */
-+(HKSQLQuery*)getSQLQuery:(NSString*)dbName;
++(HKSQLQuery*)sqlQueryWithDbName:(NSString*)dbName;
 
 /*
  insert
@@ -115,11 +143,11 @@
 
 
 
-@interface ObjQuery : NSObject
+@interface HKObjQuery : NSObject
 
 @property(nonatomic,strong) HKSQLQuery* sqlQuery;
 
-+(ObjQuery*)instanceWithDbName:(NSString*)dbName;
++(HKObjQuery*)instanceWithDbName:(NSString*)dbName;
 
 //inset 对象
 -(void)saveObj:(id)objId;

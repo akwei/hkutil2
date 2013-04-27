@@ -120,7 +120,8 @@ void GetIPAddresses(char *if_names[],char *ip_names[],char *hw_addrs[],unsigned 
         {
             continue; // ignore if interface not up
         }
-        if_names[nextAddr] = (char *)malloc(strlen(ifr->ifr_name)+1);
+        void* np = malloc(strlen(ifr->ifr_name)+1);
+        if_names[nextAddr] = (char *)np;
         if (if_names[nextAddr] == NULL)
         {
             return;
@@ -129,7 +130,8 @@ void GetIPAddresses(char *if_names[],char *ip_names[],char *hw_addrs[],unsigned 
         strcpy(if_names[nextAddr], ifr->ifr_name);
         sin = (struct sockaddr_in *)&ifr->ifr_addr;
         strcpy(temp, inet_ntoa(sin->sin_addr));
-        ip_names[nextAddr] = (char *)malloc(strlen(temp)+1);
+        void* np1=(char *)malloc(strlen(temp)+1);
+        ip_names[nextAddr] = np1;
         
         if (ip_names[nextAddr] == NULL)
         {
@@ -138,6 +140,8 @@ void GetIPAddresses(char *if_names[],char *ip_names[],char *hw_addrs[],unsigned 
         strcpy(ip_names[nextAddr], temp);
         ip_addrs[nextAddr] = sin->sin_addr.s_addr;
         ++nextAddr;
+        free(np);
+        free(np1);
     }
     
     close(sockfd);

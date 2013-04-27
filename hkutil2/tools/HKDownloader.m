@@ -94,6 +94,11 @@
     return nil;
 }
 
+-(void)dealloc{
+    dispatch_release(_syncQueue);
+    dispatch_release(_asyncQueue);
+}
+
 -(void)downloadWithUrl:(NSString*)url callbackHandler:(HKCallbackHandler*)callbackHandler timeout:(NSTimeInterval)timeout{
     NSString* _url = [url copy];
     dispatch_sync(_syncQueue, ^{

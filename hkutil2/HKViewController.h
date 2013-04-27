@@ -15,5 +15,8 @@
 - (IBAction)testEncUtil:(id)sender;
 - (IBAction)testHttpClient:(id)sender;
 - (IBAction)testUtil:(id)sender;
+- (IBAction)testTimer:(id)sender;
+- (IBAction)testHTTPServer:(id)sender;
+- (IBAction)testSQLQuery:(id)sender;
 
 @end

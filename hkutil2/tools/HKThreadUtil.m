@@ -29,6 +29,10 @@ static HKThreadUtil* _sharedHKThreadUtil;
     return self;
 }
 
+-(void)dealloc{
+    dispatch_release(_asyncQueue);
+}
+
 -(void)asyncBlock:(void (^)(void))block{
     dispatch_async(_asyncQueue, ^{
         @autoreleasepool {

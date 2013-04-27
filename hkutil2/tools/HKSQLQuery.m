@@ -839,3 +839,85 @@ static NSMutableDictionary* objQueryDic=nil;
 
 @end
 
+#pragma mark - HKDbObject
+
+@implementation HKDbObject
+
++(NSString*)currentDbName{
+    NSLog(@"Child must override this method that return real dbName");
+    return nil;
+}
+
++(id)objWithIdValue:(id)idValue{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    return [query objWithClass:cls idValue:idValue];
+}
+
++(NSArray *)listWithWhere:(NSString *)where params:(NSArray *)params orderBy:(NSString *)orderBy begin:(NSInteger)begin size:(NSInteger)size{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    return [query listWithClass:cls where:where params:params orderBy:orderBy begin:begin size:size];
+}
+
++(id)objWithWhere:(NSString *)where params:(NSArray *)params orderBy:(NSString *)orderBy{
+    NSArray* list = [self listWithWhere:where params:params orderBy:orderBy begin:0 size:1];
+    if ([list count]==0) {
+        return nil;
+    }
+    return [list objectAtIndex:0];
+}
+
++(NSInteger)countWithWhere:(NSString *)where params:(NSMutableArray *)params{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    return [query countWithClass:cls where:where params:params];
+}
+
++(void)updateBySQL:(NSString *)sql params:(NSArray *)params{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    [query.sqlQuery updateWithSQL:sql params:params];
+}
+
++(void)updateBySQLSeg:(NSString *)sqlSeg params:(NSArray *)params{
+    Class cls=[self class];
+    NSString* className=[NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
+    NSMutableString* sbuf=[[NSMutableString alloc] init];
+    [sbuf appendFormat:@"update %@ %@",ci.tableName,sqlSeg];
+    @try {
+        [self updateBySQL:sbuf params:params];
+    }
+    @finally {
+        sbuf = nil;
+    }
+}
+
++(void)deleteWithWhere:(NSString *)where params:(NSArray *)params{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    [query deleteWithClass:cls where:where params:params];
+}
+
+-(void)saveObj{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    [query saveObj:self];
+}
+
+-(void)updateObj{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    [query updateObj:self];
+}
+
+-(void)deleteObj{
+    Class cls=[self class];
+    HKObjQuery* query=[HKObjQuery instanceWithDbName:[cls currentDbName]];
+    HKClassInfo* ci=[HKClassInfo getClassInfoWithClass:cls];
+    id idValue= [self valueForKey:ci.idPropName];
+    [query deleteWithClass:cls idValue:idValue];
+}
+
+@end

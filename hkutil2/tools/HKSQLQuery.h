@@ -170,3 +170,71 @@
 
 
 @end
+
+
+@interface HKDbObject : NSObject
+//子类必须重写此方法，返回真实的数据库文件名称
++(NSString*)currentDbName;
+/*
+ 通过唯一id获得数据对象
+ */
++(id)objWithIdValue:(id)idValue;
+
+/*
+ 通过条件查询获得对象数组
+ @param where where sql
+ @param params 绑定sql中带有'?'的参数，顺序要与sql中'?'的顺序对应
+ @param orderBy 排序sql
+ @param begin 获取数据开始位置
+ @param size 获取数据数量
+ */
++(NSMutableArray*)listWithWhere:(NSString*)where params:(NSArray*)params orderBy:(NSString*)orderBy begin:(NSInteger)begin size:(NSInteger)size;
+
+/*
+ 通过条件获得对象
+ @param where where sql
+ @param params 绑定sql中带有'?'的参数，顺序要与sql中'?'的顺序对应
+ @param orderBy 排序sql
+ */
++(id)objWithWhere:(NSString*)where params:(NSArray*)params orderBy:(NSString*)orderBy;
+
+/*
+ 获得统计数量
+ @param where where sql
+ @param params 绑定sql中带有'?'的参数，顺序要与sql中'?'的顺序对应
+ */
++(NSInteger)countWithWhere:(NSString*)where params:(NSArray*)params;
+
+/*
+ 使用完整sql更新数据
+ */
++(void)updateBySQL:(NSString*)sql params:(NSArray*)params;
+
+/*
+ 使用sql片段更新数据.例: updateBySQLSeg:@"set name=? where uid=?" params:params;
+ */
++(void)updateBySQLSeg:(NSString*)sqlSeg params:(NSArray*)params;
+
+/*
+ 删除数据
+ @param where where sql
+ @param params 绑定sql中带有'?'的参数，顺序要与sql中'?'的顺序对应
+ */
++(void)deleteWithWhere:(NSString*)where params:(NSArray*)params;
+
+/*
+ 保存对象
+ */
+-(void)saveObj;
+
+/*
+ 更新对象
+ */
+-(void)updateObj;
+
+/*
+ 删除对象
+ */
+-(void)deleteObj;
+
+@end

@@ -11,7 +11,9 @@
 #import "HKTimeUtil.h"
 
 @implementation Person
-
++(NSString *)currentDbName{
+    return @"hkutil2.sqlite";
+}
 @end
 
 @interface HKSQLQueryCtrl ()
@@ -24,6 +26,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    /*
     HKSQLQuery* query = [HKSQLQuery sqlQueryWithDbName:@"hkutil2.sqlite"];
     Person* obj = [[Person alloc] init];
     obj.name =@"akweiweiwei";
@@ -45,7 +49,20 @@
     }
     
     [query updateWithSQL:@"delete from Person where pid=?" params:@[[NSNumber numberWithUnsignedInteger:obj.pid]]];
+     */
     
+    Person* obj = [[Person alloc] init];
+    obj.name =@"akweiweiwei";
+    obj.createtime = [HKTimeUtil nowDoubleDate];
+    NSString* text = @"我来测试看看有没有问题    对了    aaa bbb";
+    obj.data = [text dataUsingEncoding:NSUTF8StringEncoding];
+    [obj saveObj];
+    NSLog(@"insert person pid : %llu",(unsigned long long)obj.pid);
+    
+    obj.name=@";sdfsdf";
+    [obj updateObj];
+    
+    [obj deleteObj];
 }
 
 - (void)didReceiveMemoryWarning

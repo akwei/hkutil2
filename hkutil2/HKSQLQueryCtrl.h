@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HKSQLQuery.h"
 
-@interface Person : NSObject
+@interface Person : HKDbObject
 @property(nonatomic,assign)NSUInteger pid;
 @property(nonatomic,strong)NSData* data;
 @property(nonatomic,copy)NSString* name;
 @property(nonatomic,assign)double createtime;
+
 @end
 
 @interface HKSQLQueryCtrl : UIViewController

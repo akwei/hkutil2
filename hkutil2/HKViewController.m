@@ -17,6 +17,7 @@
 #import "HKTimerCtrl.h"
 #import "HKHTTPServerCtrl.h"
 #import "HKSQLQueryCtrl.h"
+#import "HKExceptionCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -77,6 +78,11 @@
 
 - (IBAction)testSQLQuery:(id)sender {
     HKSQLQueryCtrl* ctrl = [[HKSQLQueryCtrl alloc] initWithNibName:@"HKSQLQueryCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)textException:(id)sender {
+    HKExceptionCtrl* ctrl = [[HKExceptionCtrl alloc] initWithNibName:@"HKExceptionCtrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 - (void)viewDidUnload {

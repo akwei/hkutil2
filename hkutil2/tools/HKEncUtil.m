@@ -10,10 +10,11 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import "GTMStringEncoding.h"
+#import <Security/Security.h>
 
 @implementation HKEncUtil
 
-+(NSString *)md5:(NSString *)value{
++(NSString *)MD5:(NSString *)value{
 	int len=CC_MD5_DIGEST_LENGTH;
     const char* ch = [value UTF8String];
     unsigned char result[len];
@@ -25,17 +26,93 @@
     return ret;
 }
 
-+(NSString *)encodeBase64:(NSString *)value{
-    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
-    return [coder encodeString:value];
-    
++(NSString *)bytes2Hex:(NSData *)data{
+    unichar* hexChars = (unichar*)malloc(sizeof(unichar) * (data.length*2));
+    unsigned char* bytes = (unsigned char*)data.bytes;
+    for (NSUInteger i = 0; i < data.length; i++) {
+        unichar c = bytes[i] / 16;
+        if (c < 10) c += '0';
+        else c += 'a' - 10;
+        hexChars[i*2] = c;
+        c = bytes[i] % 16;
+        if (c < 10) c += '0';
+        else c += 'a' - 10;
+        hexChars[i*2+1] = c;
+    }
+    NSString* retVal = [[NSString alloc] initWithCharactersNoCopy:hexChars
+                                                           length:data.length*2
+                                                     freeWhenDone:YES];
+    return retVal;
 }
 
-+(NSData *)decodeBase64:(NSString *)value{
++(NSData *)hex2Bytes:(NSString *)str{
+    NSMutableData *stringData = [[NSMutableData alloc] init];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+    for (i=0; i < [str length] / 2; i++) {
+        byte_chars[0] = [str characterAtIndex:i*2];
+        byte_chars[1] = [str characterAtIndex:i*2+1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [stringData appendBytes:&whole_byte length:1];
+    }
+    return stringData;
+}
+
++(NSString *)BASE64EncryptString:(NSString *)value{
+    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
+    return [coder encodeString:value];
+}
+
++(NSString *)BASE64EncryptData:(NSData *)data{
+    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
+    return [coder encode:data];
+}
+
++(NSData *)BASE64DecryptString:(NSString *)value{
     GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
     return [coder decode:value];
 }
 
++(NSData *)DESEncryptWithData:(NSData *)data forKey:(NSString *)key{
+    NSData* encData=[HKEncUtil desData:data key:key CCOperation:kCCEncrypt];
+    return encData;
+}
+
++(NSData *)DESDecryptWithData:(NSData *)data forKey:(NSString *)key{
+    NSData* deData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
+    return deData;
+}
+
++(NSData *)DESEDEEncryptWithData:(NSData *)data forKey:(NSString *)key{
+    const void *vplainText = (const void *)[data bytes];
+    size_t plainTextBufferSize = [data length];
+    NSData* encData = [self encodeAndDecodeDESEDEWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCEncrypt];
+    return encData;
+}
+
++(NSData *)DESEDEDecryptWithData:(NSData *)data forKey:(NSString *)key{
+    const void *vplainText = (const void *)[data bytes];
+    size_t plainTextBufferSize = [data length];
+    NSData* deData = [self encodeAndDecodeDESEDEWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCDecrypt];
+    return deData;
+}
+
++ (NSData *)AES128EncryptWithData:(NSData*)data forKey:(NSString *)key {
+	return [self AESEncryptWithData:data forKey:key algorithm:kCCAlgorithmAES128 size:kCCKeySizeAES128 blockSize:kCCBlockSizeAES128];
+}
+
++ (NSData *)AES128DecryptWithData:(NSData*)data forKey:(NSString *)key {
+    return [self AESDecryptWithData:data forKey:key algorithm:kCCAlgorithmAES128 size:kCCKeySizeAES128 blockSize:kCCBlockSizeAES128];
+}
+
++ (NSData *)AES256EncryptWithData:(NSData*)data forKey:(NSString *)key {
+    return [self AESEncryptWithData:data forKey:key algorithm:kCCAlgorithmAES128 size:kCCKeySizeAES256 blockSize:kCCBlockSizeAES128];
+}
+
++ (NSData *)AES256DecryptWithData:(NSData*)data forKey:(NSString *)key {
+	return [self AESDecryptWithData:data forKey:key algorithm:kCCAlgorithmAES128 size:kCCKeySizeAES256 blockSize:kCCBlockSizeAES128];
+}
 
 + (NSData *)desData:(NSData *)data key:(NSString *)keyString CCOperation:(CCOperation)op
 {
@@ -72,93 +149,6 @@
     
 }
 
-+(NSString *)encodeDESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* data=[HKEncUtil desData:strData key:key CCOperation:kCCEncrypt];
-    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
-    return [coder encode:data];
-}
-
-+(NSString *)decodeDESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
-    NSData* data=[coder decode:value];
-    NSData* decodeData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
-    NSString* decodeStr= [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
-    return decodeStr;
-}
-
-+(NSString *)encodeDESToHexWithKey:(NSString *)key value:(NSString *)value{
-    NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* data=[HKEncUtil desData:strData key:key CCOperation:kCCEncrypt];
-    return [self hexStringFromData:data];
-}
-
-+(NSString *)decodeDESHexWithKey:(NSString *)key hex:(NSString *)hex{
-    NSData* data = [self dataFromHexString:hex];
-    NSData* decodeData=[HKEncUtil desData:data key:key CCOperation:kCCDecrypt];
-    NSString* decodeStr= [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
-    return decodeStr;
-}
-
-+(NSString *)encode3DESToHexWithKey:(NSString *)key value:(NSString *)value{
-    NSData* strData= [value dataUsingEncoding:NSUTF8StringEncoding];
-    const void *vplainText = (const void *)[strData bytes];
-    size_t plainTextBufferSize = [strData length];
-    NSData* data = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCEncrypt];
-    if (!data) {
-        return nil;
-    }
-    return [self hexStringFromData:data];
-}
-
-+(NSString *)decode3DESHexWithKey:(NSString *)key hex:(NSString *)hex{
-    NSData* data = [self dataFromHexString:hex];
-    const void *vplainText = (const void *)[data bytes];
-    size_t plainTextBufferSize = [data length];
-    NSData* d = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:kCCDecrypt];
-    if (!d) {
-        return nil;
-    }
-    return [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-}
-
-+ (NSData *)dataFromHexString:(NSString *)string{
-    NSMutableData *stringData = [[NSMutableData alloc] init];
-    unsigned char whole_byte;
-    char byte_chars[3] = {'\0','\0','\0'};
-    int i;
-    for (i=0; i < [string length] / 2; i++) {
-        byte_chars[0] = [string characterAtIndex:i*2];
-        byte_chars[1] = [string characterAtIndex:i*2+1];
-        whole_byte = strtol(byte_chars, NULL, 16);
-        [stringData appendBytes:&whole_byte length:1];
-    }
-    return stringData;
-}
-
-+ (NSString*)hexStringFromData:(NSData *)data{
-    unichar* hexChars = (unichar*)malloc(sizeof(unichar) * (data.length*2));
-    unsigned char* bytes = (unsigned char*)data.bytes;
-    for (NSUInteger i = 0; i < data.length; i++) {
-        unichar c = bytes[i] / 16;
-        if (c < 10) c += '0';
-        else c += 'a' - 10;
-        hexChars[i*2] = c;
-        c = bytes[i] % 16;
-        if (c < 10) c += '0';
-        else c += 'a' - 10;
-        hexChars[i*2+1] = c;
-    }
-    NSString* retVal = [[NSString alloc] initWithCharactersNoCopy:hexChars
-                                                           length:data.length*2
-                                                     freeWhenDone:YES];
-    return retVal;
-}
-
-+(NSString *)encode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [HKEncUtil encodeAndDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCEncrypt];
-}
-
 +(NSString*)formatKey:(NSString*)key{
     NSData* keyData=[key dataUsingEncoding:NSUTF8StringEncoding];
     Byte* keyBytes=(Byte*)[keyData bytes];
@@ -178,43 +168,7 @@
     return newKey;
 }
 
-+(NSString *)decode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value{
-    return [HKEncUtil encodeAndDecode3DESWithBase64WithKey:key value:value encryptOrDecrypt:kCCDecrypt];
-}
-
-+(NSString *)encodeAndDecode3DESWithBase64WithKey:(NSString *)key value:(NSString *)value encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
-    const void *vplainText;
-    size_t plainTextBufferSize;
-    GTMStringEncoding *coder = [GTMStringEncoding rfc4648Base64StringEncoding];
-    if (encryptOrDecrypt == kCCDecrypt)//解密
-    {
-        NSData *EncryptData = [coder decode:value];
-        plainTextBufferSize = [EncryptData length];
-        vplainText = [EncryptData bytes];
-    }
-    else //加密
-    {
-        NSData* data = [value dataUsingEncoding:NSUTF8StringEncoding];
-        plainTextBufferSize = [data length];
-        vplainText = (const void *)[data bytes];
-    }
-    NSData* data = [self encodeAndDecode3DESWithKey:key size_t:plainTextBufferSize vplainText:vplainText encryptOrDecrypt:encryptOrDecrypt];
-    if (!data) {
-        return nil;
-    }
-    NSString *result;
-    if (encryptOrDecrypt == kCCDecrypt)
-    {
-        result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    }
-    else
-    {
-        result = [coder encode:data];
-    }
-    return result;
-}
-
-+(NSData *)encodeAndDecode3DESWithKey:(NSString *)key size_t:(size_t)plainTextBufferSize vplainText:(const void *)vplainText encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
++(NSData *)encodeAndDecodeDESEDEWithKey:(NSString *)key size_t:(size_t)plainTextBufferSize vplainText:(const void *)vplainText encryptOrDecrypt:(CCOperation)encryptOrDecrypt{
     
     CCCryptorStatus ccStatus;
     uint8_t *bufferPtr = NULL;
@@ -258,5 +212,71 @@
     free(bufferPtr);
     return data;
 }
+
++ (NSData *)AESDecryptWithData:(NSData*)data forKey:(NSString *)key algorithm:(size_t)algorithm size:(size_t)bsize blockSize:(size_t)blockSize{
+	// 'key' should be 32 bytes for AES256, will be null-padded otherwise
+	char keyPtr[bsize+1]; // room for terminator (unused)
+	bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
+	
+	// fetch key data
+	[key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+	
+	NSUInteger dataLength = [data length];
+	
+	//See the doc: For block ciphers, the output size will always be less than or
+	//equal to the input size plus the size of one block.
+	//That's why we need to add the size of one block here
+	size_t bufferSize = dataLength + blockSize;
+	void *buffer = malloc(bufferSize);
+	
+	size_t numBytesDecrypted = 0;
+	CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, algorithm, kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                          keyPtr, bsize,
+                                          NULL /* initialization vector (optional) */,
+                                          [data bytes], dataLength, /* input */
+                                          buffer, bufferSize, /* output */
+                                          &numBytesDecrypted);
+	
+	if (cryptStatus == kCCSuccess) {
+		//the returned NSData takes ownership of the buffer and will free it on deallocation
+		return [NSData dataWithBytesNoCopy:buffer length:numBytesDecrypted];
+	}
+	
+	free(buffer); //free the buffer;
+	return nil;
+}
+
++ (NSData *)AESEncryptWithData:(NSData*)data forKey:(NSString *)key algorithm:(size_t)algorithm size:(size_t)bsize blockSize:(size_t)blockSize{
+	// 'key' should be 32 bytes for AES256, will be null-padded otherwise
+	char keyPtr[bsize+1]; // room for terminator (unused)
+	bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
+	
+	// fetch key data
+	[key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+	
+	NSUInteger dataLength = [data length];
+	
+	//See the doc: For block ciphers, the output size will always be less than or
+	//equal to the input size plus the size of one block.
+	//That's why we need to add the size of one block here
+	size_t bufferSize = dataLength + blockSize;
+	void *buffer = malloc(bufferSize);
+	
+	size_t numBytesEncrypted = 0;
+	CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, algorithm, kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                          keyPtr, bsize,
+                                          NULL /* initialization vector (optional) */,
+                                          [data bytes], dataLength, /* input */
+                                          buffer, bufferSize, /* output */
+                                          &numBytesEncrypted);
+	if (cryptStatus == kCCSuccess) {
+		//the returned NSData takes ownership of the buffer and will free it on deallocation
+		return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
+	}
+    
+	free(buffer); //free the buffer;
+	return nil;
+}
+
 
 @end

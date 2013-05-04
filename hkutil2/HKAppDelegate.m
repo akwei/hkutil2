@@ -7,19 +7,33 @@
 //
 
 #import "HKAppDelegate.h"
-
+#import "HKRSAUtil.h"
 #import "HKViewController.h"
 
 @implementation HKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
-    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-    self.window.rootViewController = navCtrl;
-    [self.window makeKeyAndVisible];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    // Override point for customization after application launch.
+//    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
+//    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+//    self.window.rootViewController = navCtrl;
+//    [self.window makeKeyAndVisible];
+    
+    NSString* text = @"MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALcv2Tm/1ph2EgpsZlB6DdynFT1/F/cSq5kl0ZtpLj6++EtSYQXBqGkminhQ+W309iTBHwoToQzvbV1f1a1yKMEAZ1BWywe0OZWIq9V4Oe2Gr3GFwi36nBOMat7HUnQYkqRoWdYpsQM5+lNMrznYOXnc4D1bSXI210Z1XyXgLfNlAgMBAAECgYB+7m3DgTUOMYnwpQoEK36dbTzffsg5UDuNA9KIsEn1+leLwYou9fBe4/DAy8L5uOoxr4t1bQKENwb902D5LQgk/5iycN29XxV2hSD2HGuDNk8pBfT7dzhhSrd1srCEx++u8GWiGwAVXG3k3iakwlJWn9TFCf3ff3PBsRih73OQhQJBAN0sYkDmxOJ6b57xk/qlr25SH4gpyJoK+reR/231dLO1seFrTQVWcnwd7mrceW1Sm7GsUhn9c6WtObNRk6BcmucCQQDUCDXKQl7VIrwpziBVuBk3X6+k4pfUr9RHtHgsKsEkrEqq2Z49PeiQVmQxsOkrqTHqwmwCTha4sqpxTRIfOaHTAkEAvCXQo5Nss5kiMV0i3FtsJHY6GrQo0Vo7tEO/vgPLtkD/xFpqV/sVQx6XPlK1/VkD155W7YMdiTgWWMQxyH5eywJBANIpfR+IX7UEo9sQC67LNntTZaaaToIq8c9NCxxEGINAHxZvc1Aij+SZLOCwCL4VC3w0z5gNTKovtY9uI/s9Ra8CQQDMxk1QOaCbKm9+c6ArXjN2zSGJjrvFNZX6tzEeUwaR6knCQFs62f4b9EP8//UQzCbnq0d3em+VVkc0+x7jgkD8";
+//    NSString* text =@"hello1234567890";
+    NSData* textData = [text dataUsingEncoding:NSUTF8StringEncoding];
+    HKRSAUtil* rsaUtil = [[HKRSAUtil alloc] init];
+    rsaUtil.publicKeyData = [@"com.apple.sample.publickey222" dataUsingEncoding:NSUTF8StringEncoding];
+    rsaUtil.privateKeyData = [@"com.apple.sample.privatekey111" dataUsingEncoding:NSUTF8StringEncoding];
+    [rsaUtil buildKeyInfo];
+    NSData* encData = [rsaUtil encryptData:textData usePublicKey:YES];
+    NSData* deData = [rsaUtil decryptData:encData usePublicKey:NO];
+    NSString* deText = [[NSString alloc] initWithData:deData encoding:NSUTF8StringEncoding];
+    if ([text isEqualToString:deText]) {
+        NSLog(@"encrypt and decrypt success");
+    }
     return YES;
 }
 

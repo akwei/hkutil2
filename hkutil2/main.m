@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HKEncUtil.h"
 #import "HKAppDelegate.h"
 
 int main(int argc, char *argv[])

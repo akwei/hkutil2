@@ -31,6 +31,7 @@
 @property(nonatomic,strong) ASIHTTPRequest* request;
 @property(nonatomic,strong) NSData* responseData;
 @property(nonatomic,strong) NSString* responseText;
+@property(nonatomic,assign)BOOL useSession;
 
 -(void)addString:(NSString*)value forKey:(NSString *)key;
 -(void)addInteger:(NSInteger)value forKey:(NSString*)key;

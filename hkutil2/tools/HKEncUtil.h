@@ -10,22 +10,25 @@
 
 @interface HKEncUtil : NSObject
 
-+(NSString*)md5:(NSString*)value;
++(NSString*)MD5:(NSString*)value;
 
-+(NSString*)encodeBase64:(NSString*)value;
++(NSString *)BASE64EncryptString:(NSString *)value;
++(NSString *)BASE64EncryptData:(NSData *)data;
++(NSData *)BASE64DecryptString:(NSString *)value;
 
-+(NSData*)decodeBase64:(NSString*)value;
++(NSData*)DESEncryptWithData:(NSData*)data forKey:(NSString *)key;
++(NSData*)DESDecryptWithData:(NSData*)data forKey:(NSString *)key;
 
-+(NSString*) encodeDESWithBase64WithKey:(NSString*)key value:(NSString*)value;
-+(NSString*) decodeDESWithBase64WithKey:(NSString*)key value:(NSString*)value;
++(NSData*)DESEDEEncryptWithData:(NSData*)data forKey:(NSString *)key;
++(NSData*)DESEDEDecryptWithData:(NSData*)data forKey:(NSString *)key;
 
-+(NSString*)encodeDESToHexWithKey:(NSString*)key value:(NSString*)value;
-+(NSString*)decodeDESHexWithKey:(NSString*)key hex:(NSString*)hex;
++(NSData *)AES256EncryptWithData:(NSData*)data forKey:(NSString *)key;
++(NSData *)AES256DecryptWithData:(NSData*)data forKey:(NSString *)key;
 
-+(NSString*) encode3DESWithBase64WithKey:(NSString*)key value:(NSString*)value;
-+(NSString*) decode3DESWithBase64WithKey:(NSString*)key value:(NSString*)value;
++(NSData *)AES128EncryptWithData:(NSData*)data forKey:(NSString *)key;
++(NSData *)AES128DecryptWithData:(NSData*)data forKey:(NSString *)key;
 
-+(NSString*)encode3DESToHexWithKey:(NSString*)key value:(NSString*)value;
-+(NSString*)decode3DESHexWithKey:(NSString*)key hex:(NSString*)hex;
++(NSString*)bytes2Hex:(NSData*)data;
++(NSData*)hex2Bytes:(NSString*)str;
 
 @end

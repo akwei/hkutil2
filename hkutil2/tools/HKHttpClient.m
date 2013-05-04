@@ -8,7 +8,7 @@
 
 #import "HKHttpClient.h"
 #import "ASIFormDataRequest.h"
-#import "HKDataUtil.h"
+
 
 #define HTTPCLIENT_DEBUG 1
 
@@ -32,6 +32,7 @@
         self.dataParams=[NSMutableDictionary dictionary];
         self.headers = [[NSMutableDictionary alloc] init];
         self.postTextArr=[NSMutableArray array];
+        self.useSession = NO;
 		[self setRequestGetMetod];
     }
     return self;
@@ -187,8 +188,8 @@
 	int lastIdx=[self.params count]-1;
 	for (NSString *key in self.params) {
 		id value=[self.params objectForKey:key];
-		NSString *enc_key=[HKDataUtil encodeURL:key];
-		NSString *enc_value=[HKDataUtil encodeURL:value];
+		NSString *enc_key=[HKHttpClient encodeURL:key];
+		NSString *enc_value=[HKHttpClient encodeURL:value];
 		NSString *k_v=[[NSString alloc] initWithFormat:@"%@=%@",enc_key,enc_value];
 		[buf appendString:k_v];
 		if (i<lastIdx) {
@@ -199,17 +200,49 @@
     self.tmpUrl=buf;
 }
 
++ (NSString*)encodeURL:(NSString *)string
+{
+    NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    NULL,
+                                                                                                    (__bridge CFStringRef)string,
+                                                                                                    NULL,
+                                                                                                    //                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    (CFStringRef)@":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`",
+                                                                                                    kCFStringEncodingUTF8 ));
+    return encodedString;
+}
+
++ (NSString *)decodeURL: (NSString *) input
+{
+    NSMutableString *outputStr = [NSMutableString stringWithString:input];
+    [outputStr replaceOccurrencesOfString:@"+"
+                               withString:@" "
+                                  options:NSLiteralSearch
+                                    range:NSMakeRange(0, [outputStr length])];
+    
+    return [outputStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 -(void)executeRequestForBinary:(BOOL)binary{
-    self.request.requestHeaders = self.headers;
-    self.request.requestCookies = self.cookies;
+    self.request.useSessionPersistence = self.useSession;
+    if (self.cookies) {
+        self.request.requestCookies = self.cookies;
+    }
+    if (self.headers) {
+        self.request.requestHeaders = self.headers;
+    }
 	self.request.timeOutSeconds=self.timeOutSeconds;
+#if HTTPCLIENT_DEBUG
+    NSLog(@"httpURL : %@",[self.request.url description]);
+    NSLog(@"httpMethod : %@",self.request.requestMethod);
+    NSLog(@"requestHeaders : %@",[self.request.requestHeaders description]);
+#endif
 	[self.request startSynchronous];
     self.responseData = [[NSData alloc] initWithData:self.request.responseData];
     if (!binary) {
         self.responseText = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
 	}
 #if HTTPCLIENT_DEBUG
-    NSLog(@"httpMethod : %@",self.request.requestMethod);
     NSLog(@"responseStatusCode : %i",self.request.responseStatusCode);
     NSLog(@"responseEncoding : %i",self.request.responseEncoding);
     NSLog(@"responseHeaders : %@",[self.request.responseHeaders description]);
@@ -237,8 +270,9 @@
 }
 
 -(void)doPost{
-	ASIFormDataRequest *req=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.url]];
+	__unsafe_unretained ASIFormDataRequest *req=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.url]];
 	req.requestMethod=@"POST";
+    self.request = req;
 	for (NSString *key in self.params) {
 		id value=[self.params objectForKey:key];
 		[req addPostValue:value forKey:key];
@@ -254,8 +288,9 @@
 }
 
 -(void)doPostForBinary{
-    ASIFormDataRequest *req=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.url]];
+    __unsafe_unretained ASIFormDataRequest *req=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.url]];
 	req.requestMethod=@"POST";
+    self.request = req;
 	for (NSString *key in self.params) {
 		id value=[self.params objectForKey:key];
 		[req addPostValue:value forKey:key];

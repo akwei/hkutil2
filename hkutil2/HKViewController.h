@@ -18,5 +18,6 @@
 - (IBAction)testTimer:(id)sender;
 - (IBAction)testHTTPServer:(id)sender;
 - (IBAction)testSQLQuery:(id)sender;
+- (IBAction)textException:(id)sender;
 
 @end

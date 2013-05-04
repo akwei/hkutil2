@@ -123,6 +123,9 @@
 		9BA5EDBC172B823500158865 /* HKSQLQueryCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA5EDBA172B823300158865 /* HKSQLQueryCtrl.xib */; };
 		9BA5EDBE172B8ECF00158865 /* hkutil2.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 9BA5EDBD172B8ECE00158865 /* hkutil2.sqlite */; };
 		9BA5EDC0172B91D000158865 /* db_cfg.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BA5EDBF172B91CF00158865 /* db_cfg.plist */; };
+		9BDE32A4173170760061320A /* HKRSAUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE32A3173170760061320A /* HKRSAUtil.m */; };
+		9BF4839C1733F5A000C53689 /* HKExceptionCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF4839A1733F5A000C53689 /* HKExceptionCtrl.m */; };
+		9BF4839D1733F5A000C53689 /* HKExceptionCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BF4839B1733F5A000C53689 /* HKExceptionCtrl.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -339,6 +342,11 @@
 		9BA5EDBA172B823300158865 /* HKSQLQueryCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKSQLQueryCtrl.xib; sourceTree = "<group>"; };
 		9BA5EDBD172B8ECE00158865 /* hkutil2.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = hkutil2.sqlite; sourceTree = "<group>"; };
 		9BA5EDBF172B91CF00158865 /* db_cfg.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = db_cfg.plist; sourceTree = "<group>"; };
+		9BDE32A2173170760061320A /* HKRSAUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKRSAUtil.h; sourceTree = "<group>"; };
+		9BDE32A3173170760061320A /* HKRSAUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKRSAUtil.m; sourceTree = "<group>"; };
+		9BF483991733F5A000C53689 /* HKExceptionCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKExceptionCtrl.h; sourceTree = "<group>"; };
+		9BF4839A1733F5A000C53689 /* HKExceptionCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKExceptionCtrl.m; sourceTree = "<group>"; };
+		9BF4839B1733F5A000C53689 /* HKExceptionCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKExceptionCtrl.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +465,9 @@
 				9BA5EDB8172B823000158865 /* HKSQLQueryCtrl.h */,
 				9BA5EDB9172B823100158865 /* HKSQLQueryCtrl.m */,
 				9BA5EDBA172B823300158865 /* HKSQLQueryCtrl.xib */,
+				9BF483991733F5A000C53689 /* HKExceptionCtrl.h */,
+				9BF4839A1733F5A000C53689 /* HKExceptionCtrl.m */,
+				9BF4839B1733F5A000C53689 /* HKExceptionCtrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -533,6 +544,8 @@
 				9B20EB4C17297888005E9D1D /* HKWorkUtil.m */,
 				9BA5EDAE172A44A200158865 /* HKHTTPServer.h */,
 				9BA5EDAF172A44A200158865 /* HKHTTPServer.m */,
+				9BDE32A2173170760061320A /* HKRSAUtil.h */,
+				9BDE32A3173170760061320A /* HKRSAUtil.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -861,6 +874,7 @@
 				9BA5EDBC172B823500158865 /* HKSQLQueryCtrl.xib in Resources */,
 				9BA5EDBE172B8ECF00158865 /* hkutil2.sqlite in Resources */,
 				9BA5EDC0172B91D000158865 /* db_cfg.plist in Resources */,
+				9BF4839D1733F5A000C53689 /* HKExceptionCtrl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +972,8 @@
 				9BA5EDB0172A44A200158865 /* HKHTTPServer.m in Sources */,
 				9BA5EDB4172A754200158865 /* HKHTTPServerCtrl.m in Sources */,
 				9BA5EDBB172B823500158865 /* HKSQLQueryCtrl.m in Sources */,
+				9BDE32A4173170760061320A /* HKRSAUtil.m in Sources */,
+				9BF4839C1733F5A000C53689 /* HKExceptionCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

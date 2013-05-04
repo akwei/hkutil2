@@ -44,6 +44,35 @@
         return;
     }
 }
+
+- (void)deleteKeys {
+	OSStatus sanityCheck = noErr;
+	NSMutableDictionary * queryPublicKey = [NSMutableDictionary dictionaryWithCapacity:0];
+	NSMutableDictionary * queryPrivateKey = [NSMutableDictionary dictionaryWithCapacity:0];
+	
+	// Set the public key query dictionary.
+	[queryPublicKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+	[queryPublicKey setObject:self.publicKeyData forKey:(__bridge id)kSecAttrApplicationTag];
+	[queryPublicKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+	
+	// Set the private key query dictionary.
+	[queryPrivateKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+	[queryPrivateKey setObject:self.privateKeyData forKey:(__bridge id)kSecAttrApplicationTag];
+	[queryPrivateKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+	
+	// Delete the private key.
+	sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPrivateKey);
+	
+	// Delete the public key.
+	sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPublicKey);
+    
+	if (_publicSecKeyRef) CFRelease(_publicSecKeyRef);
+	if (_privateSecKeyRef) CFRelease(_privateSecKeyRef);
+}
+
+-(void)dealloc{
+    [self deleteKeys];
+}
 -(NSData *)encryptData:(NSData *)data usePublicKey:(BOOL)flag{
     SecKeyRef key = NULL;
     if (flag) {

@@ -8,19 +8,22 @@
 
 #import "HKEncUtilCtrl.h"
 #import "HKEncUtil.h"
+#import "HKRSAUtil.h"
 
-@implementation HKEncUtilCtrl
+@implementation HKEncUtilCtrl{
+    
+}
 @synthesize shadowCtrl;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 //    [self testdes];
 //    [self testredes];
 //    [self test3des];
 //    [self testre3des];
-//    [self testRSA];
-    [self testReRSA];
+    [self testRSA];
 }
 
 -(void)testdes{
@@ -58,32 +61,18 @@
 }
 
 -(void)testRSA{
-    NSString* b64 =@"LYmhOASDElxZI91Ff0LKqNdvB/gCrPuFjRD3/nQCy68PJA2HFWSBuxITUB2Fri14bvkQEpVKN1R9e9rJSZh/p759Nt+nOBY/ZTfQK+G8Io1WdO7GXUiPSPCkbZYB+SrAPrF6x6nystHDPF/xk0jq9jfS2OXasJfk0MzJqeWH7rM=";
-    NSString* b64PrvKey=@"MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALcv2Tm/1ph2EgpsZlB6DdynFT1/F/cSq5kl0ZtpLj6++EtSYQXBqGkminhQ+W309iTBHwoToQzvbV1f1a1yKMEAZ1BWywe0OZWIq9V4Oe2Gr3GFwi36nBOMat7HUnQYkqRoWdYpsQM5+lNMrznYOXnc4D1bSXI210Z1XyXgLfNlAgMBAAECgYB+7m3DgTUOMYnwpQoEK36dbTzffsg5UDuNA9KIsEn1+leLwYou9fBe4/DAy8L5uOoxr4t1bQKENwb902D5LQgk/5iycN29XxV2hSD2HGuDNk8pBfT7dzhhSrd1srCEx++u8GWiGwAVXG3k3iakwlJWn9TFCf3ff3PBsRih73OQhQJBAN0sYkDmxOJ6b57xk/qlr25SH4gpyJoK+reR/231dLO1seFrTQVWcnwd7mrceW1Sm7GsUhn9c6WtObNRk6BcmucCQQDUCDXKQl7VIrwpziBVuBk3X6+k4pfUr9RHtHgsKsEkrEqq2Z49PeiQVmQxsOkrqTHqwmwCTha4sqpxTRIfOaHTAkEAvCXQo5Nss5kiMV0i3FtsJHY6GrQo0Vo7tEO/vgPLtkD/xFpqV/sVQx6XPlK1/VkD155W7YMdiTgWWMQxyH5eywJBANIpfR+IX7UEo9sQC67LNntTZaaaToIq8c9NCxxEGINAHxZvc1Aij+SZLOCwCL4VC3w0z5gNTKovtY9uI/s9Ra8CQQDMxk1QOaCbKm9+c6ArXjN2zSGJjrvFNZX6tzEeUwaR6knCQFs62f4b9EP8//UQzCbnq0d3em+VVkc0+x7jgkD8";
-    NSString* b64PubKey =@"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3L9k5v9aYdhIKbGZQeg3cpxU9fxf3EquZJdGbaS4+vvhLUmEFwahpJop4UPlt9PYkwR8KE6EM721dX9WtcijBAGdQVssHtDmViKvVeDnthq9xhcIt+pwTjGrex1J0GJKkaFnWKbEDOfpTTK852Dl53OA9W0lyNtdGdV8l4C3zZQIDAQAB";
-    NSData* encdata =[HKEncUtil BASE64DecryptString:b64];
-    NSData* privateKey = [HKEncUtil BASE64DecryptString:b64PrvKey];
-    NSData* publicKey = [HKEncUtil BASE64DecryptString:b64PubKey];
-    [HKEncUtil generateKeyPairWithPublicKey:publicKey privatekey:privateKey];
-    NSData* data = [HKEncUtil RSADecryptWithData:encdata forPrivateKey:privateKey];
-    NSLog(@"testRSA:%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-}
-
--(void)testReRSA{
-    NSString* b64PrvKey=@"MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALcv2Tm/1ph2EgpsZlB6DdynFT1/F/cSq5kl0ZtpLj6++EtSYQXBqGkminhQ+W309iTBHwoToQzvbV1f1a1yKMEAZ1BWywe0OZWIq9V4Oe2Gr3GFwi36nBOMat7HUnQYkqRoWdYpsQM5+lNMrznYOXnc4D1bSXI210Z1XyXgLfNlAgMBAAECgYB+7m3DgTUOMYnwpQoEK36dbTzffsg5UDuNA9KIsEn1+leLwYou9fBe4/DAy8L5uOoxr4t1bQKENwb902D5LQgk/5iycN29XxV2hSD2HGuDNk8pBfT7dzhhSrd1srCEx++u8GWiGwAVXG3k3iakwlJWn9TFCf3ff3PBsRih73OQhQJBAN0sYkDmxOJ6b57xk/qlr25SH4gpyJoK+reR/231dLO1seFrTQVWcnwd7mrceW1Sm7GsUhn9c6WtObNRk6BcmucCQQDUCDXKQl7VIrwpziBVuBk3X6+k4pfUr9RHtHgsKsEkrEqq2Z49PeiQVmQxsOkrqTHqwmwCTha4sqpxTRIfOaHTAkEAvCXQo5Nss5kiMV0i3FtsJHY6GrQo0Vo7tEO/vgPLtkD/xFpqV/sVQx6XPlK1/VkD155W7YMdiTgWWMQxyH5eywJBANIpfR+IX7UEo9sQC67LNntTZaaaToIq8c9NCxxEGINAHxZvc1Aij+SZLOCwCL4VC3w0z5gNTKovtY9uI/s9Ra8CQQDMxk1QOaCbKm9+c6ArXjN2zSGJjrvFNZX6tzEeUwaR6knCQFs62f4b9EP8//UQzCbnq0d3em+VVkc0+x7jgkD8";
-    NSString* b64PubKey =@"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3L9k5v9aYdhIKbGZQeg3cpxU9fxf3EquZJdGbaS4+vvhLUmEFwahpJop4UPlt9PYkwR8KE6EM721dX9WtcijBAGdQVssHtDmViKvVeDnthq9xhcIt+pwTjGrex1J0GJKkaFnWKbEDOfpTTK852Dl53OA9W0lyNtdGdV8l4C3zZQIDAQAB";
-    NSData* privateKey = [HKEncUtil BASE64DecryptString:b64PrvKey];
-    NSData* publicKey = [HKEncUtil BASE64DecryptString:b64PubKey];
-    [HKEncUtil generateKeyPairWithPublicKey:publicKey privatekey:privateKey];
-    NSString* text = @"123456781234567812345678";
+    HKRSAUtil* rsaUtil = [[HKRSAUtil alloc] init];
+    rsaUtil.publicKeyData = [@"com.apple.sample.publickey222" dataUsingEncoding:NSUTF8StringEncoding];
+    rsaUtil.privateKeyData = [@"com.apple.sample.privatekey111" dataUsingEncoding:NSUTF8StringEncoding];
+    [rsaUtil buildKeyInfo];
+    NSString* text = @"MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALcv2Tm/1ph2EgpsZlB6DdynFT1/F/cSq5kl0ZtpLj6++EtSYQXBqGkminhQ+W309iTBHwoToQzvbV1f1a1yKMEAZ1BWywe0OZWIq9V4Oe2Gr3GFwi36nBOMat7HUnQYkqRoWdYpsQM5+lNMrznYOXnc4D1bSXI210Z1XyXgLfNlAgMBAAECgYB+7m3DgTUOMYnwpQoEK36dbTzffsg5UDuNA9KIsEn1+leLwYou9fBe4/DAy8L5uOoxr4t1bQKENwb902D5LQgk/5iycN29XxV2hSD2HGuDNk8pBfT7dzhhSrd1srCEx++u8GWiGwAVXG3k3iakwlJWn9TFCf3ff3PBsRih73OQhQJBAN0sYkDmxOJ6b57xk/qlr25SH4gpyJoK+reR/231dLO1seFrTQVWcnwd7mrceW1Sm7GsUhn9c6WtObNRk6BcmucCQQDUCDXKQl7VIrwpziBVuBk3X6+k4pfUr9RHtHgsKsEkrEqq2Z49PeiQVmQxsOkrqTHqwmwCTha4sqpxTRIfOaHTAkEAvCXQo5Nss5kiMV0i3FtsJHY6GrQo0Vo7tEO/vgPLtkD/xFpqV/sVQx6XPlK1/VkD155W7YMdiTgWWMQxyH5eywJBANIpfR+IX7UEo9sQC67LNntTZaaaToIq8c9NCxxEGINAHxZvc1Aij+SZLOCwCL4VC3w0z5gNTKovtY9uI/s9Ra8CQQDMxk1QOaCbKm9+c6ArXjN2zSGJjrvFNZX6tzEeUwaR6knCQFs62f4b9EP8//UQzCbnq0d3em+VVkc0+x7jgkD8";
     NSData* textData = [text dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* data = [HKEncUtil RSAEncryptWithData:textData forPublicKey:publicKey];
-    NSString* b64 = [HKEncUtil BASE64EncryptData:data];
-    NSLog(@"b64:%@",b64);
-    data = [HKEncUtil BASE64DecryptString:b64];
-    textData = [HKEncUtil RSADecryptWithData:data forPrivateKey:privateKey];
-    text = [[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding];
-    NSLog(@"text:%@",text);
+    NSData* encData = [rsaUtil encryptData:textData usePublicKey:YES];
+    NSData* deData = [rsaUtil decryptData:encData usePublicKey:NO];
+    NSString* deText = [[NSString alloc] initWithData:deData encoding:NSUTF8StringEncoding];
+    if ([text isEqualToString:deText]) {
+        NSLog(@"encrypt and decrypt success");
+    }
 }
 
 - (void)didReceiveMemoryWarning

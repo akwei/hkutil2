@@ -8,14 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HKRSAUtil : NSObject{
-    SecKeyRef _publicSecKeyRef;
-    SecKeyRef _privateSecKeyRef;
-}
-@property(nonatomic,strong)NSData* publicKeyData;
-@property(nonatomic,strong)NSData* privateKeyData;
+@interface HKRSAUtil : NSObject
 
--(void)buildKeyInfo;
--(NSData*)encryptData:(NSData*)data usePublicKey:(BOOL)flag;
--(NSData*)decryptData:(NSData*)data usePublicKey:(BOOL)flag;
+-(id)initWithPublickKeyData:(NSData*)publicKeyData
+           isX509PublickKey:(BOOL)isX509PublickKey
+             privateKeyData:(NSData*)privateKeyData
+               publicKeyTag:(NSString*)publicKeyTag
+              privateKeyTag:(NSString*)privateKeyTag;
+
+-(void)reBuildKeyInfo;
+-(NSData*)encryptData:(NSData*)data;
+-(NSData*)decryptData:(NSData*)data;
+
+
 @end

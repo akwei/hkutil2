@@ -8,79 +8,171 @@
 
 #import "HKRSAUtil.h"
 
-@implementation HKRSAUtil
+@interface HKRSAUtil ()
+@property(nonatomic,strong)NSData* publicKeyData;
+@property(nonatomic,strong)NSData* privateKeyData;
+@property(nonatomic,assign)BOOL isX509PublickKey;
+@property(nonatomic,copy)NSString* publicKeyTag;
+@property(nonatomic,copy)NSString* privateKeyTag;
+@end
 
--(void)buildKeyInfo{
-    OSStatus status = noErr;
-    NSMutableDictionary *privateKeyAttr = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *publicKeyAttr = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *keyPairAttr = [[NSMutableDictionary alloc] init];
-    
-    _publicSecKeyRef = NULL;
-    _privateSecKeyRef = NULL;
-    
-    [keyPairAttr setObject:(__bridge id)kSecAttrKeyTypeRSA
-                    forKey:(__bridge id)kSecAttrKeyType];
-    [keyPairAttr setObject:[NSNumber numberWithInt:1024]
-                    forKey:(__bridge id)kSecAttrKeySizeInBits];
-    if (self.privateKeyData) {
-        [privateKeyAttr setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecAttrIsPermanent];
-        [privateKeyAttr setObject:self.privateKeyData forKey:(__bridge id)kSecAttrApplicationTag];
-    }
-    if (self.publicKeyData) {
-        [publicKeyAttr setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecAttrIsPermanent];
-        [publicKeyAttr setObject:self.publicKeyData forKey:(__bridge id)kSecAttrApplicationTag];
-    }
-    
-    [keyPairAttr setObject:privateKeyAttr forKey:(__bridge id)kSecPrivateKeyAttrs];
-    [keyPairAttr setObject:publicKeyAttr forKey:(__bridge id)kSecPublicKeyAttrs];
-    
-    status = SecKeyGeneratePair((__bridge CFDictionaryRef)keyPairAttr,
-                                &_publicSecKeyRef, &_privateSecKeyRef);
-
-    //    error handling...
-    if (status != noErr) {
-        NSLog(@"has error when generating the key pair. status=%ld",status);
-        return;
-    }
+@implementation HKRSAUtil{
+    SecKeyRef _publicSecKeyRef;
+    SecKeyRef _privateSecKeyRef;
 }
 
-- (void)deleteKeys {
-	OSStatus sanityCheck = noErr;
-	NSMutableDictionary * queryPublicKey = [NSMutableDictionary dictionaryWithCapacity:0];
-	NSMutableDictionary * queryPrivateKey = [NSMutableDictionary dictionaryWithCapacity:0];
-	
-	// Set the public key query dictionary.
-	[queryPublicKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
-	[queryPublicKey setObject:self.publicKeyData forKey:(__bridge id)kSecAttrApplicationTag];
-	[queryPublicKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
-	
-	// Set the private key query dictionary.
-	[queryPrivateKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
-	[queryPrivateKey setObject:self.privateKeyData forKey:(__bridge id)kSecAttrApplicationTag];
-	[queryPrivateKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
-	
-	// Delete the private key.
-	sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPrivateKey);
-	
-	// Delete the public key.
-	sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPublicKey);
-    
-	if (_publicSecKeyRef) CFRelease(_publicSecKeyRef);
-	if (_privateSecKeyRef) CFRelease(_privateSecKeyRef);
+-(id)initWithPublickKeyData:(NSData *)publicKeyData
+           isX509PublickKey:(BOOL)isX509PublickKey
+             privateKeyData:(NSData *)privateKeyData
+               publicKeyTag:(NSString *)publicKeyTag
+              privateKeyTag:(NSString *)privateKeyTag{
+    self = [super init];
+    if (self) {
+        self.publicKeyData = publicKeyData;
+        self.privateKeyData = privateKeyData;
+        self.isX509PublickKey = isX509PublickKey;
+        self.publicKeyTag = publicKeyTag;
+        self.privateKeyTag = privateKeyTag;
+        [self reBuildKeyInfo];
+    }
+    return self;
 }
 
 -(void)dealloc{
     [self deleteKeys];
 }
--(NSData *)encryptData:(NSData *)data usePublicKey:(BOOL)flag{
+
+-(void)reBuildKeyInfo{
+    if (self.publicKeyData) {
+        NSData* tagData= [self.publicKeyTag dataUsingEncoding:NSUTF8StringEncoding];
+        [self setPublicKey:self.publicKeyData tag:tagData];
+        _publicSecKeyRef = [self keyRefWithTag:tagData];
+    }
+    if (self.privateKeyData) {
+        NSData* tagData= [self.privateKeyTag dataUsingEncoding:NSUTF8StringEncoding];
+        [self setPrivateKey:self.privateKeyData tag:tagData];
+        _privateSecKeyRef = [self keyRefWithTag:tagData];
+    }
+}
+
+- (SecKeyRef)keyRefWithTag:(NSData *)tagData
+{
+    NSMutableDictionary *queryKey = [self keyQueryDictionary:tagData];
+    [queryKey setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnRef];
+    
     SecKeyRef key = NULL;
-    if (flag) {
-        key = _publicSecKeyRef;
+    OSStatus err = SecItemCopyMatching((__bridge CFDictionaryRef)queryKey, (CFTypeRef *)&key);
+    
+    if (err != noErr)
+    {
+        NSLog(@"HKRSAUtil.keyRefWithTag err. status=%ld",err);        
+        return nil;
     }
-    else{
-        key = _privateSecKeyRef;
+    return key;
+}
+
+- (void)setPrivateKey:(NSData *)keyData
+                  tag:(NSData *)tagData
+{
+    [self removeKey:tagData];
+    NSMutableDictionary *keyQueryDictionary = [self keyQueryDictionary:tagData];
+    [keyQueryDictionary setObject:keyData forKey:(__bridge id)kSecValueData];
+    [keyQueryDictionary setObject:(__bridge id)kSecAttrKeyClassPrivate forKey:(__bridge id)kSecAttrKeyClass];
+    [keyQueryDictionary setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnPersistentRef];
+    
+    CFTypeRef persistKey = nil;
+    OSStatus secStatus = SecItemAdd((__bridge CFDictionaryRef)keyQueryDictionary, &persistKey);
+    
+    if (persistKey != nil)
+    {
+        CFRelease(persistKey);
     }
+    
+    if ((secStatus != noErr) && (secStatus != errSecDuplicateItem))
+    {
+        NSLog(@"HKRSAUtil.setPrivateKey err. status=%ld",secStatus);
+        return;
+    }
+    
+    return;
+}
+
+- (void)setPublicKey:(NSData*)keyData
+                 tag:(NSData *)tagData
+{
+    [self removeKey:tagData];
+    NSData* data = [self strippedPublicKey:keyData isX509Key:YES];
+    CFTypeRef persistKey = nil;
+    
+    NSMutableDictionary *keyQueryDictionary = [self keyQueryDictionary:tagData];
+    [keyQueryDictionary setObject:data forKey:(__bridge id)kSecValueData];
+    [keyQueryDictionary setObject:(__bridge id)kSecAttrKeyClassPublic forKey:(__bridge id)kSecAttrKeyClass];
+    [keyQueryDictionary setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnPersistentRef];
+    
+    OSStatus secStatus = SecItemAdd((__bridge CFDictionaryRef)keyQueryDictionary, &persistKey);
+    
+    if (persistKey != nil)
+    {
+        CFRelease(persistKey);
+    }
+    
+    if ((secStatus != noErr) && (secStatus != errSecDuplicateItem))
+    {
+        NSLog(@"HKRSAUtil.setPublicKey err. status=%ld",secStatus);
+        return;
+    }
+    
+    return;
+}
+
+- (void)removeKey:(NSData *)tagData
+{
+    NSDictionary *queryKey = [self keyQueryDictionary:tagData];
+    OSStatus secStatus = SecItemDelete((__bridge CFDictionaryRef)queryKey);
+    
+    if ((secStatus != noErr) && (secStatus != errSecDuplicateItem))
+    {
+        //
+    }
+}
+
+- (NSMutableDictionary *)keyQueryDictionary:(NSData *)tagData
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    [result setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+    [result setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+    [result setObject:tagData forKey:(__bridge id)kSecAttrApplicationTag];
+    [result setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)kSecAttrAccessible];
+    
+    return result;
+}
+
+- (void)deleteKeys {
+	OSStatus sanityCheck = noErr;
+	if (self.publicKeyTag) {
+        NSMutableDictionary * queryPublicKey = [NSMutableDictionary dictionaryWithCapacity:0];
+        // Set the public key query dictionary.
+        [queryPublicKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+        [queryPublicKey setObject:self.publicKeyTag forKey:(__bridge id)kSecAttrApplicationTag];
+        [queryPublicKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+        // Delete the public key.
+        sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPublicKey);
+    }
+	if (self.privateKeyTag) {
+        NSMutableDictionary * queryPrivateKey = [NSMutableDictionary dictionaryWithCapacity:0];
+        // Set the private key query dictionary.
+        [queryPrivateKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+        [queryPrivateKey setObject:self.privateKeyTag forKey:(__bridge id)kSecAttrApplicationTag];
+        [queryPrivateKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+        // Delete the private key.
+        sanityCheck = SecItemDelete((__bridge CFDictionaryRef)queryPrivateKey);
+    }
+	if (_publicSecKeyRef) CFRelease(_publicSecKeyRef);
+	if (_privateSecKeyRef) CFRelease(_privateSecKeyRef);
+}
+
+-(NSData *)encryptData:(NSData *)data{
+    SecKeyRef key = _publicSecKeyRef;
     OSStatus status = noErr;
     size_t dataLength = [data length];
     size_t cipherBufferSize = SecKeyGetBlockSize(key);
@@ -113,14 +205,9 @@
     free(cipherBuffer);
     return mData;
 }
--(NSData *)decryptData:(NSData *)data usePublicKey:(BOOL)flag{
-    SecKeyRef key = NULL;
-    if (flag) {
-        key = _publicSecKeyRef;
-    }
-    else{
-        key = _privateSecKeyRef;
-    }
+
+-(NSData *)decryptData:(NSData *)data{
+    SecKeyRef key = _privateSecKeyRef;
     OSStatus status = noErr;
     size_t cipherBufferSize = [data length];
 //    uint8_t* cipherBuffer = (uint8_t *)[data bytes];
@@ -159,5 +246,80 @@
     }
     free(plainBuffer);
     return mData;
+}
+- (NSData *)strippedPublicKey:(NSData *)keyData isX509Key:(BOOL)isX509Key
+{
+    NSData *strippedPublicKeyData = keyData;
+    if (isX509Key)
+    {
+        unsigned char * bytes = (unsigned char *)[strippedPublicKeyData bytes];
+        size_t bytesLen = [strippedPublicKeyData length];
+        
+        size_t i = 0;
+        if (bytes[i++] != 0x30)
+        {
+            return nil;
+        }
+        
+        if (bytes[i] > 0x80)
+        {
+            i += bytes[i] - 0x80 + 1;
+        }
+        else
+        {
+            i++;
+        }
+        
+        if (i >= bytesLen)
+        {
+            return nil;
+        }
+        if (bytes[i] != 0x30)
+        {
+            return nil;
+        }
+        
+        i += 15;
+        
+        if (i >= bytesLen - 2)
+        {
+            return nil;
+        }
+        if (bytes[i++] != 0x03)
+        {
+            return nil;
+        }
+        
+        if (bytes[i] > 0x80)
+        {
+            i += bytes[i] - 0x80 + 1;
+        }
+        else
+        {
+            i++;
+        }
+        
+        if (i >= bytesLen)
+        {
+            return nil;
+        }
+        if (bytes[i++] != 0x00)
+        {
+            return nil;
+        }
+        if (i >= bytesLen)
+        {
+            return nil;
+        }
+        strippedPublicKeyData = [NSData dataWithBytes:&bytes[i]
+                                               length:bytesLen - i];
+    }
+    
+    if (!strippedPublicKeyData)
+    {
+        return nil;
+    }
+    
+    return strippedPublicKeyData;
 }
 @end

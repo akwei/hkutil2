@@ -61,11 +61,13 @@
 }
 
 -(void)testRSA{
-    HKRSAUtil* rsaUtil = [[HKRSAUtil alloc] initWithPublickKeyData:[HKEncUtil BASE64DecryptString:@"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCq54ON9vzLlSxztmBirS0MiTJs5iwHqzcvRoLiJZLpCZECuFaT+iHiZshlJqko0iuYAp8qKh//YLIQ22oh74Utu5s0e8PpaQamNmc9OptFJo6lYyGdygpm+o952UUemR42TUkCePa2tID5hbVQtgc2M4idPp0uzEN6DgnaHVjoRQIDAQAB"]
+    HKRSAUtil* rsaUtil = [[HKRSAUtil alloc] initWithPublickKeyData:[HKEncUtil BASE64DecryptString:@"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDMo51EbnF+lZ82gdW6Uycj2H9OmoaropTeMvszTiiIgiDhM+DuRP70KOzlaoSg+01qRwgXXq0iXSPLvBp0HKAsBhe1TD3kRpwvU8NetGx7h+xG/BOn8X3vJdjfonzs+6Cr+3ver7ZFO1tSjOElZYcahDHKhugpWvLSsQ/EipyCQIDAQAB"]
                                                   isX509PublickKey:YES
                                                     privateKeyData:nil
                                                       publicKeyTag:@"publickKeyRef"
                                                      privateKeyTag:@"privateKeyRef"];
+    
+    
     
     NSString* text = @"我来了，哈哈哈，你好，来一个，奥特曼，动感超人hello1234567890";
     NSData* textData = [text dataUsingEncoding:NSUTF8StringEncoding];

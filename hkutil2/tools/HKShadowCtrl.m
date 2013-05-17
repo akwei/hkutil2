@@ -45,9 +45,8 @@
         self.backwardType = kCATransitionPush;
         self.backwardSubType = kCATransitionFromLeft;
         self.closeType = kCATransitionFade;
-        return self;
     }
-    return nil;
+    return self;
 }
 
 -(id)init{
@@ -84,13 +83,13 @@
     self.view.hidden=YES;
 }
 
+-(void)buildPosition{
+    self.view.frame = self.parent.bounds;
+}
+
 -(void)changeShadowColor:(UIColor *)shadowColor{
     self.shadowColor = shadowColor;
     self.shadow.backgroundColor = self.shadowColor;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return NO;
 }
 
 #pragma mark - push
@@ -310,6 +309,7 @@
 }
 
 -(void)show{
+    [self buildPosition];
     self.view.hidden=NO;
     [self.parent bringSubviewToFront:self.view];
 }
@@ -449,5 +449,4 @@
 -(void)clearControllers{
     [self.viewControllers removeAllObjects];
 }
-
 @end

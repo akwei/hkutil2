@@ -87,4 +87,11 @@
     return [NSNumber numberWithInt:0];
 }
 
++(NSString *)formatNumber:(NSNumber *)n format:(NSString *)format{
+    NSNumberFormatter* fmt = [[NSNumberFormatter alloc] init];
+    fmt.positiveFormat = format;
+    return [fmt stringFromNumber:n];
+}
+
+
 @end

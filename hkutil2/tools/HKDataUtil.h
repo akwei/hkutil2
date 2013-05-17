@@ -28,4 +28,6 @@
 
 +(NSNumber*) parseNumber:(id)value;
 
++(NSString*) formatNumber:(NSNumber*)n format:(NSString*)format;
+
 @end

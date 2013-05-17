@@ -7,7 +7,6 @@
 //
 
 #import "HKSQLQuery.h"
-#import "HKFileUtil.h"
 
 #define DbConnDebug 0
 #define DbConnTrDebug 0
@@ -99,18 +98,45 @@ static NSMutableDictionary* objQueryDic=nil;
     return dbhandle;
 }
 
++(NSString *)getAppRefPath{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
++(NSString *)getFilePath:(NSString *)fileName{
+    return [[self getAppRefPath] stringByAppendingPathComponent:fileName];
+}
+
++(BOOL)copyFromResource:(NSString *)resourceFileName absFileName:(NSString *)absFileName{
+    NSString *riginFile = [[NSBundle mainBundle] pathForResource:resourceFileName ofType:nil];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    BOOL result = [fileManager copyItemAtPath:riginFile toPath:absFileName error:&error];
+    if (!result) {
+        NSLog(@"%@",error);
+        NSLog(@"%@",[error description]);
+    }
+    return result;
+}
+
++(BOOL)isFileExist:(NSString *)absFileName{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager fileExistsAtPath:absFileName];
+}
+
 -(void)open{
     dispatch_sync(syncQueue, ^{
         @autoreleasepool {
             if (dbOpen) {
                 return ;
             }
-            NSString* dbPath=[HKFileUtil getFilePath:self.dbName];
+            NSString* dbPath=[HKDbConn getFilePath:self.dbName];
 #if DbConnDebug
             NSLog(@"%@",dbPath);
 #endif
-            if (![HKFileUtil isFileExist:dbPath]) {
-                BOOL result = [HKFileUtil copyFromResource:self.dbName absFileName:dbPath];
+            if (![HKDbConn isFileExist:dbPath]) {
+                BOOL result = [HKDbConn copyFromResource:self.dbName absFileName:dbPath];
                 if (!result) {
                     NSString* exname=[NSString stringWithFormat:@"create db file %@ err",self.dbName];
                     [self throwException:0 exName:exname reason:@""];

@@ -78,5 +78,6 @@
 
 -(void)doPostForBinary;
 
+-(void)clear;
 
 @end

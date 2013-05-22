@@ -305,4 +305,8 @@
 	[self executeRequestForBinary:YES];
 }
 
+-(void)clear{
+    self.request = nil;
+}
+
 @end

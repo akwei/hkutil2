@@ -10,6 +10,13 @@
 #import "ASIHTTPRequest.h"
 
 /*
+ 编译时在
+ ASIFormDataRequest.m
+ ASIHTTPRequest.m
+ select the file in "Compile sources" section of the "Build Phases" tab; and add -O0 (capitol O zero).
+ 
+ 如果要使用xml还应加上：libxml，在build setting中的header search path 中加入 ${SDK_DIR}/usr/include/libxml2 
+ 
  ASIHTTPRequest 的封装，只支持同步模式，不支持异步，异步调用需要在调用层。目前只支持UTF-8编码
  使用方式:
  HttpClient* client = [[HttpClient alloc] init];
@@ -32,6 +39,7 @@
 @property(nonatomic,strong) NSData* responseData;
 @property(nonatomic,strong) NSString* responseText;
 @property(nonatomic,assign)BOOL useSession;
+@property(nonatomic,assign)NSTimeInterval sleepTime;
 
 -(void)addString:(NSString*)value forKey:(NSString *)key;
 -(void)addInteger:(NSInteger)value forKey:(NSString*)key;

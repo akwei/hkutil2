@@ -13,8 +13,7 @@
 #define HTTPCLIENT_DEBUG 1
 
 @interface HKHttpClient ()
-@property(nonatomic,copy) NSString* tmpUrl;
-@property(nonatomic,copy) NSString *method;
+@property(nonatomic,strong) NSString *method;
 @property(nonatomic,strong) NSMutableDictionary *params;//请求参数key_value值
 @property(nonatomic,strong) NSMutableDictionary *dataParams;//请求的上传数据的key_value值
 @property(nonatomic,strong) NSMutableArray *postTextArr;//post body
@@ -33,6 +32,7 @@
         self.headers = [[NSMutableDictionary alloc] init];
         self.postTextArr=[NSMutableArray array];
         self.useSession = NO;
+        self.sleepTime = 2;
 		[self setRequestGetMetod];
     }
     return self;
@@ -172,7 +172,7 @@
     [self.cookies addObject:cookie];
 }
 
--(void)buildGetUrl{
+-(NSString*)buildGetUrl{
 	NSMutableString *buf=[[NSMutableString alloc] init];
 	[buf appendString:self.url];
 	NSRange r=[self.url rangeOfString:@"?"];
@@ -197,7 +197,7 @@
 		}
 		i++;
 	}
-    self.tmpUrl=buf;
+    return buf;
 }
 
 + (NSString*)encodeURL:(NSString *)string
@@ -224,6 +224,7 @@
 }
 
 -(void)executeRequestForBinary:(BOOL)binary{
+    self.request.numberOfTimesToRetryOnTimeout = 3;
     self.request.useSessionPersistence = self.useSession;
     if (self.cookies) {
         self.request.requestCookies = self.cookies;
@@ -236,6 +237,11 @@
     NSLog(@"httpURL : %@",[self.request.url description]);
     NSLog(@"httpMethod : %@",self.request.requestMethod);
     NSLog(@"requestHeaders : %@",[self.request.requestHeaders description]);
+    NSLog(@"============ requestParams:  ============");
+    [self.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSLog(@"name=%@,value=%@",key,obj);
+    }];
+    NSLog(@"============ requestParams end ============");
 #endif
 	[self.request startSynchronous];
     self.responseData = [[NSData alloc] initWithData:self.request.responseData];
@@ -256,15 +262,19 @@
 }
 
 -(void)doGet{
-    [self buildGetUrl];
-    self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
+    NSString* turl = [self buildGetUrl];
+    self.url = nil;
+    self.url = turl;
+    self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.url]];
 	self.request.requestMethod=@"GET";
     [self executeRequestForBinary:NO];
 }
 
 -(void)doGetForBinary{
-    [self buildGetUrl];
-	self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.tmpUrl]];
+    NSString* turl = [self buildGetUrl];
+    self.url = nil;
+    self.url = turl;
+	self.request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.url]];
 	self.request.requestMethod=@"GET";
 	[self executeRequestForBinary:YES];
 }
@@ -285,6 +295,7 @@
         [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
     }
 	[self executeRequestForBinary:NO];
+    [NSThread sleepForTimeInterval:self.sleepTime];
 }
 
 -(void)doPostForBinary{
@@ -303,6 +314,7 @@
         [req appendPostData:[text dataUsingEncoding:NSUTF8StringEncoding]];
     }
 	[self executeRequestForBinary:YES];
+    [NSThread sleepForTimeInterval:self.sleepTime];
 }
 
 -(void)clear{

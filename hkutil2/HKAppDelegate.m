@@ -10,6 +10,7 @@
 #import "HKViewController.h"
 #import "HKEncUtil.h"
 #import "HKRSAUtil.h"
+#import "HKAFHTTPClient.h"
 
 @implementation HKAppDelegate
 
@@ -17,11 +18,32 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    // Override point for customization after application launch.
-    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
-    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-    self.window.rootViewController = navCtrl;
-    [self.window makeKeyAndVisible];
+//    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
+//    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+//    self.window.rootViewController = navCtrl;
+//    [self.window makeKeyAndVisible];
+    
+    [self testHTTP];
     return YES;
+}
+
+-(void)testHTTP{
+    for (int i=0; i<10; i++) {
+        HKAFHTTPClient* client = [[HKAFHTTPClient alloc] init];
+        client.timeout = 10;
+        client.url = @"http://www.yibao.com/showdemo/consult";
+        [client addString:@"vJkREBr9WUvf4ucPGP5v8bPz2eYlmy4fz3BqQ3jZe3k=" forKey:@"data"];
+        [client doPost];
+//        NSLog(@"count=%d",i+1);
+//        NSLog(@"%@",[client description]);
+        NSLog(@"responseString:%@",client.responseString);
+//        for (NSHTTPCookie* cookie in client.responseCookies) {
+//            NSLog(@"cookie name=%@ value=%@",cookie.name,cookie.value);
+//        }
+        if (client.error) {
+            NSLog(@"%@",[client.error description]);
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

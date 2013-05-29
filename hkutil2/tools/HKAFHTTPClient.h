@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface HKAFHTTPClient : NSObject
-@property(nonatomic,copy)NSString* url;
+@property(nonatomic,copy) NSString* baseUrl;
+@property(nonatomic,copy) NSString* subUrl;
 @property(nonatomic,copy)NSString* responseString;
 @property(nonatomic,copy)NSData* responseData;
 @property(nonatomic,assign)BOOL forText;

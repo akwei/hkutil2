@@ -10,6 +10,8 @@
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 
+#define DEBUG_HKAFHTTPClient 1
+
 @interface HKAFHTTPClient ()
 @property(nonatomic,strong) NSMutableDictionary* params;
 @property(nonatomic,strong) NSMutableDictionary *dataParams;//请求的上传数据的key_value值
@@ -17,10 +19,12 @@
 @property(nonatomic,strong) NSMutableDictionary* headers;
 @property(nonatomic,strong) AFHTTPClient* client;
 @property(nonatomic,assign) NSHTTPCookieStorage* cookieStorage;
+
 @end
 
 @implementation HKAFHTTPClient{
     BOOL _done;
+    NSCondition* condition;
 }
 
 -(id)init{
@@ -32,13 +36,14 @@
         self.cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         [self.cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
         self.forText = YES;
-        
+        condition = [[NSCondition alloc] init];
     }
     return self;
 }
 
 -(void)executeMethod:(NSString*)method{
-    self.client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:self.url]];
+    [condition lock];
+    self.client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:self.baseUrl]];
     self.client.stringEncoding = NSUTF8StringEncoding;
     self.client.parameterEncoding = AFFormURLParameterEncoding;
     NSDictionary* headersFromCookies = [NSHTTPCookie requestHeaderFieldsWithCookies:self.cookieStorage.cookies];
@@ -55,18 +60,25 @@
         [me onFinish:operation :error];
     }];
     [self.client enqueueHTTPRequestOperation:operation];
-    [self doRunLoop];
+#if DEBUG_HKAFHTTPClient
+    NSLog(@"http request %@",[request description]);
+#endif
+    //    [self doRunLoop];
+    [condition wait];
+    [condition unlock];
 }
 
 -(NSMutableURLRequest*)createRequest:(NSString*)method{
-    NSDictionary* params = nil;
-    if (![method isEqualToString:@"GET"]) {
-        params = self.params;
-    }
+    //    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    //    [self.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    //        NSString* _key = [self encodeURL:key];
+    //        NSString* _value = [self encodeURL:obj];
+    //        [params setValue:_value forKey:_key];
+    //    }];
     NSMutableURLRequest *request = nil;
     HKAFHTTPClient* me = self;
     if ([self.dataParams count] > 0) {
-        request = [self.client multipartFormRequestWithMethod:method path:@"" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        request = [self.client multipartFormRequestWithMethod:method path:self.subUrl parameters:self.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             for (NSString* key in me.dataParams) {
                 id obj = [me.dataParams valueForKey:key];
                 [formData appendPartWithFormData:obj name:key];
@@ -74,15 +86,13 @@
         }];
     }
     else{
-        request = [self.client requestWithMethod:method path:@"" parameters:params];
+        request = [self.client requestWithMethod:method path:self.subUrl parameters:self.params];
     }
     request.timeoutInterval = self.timeout;
     return request;
 }
 
 -(void)doGet{
-    NSString* turl = [self buildGetUrl];
-    self.url = turl;
     [self executeMethod:@"GET"];
 }
 
@@ -91,6 +101,7 @@
 }
 
 -(void)onFinish:(AFHTTPRequestOperation *)operation :(NSError *)error{
+    [condition lock];
     _done = YES;
     self.responseStatusCode = operation.response.statusCode;
     self.responseStatusText = [NSHTTPURLResponse localizedStringForStatusCode:self.responseStatusCode];
@@ -99,12 +110,28 @@
     if (self.forText && self.responseData) {
         self.responseString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     }
+#if DEBUG_HKAFHTTPClient
+    NSLog(@"url:%@",[[NSURL URLWithString:self.subUrl relativeToURL:[NSURL URLWithString:self.baseUrl]] absoluteString]);
+    NSLog(@"responseStatusCode:%d",self.responseStatusCode);
+    NSLog(@"responseStatusText:%@",self.responseStatusText);
+    if (self.forText) {
+        NSLog(@"responseString:%@",self.responseString);
+    }
+    if (error) {
+        NSLog(@"http error %@",[error description]);
+    }
+#endif
+    [condition signal];
+    [condition unlock];
 }
 
 -(void)doRunLoop{
-    while (!_done) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    }
+    do {
+        SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, NO);
+        if (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished) {
+            _done = YES;
+        }
+    } while (!_done);
 }
 
 #pragma mark - addKeyValue method
@@ -232,34 +259,6 @@
 }
 
 #pragma mark - common method
-
--(NSString*)buildGetUrl{
-	NSMutableString *buf=[[NSMutableString alloc] init];
-	[buf appendString:self.url];
-	NSRange r=[self.url rangeOfString:@"?"];
-	if (r.location==NSNotFound) {
-		if ([self.params count]>0) {
-			[buf appendString:@"?"];
-		}
-	}
-	else{
-		[buf appendString:@"&"];
-	}
-	int i=0;
-	int lastIdx=[self.params count]-1;
-	for (NSString *key in self.params) {
-		id value=[self.params objectForKey:key];
-		NSString *enc_key=[self encodeURL:key];
-		NSString *enc_value=[self encodeURL:value];
-		NSString *k_v=[[NSString alloc] initWithFormat:@"%@=%@",enc_key,enc_value];
-		[buf appendString:k_v];
-		if (i<lastIdx) {
-			[buf appendString:@"&"];
-		}
-		i++;
-	}
-    return buf;
-}
 
 - (NSString*)encodeURL:(NSString *)string
 {

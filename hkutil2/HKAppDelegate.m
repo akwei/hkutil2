@@ -31,7 +31,8 @@
     for (int i=0; i<10; i++) {
         HKAFHTTPClient* client = [[HKAFHTTPClient alloc] init];
         client.timeout = 10;
-        client.url = @"http://www.yibao.com/showdemo/consult";
+        client.baseUrl = @"http://www.yibao.com";
+        client.subUrl = @"showdemo/consult";
         [client addString:@"vJkREBr9WUvf4ucPGP5v8bPz2eYlmy4fz3BqQ3jZe3k=" forKey:@"data"];
         [client doPost];
 //        NSLog(@"count=%d",i+1);

@@ -11,24 +11,31 @@
 #import "HKEncUtil.h"
 #import "HKRSAUtil.h"
 #import "HKAFHTTPClient.h"
+#import "HKThreadUtil.h"
+#import "HKRunLoopObj.h"
 
 @implementation HKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"main thread %@",[[NSThread currentThread] description]);
+    [[HKThreadUtil shareInstance] asyncBlock:^{
+        HKRunLoopObj* robj = [[HKRunLoopObj alloc] init];
+        [robj doSth];
+    }];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    // Override point for customization after application launch.
-//    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
-//    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-//    self.window.rootViewController = navCtrl;
-//    [self.window makeKeyAndVisible];
+    // Override point for customization after application launch.
+    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
+    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.window.rootViewController = navCtrl;
+    [self.window makeKeyAndVisible];
     
-    [self testHTTP];
+//    [self testHTTP];
     return YES;
 }
 
 -(void)testHTTP{
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<1; i++) {
         HKAFHTTPClient* client = [[HKAFHTTPClient alloc] init];
         client.timeout = 10;
         client.baseUrl = @"http://www.yibao.com";
@@ -37,7 +44,7 @@
         [client doPost];
 //        NSLog(@"count=%d",i+1);
 //        NSLog(@"%@",[client description]);
-        NSLog(@"responseString:%@",client.responseString);
+//        NSLog(@"responseString:%@",client.responseString);
 //        for (NSHTTPCookie* cookie in client.responseCookies) {
 //            NSLog(@"cookie name=%@ value=%@",cookie.name,cookie.value);
 //        }

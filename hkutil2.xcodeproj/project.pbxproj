@@ -25,6 +25,7 @@
 		9B4B337B172575450078CDCC /* HKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4B337A172575450078CDCC /* HKViewController.m */; };
 		9B4B337E172575450078CDCC /* HKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B337C172575450078CDCC /* HKViewController.xib */; };
 		9B4B3385172576A70078CDCC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9B4B3384172576A70078CDCC /* README.md */; };
+		9B62E9D417582C2A003A8BFB /* HKRunLoopObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B62E9D317582C2A003A8BFB /* HKRunLoopObj.m */; };
 		9B73E6E01726C7320051C840 /* HKAutoSizeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */; };
 		9B73E6E71726C7EE0051C840 /* GTMStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E51726C7EE0051C840 /* GTMStringEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9B73E6EA1726C8320051C840 /* HKSQLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B73E6E91726C8320051C840 /* HKSQLQuery.m */; };
@@ -168,6 +169,8 @@
 		9B4B337A172575450078CDCC /* HKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HKViewController.m; sourceTree = "<group>"; };
 		9B4B337D172575450078CDCC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HKViewController.xib; sourceTree = "<group>"; };
 		9B4B3384172576A70078CDCC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		9B62E9D217582C2A003A8BFB /* HKRunLoopObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKRunLoopObj.h; sourceTree = "<group>"; };
+		9B62E9D317582C2A003A8BFB /* HKRunLoopObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKRunLoopObj.m; sourceTree = "<group>"; };
 		9B73E6DE1726C7320051C840 /* HKAutoSizeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKAutoSizeLabel.h; sourceTree = "<group>"; };
 		9B73E6DF1726C7320051C840 /* HKAutoSizeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKAutoSizeLabel.m; sourceTree = "<group>"; };
 		9B73E6E31726C7EE0051C840 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -583,6 +586,8 @@
 				9BA5EDAF172A44A200158865 /* HKHTTPServer.m */,
 				9BDE32A2173170760061320A /* HKRSAUtil.h */,
 				9BDE32A3173170760061320A /* HKRSAUtil.m */,
+				9B62E9D217582C2A003A8BFB /* HKRunLoopObj.h */,
+				9B62E9D317582C2A003A8BFB /* HKRunLoopObj.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 				9BE717761753417D00CB3CE8 /* AFXMLRequestOperation.m in Sources */,
 				9BE717771753417D00CB3CE8 /* UIImageView+AFNetworking.m in Sources */,
 				9BD020471754C3F3007437A8 /* HKAFHTTPClient.m in Sources */,
+				9B62E9D417582C2A003A8BFB /* HKRunLoopObj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

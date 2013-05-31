@@ -9,8 +9,10 @@
 #import "HKAFHTTPClient.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
+#import "HKAppDelegate.h"
 
 #define DEBUG_HKAFHTTPClient 1
+
 
 @interface HKAFHTTPClient ()
 @property(nonatomic,strong) NSMutableDictionary* params;
@@ -25,6 +27,7 @@
 @implementation HKAFHTTPClient{
     BOOL _done;
     NSCondition* condition;
+    dispatch_queue_t _asyncQueue;
 }
 
 -(id)init{
@@ -37,8 +40,14 @@
         [self.cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
         self.forText = YES;
         condition = [[NSCondition alloc] init];
+        NSString* qname = [[NSString alloc] initWithFormat:@"HKAFHTTPClient._asyncQueue.name.%@",[self description]];
+        _asyncQueue = dispatch_queue_create([qname UTF8String], DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
+}
+
+-(void)dealloc{
+    dispatch_release(_asyncQueue);
 }
 
 -(void)executeMethod:(NSString*)method{
@@ -59,11 +68,13 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [me onFinish:operation :error];
     }];
+    operation.successCallbackQueue = _asyncQueue;
+    operation.failureCallbackQueue = _asyncQueue;
     [self.client enqueueHTTPRequestOperation:operation];
 #if DEBUG_HKAFHTTPClient
+    NSLog(@"url:%@",[[NSURL URLWithString:self.subUrl relativeToURL:[NSURL URLWithString:self.baseUrl]] absoluteString]);
     NSLog(@"http request %@",[request description]);
 #endif
-    //    [self doRunLoop];
     [condition wait];
     [condition unlock];
 }
@@ -75,10 +86,14 @@
     //        NSString* _value = [self encodeURL:obj];
     //        [params setValue:_value forKey:_key];
     //    }];
+    NSDictionary* uparams = nil;
+    if ([self.params count] > 0) {
+        uparams = self.params;
+    }
     NSMutableURLRequest *request = nil;
     HKAFHTTPClient* me = self;
     if ([self.dataParams count] > 0) {
-        request = [self.client multipartFormRequestWithMethod:method path:self.subUrl parameters:self.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        request = [self.client multipartFormRequestWithMethod:method path:self.subUrl parameters:uparams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             for (NSString* key in me.dataParams) {
                 id obj = [me.dataParams valueForKey:key];
                 [formData appendPartWithFormData:obj name:key];
@@ -86,7 +101,7 @@
         }];
     }
     else{
-        request = [self.client requestWithMethod:method path:self.subUrl parameters:self.params];
+        request = [self.client requestWithMethod:method path:self.subUrl parameters:uparams];
     }
     request.timeoutInterval = self.timeout;
     return request;
@@ -111,7 +126,6 @@
         self.responseString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     }
 #if DEBUG_HKAFHTTPClient
-    NSLog(@"url:%@",[[NSURL URLWithString:self.subUrl relativeToURL:[NSURL URLWithString:self.baseUrl]] absoluteString]);
     NSLog(@"responseStatusCode:%d",self.responseStatusCode);
     NSLog(@"responseStatusText:%@",self.responseStatusText);
     if (self.forText) {
@@ -125,13 +139,33 @@
     [condition unlock];
 }
 
--(void)doRunLoop{
-    do {
-        SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, NO);
-        if (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished) {
-            _done = YES;
-        }
-    } while (!_done);
+
+-(void)doFireTimer:(id)obj{
+    NSLog(@"doFireTimer:%@",[obj description]);
+}
+
+void myRunLoopObserver(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
+    if (activity == kCFRunLoopEntry) {
+        NSLog(@"activity = kCFRunLoopEntry");
+    }
+    else if (activity == kCFRunLoopBeforeTimers){
+        NSLog(@"activity = kCFRunLoopBeforeTimers");
+    }
+    else if (activity == kCFRunLoopBeforeSources){
+        NSLog(@"activity = kCFRunLoopBeforeSources");
+    }
+    else if (activity == kCFRunLoopBeforeWaiting){
+        NSLog(@"activity = kCFRunLoopBeforeWaiting");
+    }
+    else if (activity == kCFRunLoopAfterWaiting){
+        NSLog(@"activity = kCFRunLoopAfterWaiting");
+    }
+    else if (activity == kCFRunLoopExit){
+        NSLog(@"activity = kCFRunLoopExit");
+    }
+    else if (activity == kCFRunLoopAllActivities){
+        NSLog(@"activity = kCFRunLoopAllActivities");
+    }
 }
 
 #pragma mark - addKeyValue method
@@ -277,4 +311,30 @@
 -(NSString *)description{
     return [self.client description];
 }
+
+
+#pragma mark - test
+
+//- (void)registerSource:(RunLoopContext*)sourceInfo;
+//{
+//    [sourcesToPing addObject:sourceInfo];
+//}
+//
+//- (void)removeSource:(RunLoopContext*)sourceInfo
+//{
+//    id    objToRemove = nil;
+//    
+//    for (RunLoopContext* context in sourcesToPing)
+//    {
+//        if ([context isEqual:sourceInfo])
+//        {
+//            objToRemove = context;
+//            break;
+//        }
+//    }
+//    
+//    if (objToRemove)
+//        [sourcesToPing removeObject:objToRemove];
+//}
+
 @end

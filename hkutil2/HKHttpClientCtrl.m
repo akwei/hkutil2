@@ -9,6 +9,7 @@
 #import "HKHttpClientCtrl.h"
 #import "HKHttpClient.h"
 #import "HKThreadUtil.h"
+#import "HKAFHTTPClient.h"
 
 @implementation HKHttpClientCtrl{
     HKThreadUtil* _threadUtil;
@@ -21,12 +22,13 @@
     
     _threadUtil = [HKThreadUtil shareInstance];
     [_threadUtil asyncBlock:^{
-        HKHttpClient* client = [[HKHttpClient alloc] init];
-        client.timeOutSeconds = 10;
-        client.url = @"http://www.iteye.com";
+        HKAFHTTPClient* client = [[HKAFHTTPClient alloc] init];
+        client.timeout = 10;
+        client.baseUrl = @"http://www.baidu.com";
+        client.subUrl = @"";
         [client doGet];
-        if (client.request.error) {
-            NSLog(@"request error\n%@",[client.request.error description]);
+        if (client.error) {
+            NSLog(@"request error\n%@",[client.error description]);
         }
         else{
             [_threadUtil syncBlockToMainThread:^{

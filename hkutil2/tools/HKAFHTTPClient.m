@@ -9,7 +9,6 @@
 #import "HKAFHTTPClient.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
-#import "HKAppDelegate.h"
 
 #define DEBUG_HKAFHTTPClient 1
 
@@ -311,30 +310,5 @@ void myRunLoopObserver(CFRunLoopObserverRef observer, CFRunLoopActivity activity
 -(NSString *)description{
     return [self.client description];
 }
-
-
-#pragma mark - test
-
-//- (void)registerSource:(RunLoopContext*)sourceInfo;
-//{
-//    [sourcesToPing addObject:sourceInfo];
-//}
-//
-//- (void)removeSource:(RunLoopContext*)sourceInfo
-//{
-//    id    objToRemove = nil;
-//    
-//    for (RunLoopContext* context in sourcesToPing)
-//    {
-//        if ([context isEqual:sourceInfo])
-//        {
-//            objToRemove = context;
-//            break;
-//        }
-//    }
-//    
-//    if (objToRemove)
-//        [sourcesToPing removeObject:objToRemove];
-//}
 
 @end

@@ -56,9 +56,7 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
         CFRunLoopStop(runloopRef);
     }];
     BOOL done = NO;
-    
     [_rls addToCurrentRunLoop];
-    
     do
     {
         // Start the run loop but return after each source is handled.

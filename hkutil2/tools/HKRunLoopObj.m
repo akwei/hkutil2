@@ -43,7 +43,6 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
     RunLoopSourceObj* _rls;
 }
 
-
 -(void)doSth{
     NSLog(@"doSth %@",[[NSThread currentThread] description]);
     _rls = [[RunLoopSourceObj alloc] init];
@@ -109,14 +108,12 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
     CFRunLoopWakeUp(runloop);
 }
 
-
 -(void)sourceFired{
     NSLog(@"sourceFired %@",[[NSThread currentThread] description]);
     [NSThread sleepForTimeInterval:5];
     self.done = YES;
     NSLog(@"sourceFired end %@",[[NSThread currentThread] description]);
 }
-
 
 @end
 

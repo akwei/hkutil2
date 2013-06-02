@@ -79,12 +79,6 @@
 }
 
 -(NSMutableURLRequest*)createRequest:(NSString*)method{
-    //    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    //    [self.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-    //        NSString* _key = [self encodeURL:key];
-    //        NSString* _value = [self encodeURL:obj];
-    //        [params setValue:_value forKey:_key];
-    //    }];
     NSDictionary* uparams = nil;
     if ([self.params count] > 0) {
         uparams = self.params;
@@ -95,7 +89,7 @@
         request = [self.client multipartFormRequestWithMethod:method path:self.subUrl parameters:uparams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             for (NSString* key in me.dataParams) {
                 id obj = [me.dataParams valueForKey:key];
-                [formData appendPartWithFormData:obj name:key];
+                [formData appendPartWithFileData:obj name:key fileName:key mimeType:@"data/file"];
             }
         }];
     }

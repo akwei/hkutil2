@@ -18,11 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"main thread %@",[[NSThread currentThread] description]);
-    [[HKThreadUtil shareInstance] asyncBlock:^{
-        HKRunLoopObj* robj = [[HKRunLoopObj alloc] init];
-        [robj doSth];
-    }];
+//    NSLog(@"main thread %@",[[NSThread currentThread] description]);
+//    [[HKThreadUtil shareInstance] asyncBlock:^{
+//        HKRunLoopObj* robj = [[HKRunLoopObj alloc] init];
+//        [robj doSth];
+//    }];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];

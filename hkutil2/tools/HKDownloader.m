@@ -95,8 +95,10 @@
 }
 
 -(void)dealloc{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     dispatch_release(_syncQueue);
     dispatch_release(_asyncQueue);
+#endif
 }
 
 -(void)downloadWithUrl:(NSString*)url callbackHandler:(HKCallbackHandler*)callbackHandler timeout:(NSTimeInterval)timeout{

@@ -90,7 +90,9 @@ static NSMutableDictionary* objQueryDic=nil;
 }
 
 -(void)dealloc{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     dispatch_release(syncQueue);
+#endif
 }
 
 
@@ -451,7 +453,9 @@ static NSMutableDictionary* objQueryDic=nil;
 }
 
 -(void)dealloc{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     dispatch_release(syncQueue);
+#endif
 }
 
 -(NSInteger)insertWithSQL:(NSString *)sql params:(NSArray *)params{
@@ -829,6 +833,9 @@ static NSMutableDictionary* objQueryDic=nil;
         id o=[[NSClassFromString(ci.className) alloc] init];
         for (NSString* colName in dic) {
             NSString* propName=[ci getPropNameWithColName:colName];
+            if (!propName) {
+                continue;
+            }
             NSString* typeEncoding = [ci getPropTypeEncoding:propName];
             id value=[dic valueForKey:colName];
             if (value && value !=[NSNull null] && ![value isEqual:[NSNull null]]) {

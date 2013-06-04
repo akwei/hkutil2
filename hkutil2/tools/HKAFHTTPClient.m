@@ -46,7 +46,9 @@
 }
 
 -(void)dealloc{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     dispatch_release(_asyncQueue);
+#endif
 }
 
 -(void)executeMethod:(NSString*)method{

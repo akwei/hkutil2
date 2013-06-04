@@ -10,6 +10,7 @@
 #import "HKSQLQuery.h"
 #import "HKTimeUtil.h"
 
+
 @implementation Person
 +(NSString *)currentDbName{
     return @"hkutil2.sqlite";
@@ -63,6 +64,7 @@
     [obj updateObj];
     
     [obj deleteObj];
+    
 }
 
 - (void)didReceiveMemoryWarning

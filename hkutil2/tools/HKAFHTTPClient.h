@@ -20,6 +20,7 @@
 @property(nonatomic,assign)NSInteger responseStatusCode;
 @property(nonatomic,copy)NSString* responseStatusText;
 @property(nonatomic,strong) NSArray* responseCookies;
+@property(nonatomic,strong) NSMutableDictionary* params;
 
 -(void)addString:(NSString*)value forKey:(NSString *)key;
 -(void)addInteger:(NSInteger)value forKey:(NSString*)key;

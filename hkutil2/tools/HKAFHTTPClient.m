@@ -14,7 +14,6 @@
 
 
 @interface HKAFHTTPClient ()
-@property(nonatomic,strong) NSMutableDictionary* params;
 @property(nonatomic,strong) NSMutableDictionary *dataParams;//请求的上传数据的key_value值
 @property(nonatomic,strong) NSMutableArray *postTextArr;//post body
 @property(nonatomic,strong) NSMutableDictionary* headers;

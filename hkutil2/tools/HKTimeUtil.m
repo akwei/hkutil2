@@ -89,47 +89,47 @@
     return nowTime - nowTime % (3600 * 24);
 }
 
-//+(NSDate*)buildDateWithYear:(NSInteger)year
-//                      month:(NSInteger)month
-//                       day:(NSInteger)day
-//                       hour:(NSInteger)hour
-//                     minute:(NSInteger)minute
-//                     second:(NSInteger)second{
-//
-//    NSDate* now = [NSDate date];
-//
-//
-//
-//    TimeInfo* info = [TimeUtil timeInfoWithDate:now];
-//    NSDateComponents* cmp = [[NSDateComponents alloc] init];
-//    if (year < 1) {
-//        year = info.year;
-//    }
-//    if (month < 1) {
-//        month = info.month;
-//    }
-//    if (day < 1) {
-//        day = info.day;
-//    }
-//    if (hour < 0) {
-//        hour = info.hour;
-//    }
-//    if (minute < 0) {
-//        minute = info.minute;
-//    }
-//    if (second < 0) {
-//        second = info.second;
-//    }
-//    cmp.year = year;
-//    cmp.month = month;
-//    cmp.day = day;
-//    cmp.second = second;
-//    cmp.hour = hour;
-//    cmp.minute = minute;
-//    cmp.second = second;
-//    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-//    return [cal dateFromComponents:cmp];
-//}
++(NSDate*)buildDateWithYear:(NSInteger)year
+                      month:(NSInteger)month
+                       day:(NSInteger)day
+                       hour:(NSInteger)hour
+                     minute:(NSInteger)minute
+                     second:(NSInteger)second{
+
+    NSDate* now = [NSDate date];
+
+
+
+    HKTimeInfo* info = [HKTimeUtil timeInfoWithDate:now];
+    NSDateComponents* cmp = [[NSDateComponents alloc] init];
+    if (year < 1) {
+        year = info.year;
+    }
+    if (month < 1) {
+        month = info.month;
+    }
+    if (day < 1) {
+        day = info.day;
+    }
+    if (hour < 0) {
+        hour = info.hour;
+    }
+    if (minute < 0) {
+        minute = info.minute;
+    }
+    if (second < 0) {
+        second = info.second;
+    }
+    cmp.year = year;
+    cmp.month = month;
+    cmp.day = day;
+    cmp.second = second;
+    cmp.hour = hour;
+    cmp.minute = minute;
+    cmp.second = second;
+    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    return [cal dateFromComponents:cmp];
+}
 
 
 @end

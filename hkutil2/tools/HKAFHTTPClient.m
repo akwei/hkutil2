@@ -126,7 +126,7 @@
         NSLog(@"responseString:%@",self.responseString);
     }
     if (error) {
-        NSLog(@"http error %@",[error description]);
+        NSLog(@"http error:%@",[error description]);
     }
 #endif
     [condition signal];

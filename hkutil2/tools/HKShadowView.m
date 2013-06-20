@@ -25,6 +25,7 @@
 @implementation HKShadowView
 
 -(id)initWithParentView:(UIView*)parentView{
+    self.aniTime = .5;
     CGRect parentFrame = parentView.frame;
     CGRect oframe=CGRectMake(0, 0, parentFrame.size.width, parentFrame.size.height);
     self = [self initWithFrame:oframe];
@@ -189,7 +190,7 @@
 
 -(CATransition*)createAnimationWithtype:(NSString*)type subType:(NSString*)subType{
     CATransition *transition = [CATransition animation];
-    transition.duration = 0.5;
+    transition.duration = self.aniTime;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type=type;
     transition.subtype=subType;

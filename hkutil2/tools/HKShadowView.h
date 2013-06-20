@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface HKShadowView : UIView
+@property(nonatomic,assign)NSTimeInterval aniTime;
 
 -(id)initWithParentView:(UIView*)parentView;
 -(void)changeShadowColor:(UIColor *)shadowColor;

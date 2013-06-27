@@ -10,9 +10,6 @@
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 
-#define DEBUG_HKAFHTTPClient 1
-
-
 @interface HKAFHTTPClient ()
 @property(nonatomic,strong) NSMutableDictionary *dataParams;//请求的上传数据的key_value值
 @property(nonatomic,strong) NSMutableArray *postTextArr;//post body
@@ -74,9 +71,16 @@
 #if DEBUG_HKAFHTTPClient
     NSLog(@"url:%@",[[NSURL URLWithString:self.subUrl relativeToURL:[NSURL URLWithString:self.baseUrl]] absoluteString]);
     NSLog(@"http request %@",[request description]);
+    NSLog(@"request data :\n");
+    [self.params enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSLog(@"%@=%@",key,obj);
+    }];
 #endif
-    [condition wait];
+    while (!_done) {
+        [condition wait];
+    }
     [condition unlock];
+    NSLog(@"condition wait");
 }
 
 -(NSMutableURLRequest*)createRequest:(NSString*)method{
@@ -111,7 +115,6 @@
 
 -(void)onFinish:(AFHTTPRequestOperation *)operation :(NSError *)error{
     [condition lock];
-    _done = YES;
     self.responseStatusCode = operation.response.statusCode;
     self.responseStatusText = [NSHTTPURLResponse localizedStringForStatusCode:self.responseStatusCode];
     self.responseData = operation.responseData;
@@ -129,6 +132,7 @@
         NSLog(@"http error:%@",[error description]);
     }
 #endif
+    _done = YES;
     [condition signal];
     [condition unlock];
 }
@@ -164,6 +168,9 @@ void myRunLoopObserver(CFRunLoopObserverRef observer, CFRunLoopActivity activity
 
 #pragma mark - addKeyValue method
 -(void)addParam:(id)value forKey:(NSString *)key{
+    if (!value) {
+        return;
+    }
 	[self.params setObject:value forKey:key];
 }
 

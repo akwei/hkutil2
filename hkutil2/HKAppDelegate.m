@@ -18,40 +18,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    NSLog(@"main thread %@",[[NSThread currentThread] description]);
-//    [[HKThreadUtil shareInstance] asyncBlock:^{
-//        HKRunLoopObj* robj = [[HKRunLoopObj alloc] init];
-//        [robj doSth];
-//    }];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
-    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-    self.window.rootViewController = navCtrl;
-    [self.window makeKeyAndVisible];
-    
-//    [self testHTTP];
-    return YES;
-}
+    NSLog(@"main thread %@",[[NSThread currentThread] description]);
+    [[HKThreadUtil shareInstance] asyncBlock:^{
+        HKRunLoopObj* robj = [[HKRunLoopObj alloc] init];
+        [robj doSth];
+    }];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    // Override point for customization after application launch.
+//    self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];
+//    UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+//    self.window.rootViewController = navCtrl;
+//    [self.window makeKeyAndVisible];
 
--(void)testHTTP{
-    for (int i=0; i<1; i++) {
-        HKAFHTTPClient* client = [[HKAFHTTPClient alloc] init];
-        client.timeout = 10;
-        client.baseUrl = @"http://www.yibao.com";
-        client.subUrl = @"showdemo/consult";
-        [client addString:@"vJkREBr9WUvf4ucPGP5v8bPz2eYlmy4fz3BqQ3jZe3k=" forKey:@"data"];
-        [client doPost];
-//        NSLog(@"count=%d",i+1);
-//        NSLog(@"%@",[client description]);
-//        NSLog(@"responseString:%@",client.responseString);
-//        for (NSHTTPCookie* cookie in client.responseCookies) {
-//            NSLog(@"cookie name=%@ value=%@",cookie.name,cookie.value);
-//        }
-        if (client.error) {
-            NSLog(@"%@",[client.error description]);
-        }
-    }
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

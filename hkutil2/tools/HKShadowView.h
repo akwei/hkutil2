@@ -16,9 +16,13 @@
 
 -(id)initWithParentView:(UIView*)parentView;
 -(void)changeShadowColor:(UIColor *)shadowColor;
+
+-(void)showView:(UIView*)view animated:(BOOL)animated;
 -(void)showView:(UIView*)view completeBlock:(void (^)(void))block animation:(CAAnimation*)animation;
--(void)closeViewWithCompleteBlock:(void (^)(void))block delay:(NSTimeInterval)delay animation:(CAAnimation*)animation;
 -(void)showView:(UIView*)view completeBlock:(void (^)(void))block animated:(BOOL)animated;
+
+-(void)closeViewWithAnimated:(BOOL)animated;
+-(void)closeViewWithCompleteBlock:(void (^)(void))block delay:(NSTimeInterval)delay animation:(CAAnimation*)animation;
 -(void)closeViewWithCompleteBlock:(void (^)(void))block delay:(NSTimeInterval)delay animated:(BOOL)animated;
 
 @end

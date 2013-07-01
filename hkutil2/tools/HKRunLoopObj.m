@@ -9,8 +9,7 @@
 #import "HKRunLoopObj.h"
 #import "HKThreadUtil.h"
 
-void RunLoopSourceScheduleRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
-{
+void RunLoopSourceScheduleRoutine (void *info, CFRunLoopRef rl, CFStringRef mode){
     NSLog(@"RunLoopSourceScheduleRoutine %@",[[NSThread currentThread] description]);
 //    RunLoopSource* obj = (__bridge RunLoopSource*)info;
     
@@ -21,15 +20,13 @@ void RunLoopSourceScheduleRoutine (void *info, CFRunLoopRef rl, CFStringRef mode
     //                          withObject:theContext waitUntilDone:NO];
 }
 
-void RunLoopSourcePerformRoutine (void *info)
-{
+void RunLoopSourcePerformRoutine (void *info){
     NSLog(@"RunLoopSourcePerformRoutine %@",[[NSThread currentThread] description]);
     RunLoopSourceObj* obj = (__bridge RunLoopSourceObj*)info;
     [obj sourceFired];
 }
 
-void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
-{
+void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode){
     NSLog(@"RunLoopSourceCancelRoutine %@",[[NSThread currentThread] description]);
 //    RunLoopSource* obj = (__bridge RunLoopSource*)info;
     //    AppDelegate* del = [AppDelegate sharedAppDelegate];
@@ -40,22 +37,22 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
 }
 
 @implementation HKRunLoopObj{
-    RunLoopSourceObj* _rls;
+    RunLoopSourceObj* _runLoopSourceObj;
 }
 
 -(void)doSth{
     NSLog(@"doSth %@",[[NSThread currentThread] description]);
-    _rls = [[RunLoopSourceObj alloc] init];
+    _runLoopSourceObj = [[RunLoopSourceObj alloc] init];
     CFRunLoopRef runloopRef = [[NSRunLoop currentRunLoop] getCFRunLoop];
     [[HKThreadUtil shareInstance] asyncBlock:^{
         NSLog(@"doAsync begin %@",[[NSThread currentThread] description]);
         [NSThread sleepForTimeInterval:5];
-        [_rls fireAllCommandsOnRunLoop:runloopRef];
+        [_runLoopSourceObj fireAllCommandsOnRunLoop:runloopRef];
         NSLog(@"doAsync end %@",[[NSThread currentThread] description]);
         CFRunLoopStop(runloopRef);
     }];
     BOOL done = NO;
-    [_rls addToCurrentRunLoop];
+    [_runLoopSourceObj addToCurrentRunLoop];
     do
     {
         // Start the run loop but return after each source is handled.
@@ -68,7 +65,7 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
         
         // Check for any other exit conditions here and set the
         // done variable as needed.
-        if (_rls.done) {
+        if (_runLoopSourceObj.done) {
             done = YES;
         }
     }
@@ -79,31 +76,32 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
 
 @end
 
+@interface RunLoopSourceObj (){
+    CFRunLoopSourceRef runLoopSource;
+}
+@end;
+
 @implementation RunLoopSourceObj
 
-- (id)init
-{
+- (id)init{
     self = [super init];
     if (self) {
-        CFRunLoopSourceContext    context = {0, (__bridge void *)(self), NULL, NULL, NULL, NULL, NULL,
+        CFRunLoopSourceContext context = {0, (__bridge void *)(self), NULL, NULL, NULL, NULL, NULL,
             &RunLoopSourceScheduleRoutine,
             &RunLoopSourceCancelRoutine,
             &RunLoopSourcePerformRoutine};
-        
         runLoopSource = CFRunLoopSourceCreate(NULL, 0, &context);
         self.done = NO;
     }
     return self;
 }
 
-- (void)addToCurrentRunLoop
-{
+- (void)addToCurrentRunLoop{
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
 }
 
--(void)fireAllCommandsOnRunLoop:(CFRunLoopRef)runloop
-{
+-(void)fireAllCommandsOnRunLoop:(CFRunLoopRef)runloop{
     CFRunLoopSourceSignal(runLoopSource);
     CFRunLoopWakeUp(runloop);
 }
@@ -111,10 +109,15 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
 -(void)sourceFired{
     NSLog(@"sourceFired %@",[[NSThread currentThread] description]);
     [NSThread sleepForTimeInterval:5];
-    self.done = YES;
+//    self.done = YES;
     NSLog(@"sourceFired end %@",[[NSThread currentThread] description]);
 }
 
+@end
+
+@interface RunLoopContext ()
+@property (nonatomic,readonly) CFRunLoopRef runLoop;
+@property (nonatomic,readonly) RunLoopSourceObj* source;
 @end
 
 @implementation RunLoopContext
@@ -129,6 +132,4 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode)
 }
 
 @end
-
-
 

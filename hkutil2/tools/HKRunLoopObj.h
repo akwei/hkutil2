@@ -15,9 +15,6 @@
 @end
 
 @interface RunLoopSourceObj : NSObject
-{
-    CFRunLoopSourceRef runLoopSource;
-}
 
 @property(nonatomic,assign)BOOL done;
 
@@ -37,10 +34,6 @@ void RunLoopSourceCancelRoutine (void *info, CFRunLoopRef rl, CFStringRef mode);
 
 // RunLoopContext is a container object used during registration of the input source.
 @interface RunLoopContext : NSObject
-
-@property (nonatomic,readonly) CFRunLoopRef runLoop;
-@property (nonatomic,readonly) RunLoopSourceObj* source;
-
 - (id)initWithSource:(RunLoopSourceObj*)src andLoop:(CFRunLoopRef)loop;
 @end
 

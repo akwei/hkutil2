@@ -67,6 +67,12 @@
     return nil;
 }
 
+#pragma mark - show method
+
+-(void)showView:(UIView *)view animated:(BOOL)animated{
+    [self showView:view completeBlock:nil animated:animated];
+}
+
 -(void)showView:(UIView *)view completeBlock:(void (^)(void))block animation:(CAAnimation*)animation{
     [self showView:view];
     if (animation) {
@@ -90,6 +96,12 @@
         animation = [self createAnimationWithtype:kCATransitionFade subType:nil];
     }
     [self showView:view completeBlock:block animation:animation];
+}
+
+#pragma mark - close method
+
+-(void)closeViewWithAnimated:(BOOL)animated{
+    [self closeViewWithCompleteBlock:nil delay:0 animated:YES];
 }
 
 -(void)closeViewWithCompleteBlock:(void (^)(void))block delay:(NSTimeInterval)delay animation:(CAAnimation *)animation{

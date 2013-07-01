@@ -80,7 +80,6 @@
         [condition wait];
     }
     [condition unlock];
-    NSLog(@"condition wait");
 }
 
 -(NSMutableURLRequest*)createRequest:(NSString*)method{

@@ -206,6 +206,7 @@
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type=type;
     transition.subtype=subType;
+    transition.removedOnCompletion = YES;
     return transition;
 }
 

@@ -17,14 +17,24 @@
 }
 
 -(void)showLoadingHUD:(NSString *)msg{
-    
-    self.hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (!self.hud) {
+        self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:self.hud];
+    }
+    [self.view addSubview:self.hud];
     self.hud.labelText=msg;
+    self.hud.labelFont = [UIFont systemFontOfSize:30];
+    [self.hud show:YES];
 }
 -(void)showMsgHUD:(NSString *)msg{
-    self.hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (!self.hud) {
+        self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:self.hud];
+    }
     self.hud.mode=MBProgressHUDModeText;
     self.hud.labelText=msg;
+    self.hud.labelFont = [UIFont systemFontOfSize:30];
+    [self.hud show:YES];
 }
 -(void)changeHUDMsg:(NSString *)msg{
     if (!self.hud) {
@@ -71,5 +81,4 @@
 -(void)hideHUDWithDelay:(NSTimeInterval)delay{
     [self.hud hide:YES afterDelay:delay];
 }
-
 @end

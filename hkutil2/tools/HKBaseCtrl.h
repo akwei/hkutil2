@@ -12,8 +12,8 @@
 
 @interface HKBaseCtrl : UIViewController
 
-@property(nonatomic,unsafe_unretained)MBProgressHUD* hud;
-@property(nonatomic,unsafe_unretained)HKThreadUtil* threadUtil;
+@property(nonatomic,strong)MBProgressHUD* hud;
+@property(nonatomic,weak)HKThreadUtil* threadUtil;
 
 
 -(void)showLoadingHUD:(NSString*)msg;

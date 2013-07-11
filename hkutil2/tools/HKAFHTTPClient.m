@@ -59,7 +59,7 @@
         [self.client setDefaultHeader:key value:value];
     }
     NSMutableURLRequest* request = [self createRequest:method];
-    HKAFHTTPClient* me = self;
+    __weak HKAFHTTPClient* me = self;
     AFHTTPRequestOperation *operation = [self.client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [me onFinish:operation :nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -117,7 +117,9 @@
     self.responseStatusCode = operation.response.statusCode;
     self.responseStatusText = [NSHTTPURLResponse localizedStringForStatusCode:self.responseStatusCode];
     self.responseData = operation.responseData;
-    self.responseCookies = self.cookieStorage.cookies;
+    if (self.cookieStorage.cookies) {
+        self.responseCookies = self.cookieStorage.cookies;
+    }
     if (self.forText && self.responseData) {
         self.responseString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     }
@@ -134,6 +136,7 @@
     _done = YES;
     [condition signal];
     [condition unlock];
+    self.client = nil;
 }
 
 

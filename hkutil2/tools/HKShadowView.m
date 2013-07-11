@@ -18,19 +18,25 @@
 @property(nonatomic,retain)UIView* currentShowView;
 @property(nonatomic,assign)BOOL aniProcessing;//动画是否正在进行
 @property(nonatomic,strong)UIView* shadow;//作用是渐变式弹出阴影层，不收view切换影响
-@property(nonatomic,strong)UIColor* shadowColor;
+//@property(nonatomic,strong)UIColor* shadowColor;
 @end
 
 
 @implementation HKShadowView
 
 -(id)initWithParentView:(UIView*)parentView{
-    self.aniTime = .5;
     CGRect parentFrame = parentView.frame;
     CGRect oframe=CGRectMake(0, 0, parentFrame.size.width, parentFrame.size.height);
-    self = [self initWithFrame:oframe];
+    self = [super initWithFrame:oframe];
     if (self) {
+        self.aniTime = .5;
         UIViewAutoresizing defViewAutoresizing = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        self.hidden=YES;
+        self.backgroundColor=[UIColor clearColor];
+        self.alpha=1;
+        self.autoresizesSubviews=YES;
+        self.autoresizingMask=defViewAutoresizing;
+        
         [parentView addSubview:self];
         CGRect ooframe=oframe;
         ooframe.origin.x=0;
@@ -38,7 +44,7 @@
         UIColor* clearColor = [UIColor clearColor];
         self.backgroundColor = clearColor;
         self.shadow=[[UIView alloc] initWithFrame:ooframe];
-        self.shadow.backgroundColor=self.shadowColor;
+        self.shadow.backgroundColor=nil;
         self.shadow.alpha=0.5;
         self.shadow.autoresizesSubviews=YES;
         self.shadow.autoresizingMask=defViewAutoresizing;
@@ -50,22 +56,10 @@
         self.viewContainer.autoresizingMask=defViewAutoresizing;
         self.viewContainer.backgroundColor = clearColor;
         [self addSubview:self.viewContainer];
-        return self;
     }
-    return nil;
+    return self;
 }
-- (id)initWithFrame:(CGRect)frame{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.hidden=YES;
-        self.backgroundColor=[UIColor clearColor];
-        self.alpha=1;
-        self.autoresizesSubviews=YES;
-        self.autoresizingMask=UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        return self;
-    }
-    return nil;
-}
+
 
 #pragma mark - show method
 
@@ -144,9 +138,8 @@
             return ;
         }
         self.aniProcessing=YES;
-        [animation setRemovedOnCompletion:YES];
+        animation.removedOnCompletion = YES;
         animation.delegate = self;
-        [animation setValue:animation forKey:kAnimationKey];
         [animation setValue:block forKey:kBlockKey];
         [self.layer addAnimation:animation forKey:nil];
     }
@@ -167,8 +160,10 @@
 }
 
 -(void)changeShadowColor:(UIColor *)shadowColor{
-    self.shadowColor = shadowColor;
-    self.shadow.backgroundColor = self.shadowColor;
+    if (shadowColor == self.shadow.backgroundColor) {
+        return;
+    }
+    self.shadow.backgroundColor = shadowColor;
 }
 
 -(void)showView:(UIView *)view{

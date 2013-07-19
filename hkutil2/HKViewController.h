@@ -19,5 +19,6 @@
 - (IBAction)testHTTPServer:(id)sender;
 - (IBAction)testSQLQuery:(id)sender;
 - (IBAction)textException:(id)sender;
+- (IBAction)testWorkCall:(id)sender;
 
 @end

@@ -18,6 +18,7 @@
 #import "HKHTTPServerCtrl.h"
 #import "HKSQLQueryCtrl.h"
 #import "HKExceptionCtrl.h"
+#import "HKWorkCallCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -83,6 +84,11 @@
 
 - (IBAction)textException:(id)sender {
     HKExceptionCtrl* ctrl = [[HKExceptionCtrl alloc] initWithNibName:@"HKExceptionCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testWorkCall:(id)sender {
+    HKWorkCallCtrl* ctrl = [[HKWorkCallCtrl alloc] initWithNibName:@"HKWorkCallCtrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 - (void)viewDidUnload {

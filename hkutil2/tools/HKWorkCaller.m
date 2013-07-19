@@ -24,7 +24,6 @@
 }
 
 -(void)workWithBlock:(BOOL (^)(void))block onErrorMainBlock:(void (^)(NSException* exception))onErrorMainBlock{
-    __weak HKWorkCaller* me = self;
     [self.info removeAllObjects];
     [[HKThreadUtil shareInstance] asyncBlock:^{
         @try {
@@ -65,6 +64,7 @@
             info = nil;
         }
     }];
+    info = nil;
 }
 
 @end

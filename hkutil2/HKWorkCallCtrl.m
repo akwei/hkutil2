@@ -17,7 +17,7 @@
     [HKWorkCaller workWithBlock:^BOOL(NSMutableDictionary *info) {
         [NSThread sleepForTimeInterval:1];
         [info setValue:@"11" forKey:@"key"];
-        
+        @throw [NSException exceptionWithName:@"test exception" reason:@"test exception" userInfo:nil];
         [[HKThreadUtil shareInstance] asyncBlockToMainThread:^{
             NSString* value = [info valueForKey:@"key"];
             UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 200, 100)];

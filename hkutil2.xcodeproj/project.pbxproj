@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B0A47F2179E367900B632C0 /* UIView+HKEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A47F1179E367900B632C0 /* UIView+HKEx.m */; };
 		9B20EB491729714D005E9D1D /* HKUtilCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB471729714D005E9D1D /* HKUtilCtrl.m */; };
 		9B20EB4A1729714D005E9D1D /* HKUtilCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */; };
 		9B20EB4D17297888005E9D1D /* HKWorkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB4C17297888005E9D1D /* HKWorkUtil.m */; };
@@ -147,6 +148,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B0A47F0179E367900B632C0 /* UIView+HKEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HKEx.h"; sourceTree = "<group>"; };
+		9B0A47F1179E367900B632C0 /* UIView+HKEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HKEx.m"; sourceTree = "<group>"; };
 		9B20EB461729714D005E9D1D /* HKUtilCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKUtilCtrl.h; sourceTree = "<group>"; };
 		9B20EB471729714D005E9D1D /* HKUtilCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKUtilCtrl.m; sourceTree = "<group>"; };
 		9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKUtilCtrl.xib; sourceTree = "<group>"; };
@@ -553,6 +556,8 @@
 				9B83DB281798E465006F6338 /* HKWorkCallCtrl.h */,
 				9B83DB291798E465006F6338 /* HKWorkCallCtrl.m */,
 				9B83DB2A1798E465006F6338 /* HKWorkCallCtrl.xib */,
+				9B0A47F0179E367900B632C0 /* UIView+HKEx.h */,
+				9B0A47F1179E367900B632C0 /* UIView+HKEx.m */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -1088,6 +1093,7 @@
 				9B454EC31797AA3D0063F841 /* UIImageView+AFNetworking.m in Sources */,
 				9B83DB271798E3A9006F6338 /* HKWorkCaller.m in Sources */,
 				9B83DB2B1798E465006F6338 /* HKWorkCallCtrl.m in Sources */,
+				9B0A47F2179E367900B632C0 /* UIView+HKEx.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

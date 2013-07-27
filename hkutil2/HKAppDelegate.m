@@ -13,6 +13,8 @@
 #import "HKAFHTTPClient.h"
 #import "HKThreadUtil.h"
 #import "HKRunLoopObj.h"
+#import "HKURLImageView.h"
+#import "HKCache.h"
 
 @implementation HKAppDelegate
 
@@ -25,6 +27,8 @@
         [robj doSth];
     }];
      **/
+    HKCache* cache = [[HKMemAndSQLiteCache alloc] init];
+    [HKURLImageView setCache:cache];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[HKViewController alloc] initWithNibName:@"HKViewController" bundle:nil];

@@ -19,6 +19,7 @@
 #import "HKSQLQueryCtrl.h"
 #import "HKExceptionCtrl.h"
 #import "HKWorkCallCtrl.h"
+#import "HKURLImageViewCtrl.h"
 
 @implementation HKViewController{
     HKShadowCtrl* _shadowCtrl;
@@ -89,6 +90,11 @@
 
 - (IBAction)testWorkCall:(id)sender {
     HKWorkCallCtrl* ctrl = [[HKWorkCallCtrl alloc] initWithNibName:@"HKWorkCallCtrl" bundle:nil];
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (IBAction)testURLImageView:(id)sender {
+    HKURLImageViewCtrl* ctrl = [[HKURLImageViewCtrl alloc] initWithNibName:@"HKURLImageViewCtrl" bundle:nil];
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 - (void)viewDidUnload {

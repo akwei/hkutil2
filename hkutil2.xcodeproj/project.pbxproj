@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B0A47F2179E367900B632C0 /* UIView+HKEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A47F1179E367900B632C0 /* UIView+HKEx.m */; };
+		9B1A49FB17A2790A00F95146 /* hk_cache.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 9B1A49FA17A2790A00F95146 /* hk_cache.sqlite */; };
 		9B20EB491729714D005E9D1D /* HKUtilCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB471729714D005E9D1D /* HKUtilCtrl.m */; };
 		9B20EB4A1729714D005E9D1D /* HKUtilCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */; };
 		9B20EB4D17297888005E9D1D /* HKWorkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B20EB4C17297888005E9D1D /* HKWorkUtil.m */; };
@@ -46,6 +47,9 @@
 		9B83DB271798E3A9006F6338 /* HKWorkCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B83DB261798E3A9006F6338 /* HKWorkCaller.m */; };
 		9B83DB2B1798E465006F6338 /* HKWorkCallCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B83DB291798E465006F6338 /* HKWorkCallCtrl.m */; };
 		9B83DB2C1798E465006F6338 /* HKWorkCallCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B83DB2A1798E465006F6338 /* HKWorkCallCtrl.xib */; };
+		9B89430C17A13ED6000EF110 /* HKURLImageViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B89430A17A13ED6000EF110 /* HKURLImageViewCtrl.m */; };
+		9B89430D17A13ED6000EF110 /* HKURLImageViewCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B89430B17A13ED6000EF110 /* HKURLImageViewCtrl.xib */; };
+		9B89431017A18490000EF110 /* HKCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B89430F17A18490000EF110 /* HKCache.m */; };
 		9B8B600C1728B58A00032219 /* HKDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FF91728B58A00032219 /* HKDataUtil.m */; };
 		9B8B600D1728B58A00032219 /* HKDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FFB1728B58A00032219 /* HKDeviceUtil.m */; };
 		9B8B600E1728B58A00032219 /* HKEncUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B5FFD1728B58A00032219 /* HKEncUtil.m */; };
@@ -150,6 +154,7 @@
 /* Begin PBXFileReference section */
 		9B0A47F0179E367900B632C0 /* UIView+HKEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HKEx.h"; sourceTree = "<group>"; };
 		9B0A47F1179E367900B632C0 /* UIView+HKEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HKEx.m"; sourceTree = "<group>"; };
+		9B1A49FA17A2790A00F95146 /* hk_cache.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = hk_cache.sqlite; sourceTree = "<group>"; };
 		9B20EB461729714D005E9D1D /* HKUtilCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKUtilCtrl.h; sourceTree = "<group>"; };
 		9B20EB471729714D005E9D1D /* HKUtilCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKUtilCtrl.m; sourceTree = "<group>"; };
 		9B20EB481729714D005E9D1D /* HKUtilCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKUtilCtrl.xib; sourceTree = "<group>"; };
@@ -218,6 +223,11 @@
 		9B83DB281798E465006F6338 /* HKWorkCallCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKWorkCallCtrl.h; sourceTree = "<group>"; };
 		9B83DB291798E465006F6338 /* HKWorkCallCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKWorkCallCtrl.m; sourceTree = "<group>"; };
 		9B83DB2A1798E465006F6338 /* HKWorkCallCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKWorkCallCtrl.xib; sourceTree = "<group>"; };
+		9B89430917A13ED6000EF110 /* HKURLImageViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKURLImageViewCtrl.h; sourceTree = "<group>"; };
+		9B89430A17A13ED6000EF110 /* HKURLImageViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKURLImageViewCtrl.m; sourceTree = "<group>"; };
+		9B89430B17A13ED6000EF110 /* HKURLImageViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKURLImageViewCtrl.xib; sourceTree = "<group>"; };
+		9B89430E17A1848F000EF110 /* HKCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKCache.h; sourceTree = "<group>"; };
+		9B89430F17A18490000EF110 /* HKCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKCache.m; sourceTree = "<group>"; };
 		9B8B5FF81728B58A00032219 /* HKDataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDataUtil.h; sourceTree = "<group>"; };
 		9B8B5FF91728B58A00032219 /* HKDataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDataUtil.m; sourceTree = "<group>"; };
 		9B8B5FFA1728B58A00032219 /* HKDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKDeviceUtil.h; sourceTree = "<group>"; };
@@ -476,6 +486,7 @@
 		9B4B3355172575440078CDCC = {
 			isa = PBXGroup;
 			children = (
+				9B1A49FA17A2790A00F95146 /* hk_cache.sqlite */,
 				9BB2A7DB1737754800C99DC0 /* rsa_public_key.txt */,
 				9BA5EDBF172B91CF00158865 /* db_cfg.plist */,
 				9BA5EDBD172B8ECE00158865 /* hkutil2.sqlite */,
@@ -558,6 +569,9 @@
 				9B83DB2A1798E465006F6338 /* HKWorkCallCtrl.xib */,
 				9B0A47F0179E367900B632C0 /* UIView+HKEx.h */,
 				9B0A47F1179E367900B632C0 /* UIView+HKEx.m */,
+				9B89430917A13ED6000EF110 /* HKURLImageViewCtrl.h */,
+				9B89430A17A13ED6000EF110 /* HKURLImageViewCtrl.m */,
+				9B89430B17A13ED6000EF110 /* HKURLImageViewCtrl.xib */,
 				9B4B3368172575440078CDCC /* Supporting Files */,
 			);
 			path = hkutil2;
@@ -625,6 +639,8 @@
 				9BA07A6F1725842F000F4183 /* HKThreadUtil.m */,
 				9BA07A71172587ED000F4183 /* HKDownloader.h */,
 				9BA07A72172587ED000F4183 /* HKDownloader.m */,
+				9B89430E17A1848F000EF110 /* HKCache.h */,
+				9B89430F17A18490000EF110 /* HKCache.m */,
 				9BA07A7417258905000F4183 /* HKURLImageView.h */,
 				9BA07A7517258905000F4183 /* HKURLImageView.m */,
 				9BA07BDE17266403000F4183 /* HKShadowCtrl.h */,
@@ -978,6 +994,8 @@
 				9BF4839D1733F5A000C53689 /* HKExceptionCtrl.xib in Resources */,
 				9BB2A7DC1737754800C99DC0 /* rsa_public_key.txt in Resources */,
 				9B83DB2C1798E465006F6338 /* HKWorkCallCtrl.xib in Resources */,
+				9B89430D17A13ED6000EF110 /* HKURLImageViewCtrl.xib in Resources */,
+				9B1A49FB17A2790A00F95146 /* hk_cache.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,6 +1112,8 @@
 				9B83DB271798E3A9006F6338 /* HKWorkCaller.m in Sources */,
 				9B83DB2B1798E465006F6338 /* HKWorkCallCtrl.m in Sources */,
 				9B0A47F2179E367900B632C0 /* UIView+HKEx.m in Sources */,
+				9B89430C17A13ED6000EF110 /* HKURLImageViewCtrl.m in Sources */,
+				9B89431017A18490000EF110 /* HKCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

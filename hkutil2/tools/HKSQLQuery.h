@@ -121,11 +121,11 @@
 -(void)updateWithSQL:(NSString*)sql params:(NSArray*)params;
 
 /*
- select count(*)
+ select 获得整型数字
  @param sql sql语句
  @param params 绑定sql中带有'?'的参数，顺序要与sql中'?'的顺序对应
  */
--(NSInteger)countWithSQL:(NSString*)sql params:(NSArray*)params;
+-(long long)numberWithSQL:(NSString*)sql params:(NSArray*)params;
 
 /*
  select
@@ -140,8 +140,6 @@
 -(void)doTranscationWithBlock:(void (^)(void))block;
 
 @end
-
-
 
 @interface HKObjQuery : NSObject
 
@@ -161,7 +159,7 @@
 -(void)deleteWithClass:(Class)cls where:(NSString*)where params:(NSArray*)params;
 
 //select count(*)统计
--(NSInteger)countWithClass:(Class)cls where:(NSString *)where params:(NSArray*)params;
+-(long long)countWithClass:(Class)cls where:(NSString *)where params:(NSArray*)params;
 
 //select * from table 获取cls类型对象集合
 -(NSArray*)listWithClass:(Class)cls where:(NSString*)where params:(NSArray*)params orderBy:(NSString*)orderBy begin:(NSInteger)begin size:(NSInteger)size;
@@ -171,8 +169,7 @@
 
 @end
 
-
-@interface HKDbObject : NSObject
+@interface NSObject (HKSQLQueryEx)
 //子类必须重写此方法，返回真实的数据库文件名称
 +(NSString*)currentDbName;
 /*
@@ -236,5 +233,4 @@
  删除对象
  */
 -(void)deleteObj;
-
 @end

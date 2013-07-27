@@ -478,18 +478,19 @@ static NSMutableDictionary* objQueryDic=nil;
     });
 }
 
--(NSInteger)countWithSQL:(NSString *)sql params:(NSArray *)params{
-    __block NSInteger count=0;
+-(long long)numberWithSQL:(NSString *)sql params:(NSArray *)params{
+    __block long long num=0;
     dispatch_sync(syncQueue, ^{
         [self execute:sql exeBlock:^(sqlite3_stmt *stmt) {
             [self bindParams:stmt params:params];
             while ([self queryNextRow:stmt]) {
-                count = sqlite3_column_int64(stmt, 0);
+                num = sqlite3_column_int64(stmt, 0);
             }
         }];
     });
-    return count;
+    return num;
 }
+
 
 -(NSArray *)listWithSQL:(NSString *)sql params:(NSArray *)params{
     __block NSMutableArray* list=[NSMutableArray array];
@@ -735,7 +736,7 @@ static NSMutableDictionary* objQueryDic=nil;
             id value=nil;
             if (forInsert && i==0) {
                 value=[objId valueForKey:propName];
-                if ([value longLongValue]==0) {
+                if ([value isKindOfClass:[NSNumber class]] && [value longLongValue]==0) {
                     value=[NSNull null];
                 }
             }
@@ -796,7 +797,7 @@ static NSMutableDictionary* objQueryDic=nil;
     }
 }
 
--(int)countWithClass:(Class)cls where:(NSString *)where  params:(NSArray*)params{
+-(long long)countWithClass:(Class)cls where:(NSString *)where  params:(NSArray*)params{
     NSString* className = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
     HKClassInfo* ci=[HKClassInfo getClassInfoWithClassName:className];
     NSMutableString* sqlbuf=[NSMutableString string];
@@ -804,8 +805,7 @@ static NSMutableDictionary* objQueryDic=nil;
     if (where) {
         [sqlbuf appendFormat:@" where %@",where];
     }
-    NSInteger count=[self.sqlQuery countWithSQL:sqlbuf params:params];
-    return count;
+    return [self.sqlQuery numberWithSQL:sqlbuf params:params];
 }
 
 -(NSArray *)listWithClass:(Class)cls where:(NSString *)where params:(NSArray *)params orderBy:(NSString *)orderBy begin:(NSInteger)begin size:(NSInteger)size{
@@ -872,12 +872,11 @@ static NSMutableDictionary* objQueryDic=nil;
 
 @end
 
-#pragma mark - HKDbObject
+#pragma mark - NSObject (HKSQLQueryEx)
 
-@implementation HKDbObject
-
+@implementation NSObject (HKSQLQueryEx)
 +(NSString*)currentDbName{
-    NSLog(@"Child must override this method that return real dbName");
+    NSLog(@"subclass must override this method that return real dbName");
     return nil;
 }
 
@@ -954,3 +953,4 @@ static NSMutableDictionary* objQueryDic=nil;
 }
 
 @end
+

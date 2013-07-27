@@ -15,63 +15,33 @@
 
 //数据下载器
 @implementation HKDownloader{
-    NSURLConnection* _con;
-    BOOL _downloadDone;
 }
 
 -(id)init{
     self=[super init];
     if (self) {
-        self.data=[[NSMutableData alloc] initWithCapacity:3096];
+        self.data=[[NSMutableData alloc] initWithCapacity:10240];
         self.timeout = 10;
     }
     return self;
 }
 
 -(void)start{
-    @autoreleasepool {
-        _downloadDone = NO;
-        NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:self.timeout];
-        _con = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-        [_con scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        [_con start];
-        do {
-            SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, NO);
-            if (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished) {
-                _downloadDone = YES;
-            }
-        } while (!_downloadDone);
-    }
-}
-
--(void)cancel{
-    [_con cancel];
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    self.httpResponse = (NSHTTPURLResponse*)response;
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    [self.data appendData:data];
-}
-
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    NSLog(@"download url [%@]",self.url);
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:self.timeout];
+    NSError* error ;
+    NSHTTPURLResponse* response;
+    NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    if (error) {
         if (self.onErrorBlock) {
-            self.onErrorBlock(self,error);
+            self.onErrorBlock(error,response.statusCode);
         }
-        _downloadDone = YES;
-    });
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    }
+    else{
         if (self.onFinishBlock) {
-            self.onFinishBlock(self);
+            self.onFinishBlock(data,response.statusCode);
         }
-        _downloadDone = YES;
-    });
+    }
 }
 
 @end
@@ -103,6 +73,7 @@
 
 -(void)downloadWithUrl:(NSString*)url callbackHandler:(HKCallbackHandler*)callbackHandler timeout:(NSTimeInterval)timeout{
     NSString* _url = [url copy];
+    __weak HKDownloaderMgr* me = self;
     dispatch_sync(_syncQueue, ^{
         NSMutableArray* callbackHandlers = [_downloader_callbackHandlers_dic valueForKey:_url];
         if (!callbackHandlers) {
@@ -115,28 +86,26 @@
             _downloader = [[HKDownloader alloc] init];
             _downloader.url = _url;
             _downloader.timeout = timeout;
-            [_downloader setOnFinishBlock:^(HKDownloader *downloader) {
+            [_downloader setOnFinishBlock:^(NSData *data,NSInteger statusCode) {
                 NSMutableArray* callbackHandlers = [_downloader_callbackHandlers_dic valueForKey:_url];
                 if (callbackHandlers) {
                     for (HKCallbackHandler* handler in callbackHandlers) {
-                        handler.onFinishBlock(downloader.url,downloader.data,downloader.httpResponse);
+                        handler.onFinishBlock(_url,data,statusCode);
                     }
                 }
-                [self clearWithUrl:downloader.url];
+                [me clearWithUrl:_url];
             }];
-            [_downloader setOnErrorBlock:^(HKDownloader *downloader, NSError *error) {
+            [_downloader setOnErrorBlock:^(NSError *error,NSInteger statusCode) {
                 NSMutableArray* callbackHandlers = [_downloader_callbackHandlers_dic valueForKey:_url];
                 if (callbackHandlers) {
                     for (HKCallbackHandler* handler in callbackHandlers) {
-                        handler.onErrorBlock(downloader.url,error,downloader.httpResponse);
+                        handler.onErrorBlock(_url,error,statusCode);
                     }
                 }
-                [self clearWithUrl:downloader.url];
+                [me clearWithUrl:_url];
             }];
             [_downloader_dic setValue:_downloader forKey:_url];
-            dispatch_async(_asyncQueue, ^{
-                [_downloader start];
-            });
+            [_downloader start];
         }
     });
 }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HKSQLQuery.h"
 
-@interface Person : HKDbObject
+@interface Person : NSObject
 @property(nonatomic,assign)NSUInteger pid;
 @property(nonatomic,strong)NSData* data;
 @property(nonatomic,copy)NSString* name;

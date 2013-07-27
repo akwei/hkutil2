@@ -16,8 +16,8 @@
 #import <Foundation/Foundation.h>
 
 @interface HKCallbackHandler : NSObject
-@property(nonatomic,strong)void (^onFinishBlock)(NSString*,NSData*,NSHTTPURLResponse*);
-@property(nonatomic,strong)void (^onErrorBlock)(NSString*,NSError*,NSHTTPURLResponse*);
+@property(nonatomic,strong)void (^onFinishBlock)(NSString* url,NSData* data,NSInteger statusCode);
+@property(nonatomic,strong)void (^onErrorBlock)(NSString* url,NSError* data,NSInteger statusCode);
 @end
 
 
@@ -26,12 +26,12 @@
 @property(nonatomic,copy)NSString* url;
 @property(nonatomic,strong)NSMutableData* data;
 @property(nonatomic,strong)NSHTTPURLResponse* httpResponse;
-@property(nonatomic,strong)void (^onFinishBlock)(HKDownloader *);
-@property(nonatomic,strong)void (^onErrorBlock)(HKDownloader *,NSError *);
+@property(nonatomic,strong)void (^onFinishBlock)(NSData* url,NSInteger statusCode);
+@property(nonatomic,strong)void (^onErrorBlock)(NSError* url,NSInteger statusCode);
 @property(nonatomic,assign)NSTimeInterval timeout;
 
 -(void)start;
--(void)cancel;
+
 @end
 
 @interface HKDownloaderMgr : NSObject

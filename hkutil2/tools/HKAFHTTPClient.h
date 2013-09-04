@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEBUG_HKAFHTTPClient 1
+
 @interface HKAFHTTPClient : NSObject
 @property(nonatomic,copy) NSString* baseUrl;
 @property(nonatomic,copy) NSString* subUrl;

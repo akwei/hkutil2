@@ -84,22 +84,15 @@
     return [[NSDate date] timeIntervalSince1970];
 }
 
-+(double)currentDateTimeStamp{
-    NSInteger nowTime = [[NSDate date] timeIntervalSince1970];
-    return nowTime - nowTime % (3600 * 24);
-}
-
 +(NSDate*)buildDateWithYear:(NSInteger)year
                       month:(NSInteger)month
-                       day:(NSInteger)day
+                        day:(NSInteger)day
                        hour:(NSInteger)hour
                      minute:(NSInteger)minute
                      second:(NSInteger)second{
-
+    
     NSDate* now = [NSDate date];
-
-
-
+    
     HKTimeInfo* info = [HKTimeUtil timeInfoWithDate:now];
     NSDateComponents* cmp = [[NSDateComponents alloc] init];
     if (year < 1) {
@@ -123,13 +116,11 @@
     cmp.year = year;
     cmp.month = month;
     cmp.day = day;
-    cmp.second = second;
     cmp.hour = hour;
     cmp.minute = minute;
     cmp.second = second;
     NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     return [cal dateFromComponents:cmp];
 }
-
 
 @end

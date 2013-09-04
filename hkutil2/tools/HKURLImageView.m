@@ -65,6 +65,9 @@ static HKCache* _cache = nil;
 }
 
 -(void)loadFromUrl:(NSString *)url onErrorBlock:(void (^)(NSError *error))onErrorBlock{
+    if (!url || [url length] == 0) {
+        return;
+    }
     if (self.isCanShowLoading) {
         if (!_indicatorView) {
             _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.loadingStyle];

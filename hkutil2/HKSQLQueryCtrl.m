@@ -7,7 +7,6 @@
 //
 
 #import "HKSQLQueryCtrl.h"
-#import "HKSQLQuery.h"
 #import "HKTimeUtil.h"
 
 
